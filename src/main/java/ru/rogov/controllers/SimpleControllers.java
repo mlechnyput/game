@@ -15,4 +15,9 @@ public class SimpleControllers {
     public Mono<String> come() {
         return Mono.just("custom_login.html");
     }
+
+    @GetMapping("/register")
+    public Mono<String> register() {
+        return Mono.just("custom_register.html");
+    }
 }

@@ -16,7 +16,7 @@
         transform: translate(-50%, -50%);
         width: 400px;
         padding: 40px;
-        background: rgba(0, 0, 0, .8);
+        background: rgba(196, 196, 196, 0.8);
         box-sizing: border-box;
         box-shadow: 0 15px 25px rgba(0, 0, 0, .5);
         border-radius: 10px;
@@ -25,7 +25,7 @@
     .box h2 {
         margin: 0 0 30px;
         padding: 0;
-        color: #fff;
+        color: #3c3c3c;
         text-align: center;
     }
 
@@ -35,7 +35,7 @@
 
     .txt a{
         text-decoration: none;
-        color: #f3c47d;
+        color: #963212;
         font-size: 14px;
     }
 
@@ -48,11 +48,11 @@
         width: 100%;
         padding: 10px 0;
         font-size: 16px;
-        color: #fff;
+        color: #454545;
         letter-spacing: 1px;
         margin-bottom: 30px;
         border: none;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid #454545;
         outline: none;
         background: transparent;
     }
@@ -63,7 +63,7 @@
         left: 0;
         padding: 10px 0;
         font-size: 16px;
-        color: #fff;
+        color: #454545;
         pointer-events: none;
         transition: .5s;
     }
@@ -95,7 +95,7 @@
 </head>
 <body>
 <div class="box">
-    <h2>Вход</h2>
+    <h2>Регистрация</h2>
     <form action="/come" method="post">
         <div class="inputbox">
             <input type="text" name="username" required=""/>
@@ -106,9 +106,9 @@
             <label>Пароль</label>
         </div>
         <div class="txt">
-            <a href="http://localhost:8080/register">Зарегистрировать новое погонялово</a>
+            <a href="http://localhost:8080/come">Вернуться ко входу</a>
         </div>
-        <input type="submit" name="" value="Войти"/>
+        <input type="submit" name="" value="Отправить"/>
     </form>
 </div>
 </body>
