@@ -1,0 +1,12 @@
+#spring:
+#  r2dbc:
+#    url: r2dbc:postgresql://5.23.49.13:5432/default_db
+#    username: gen_user
+#    password: <~&ztY!8FOSg^D
+
+spring:
+  datasource:
+    url: jdbc:postgresql://5.23.49.13:5432/default_db
+    username: gen_user
+    password: <~&ztY!8FOSg^D
+    driver-class-name: org.postgresql.Driver
