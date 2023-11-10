@@ -21,10 +21,10 @@ public class WebSecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity){
         return httpSecurity
                 .csrf().disable()
-                .formLogin().and()
+                .formLogin().loginPage("/come").and()
                 .httpBasic().disable()
                 .authorizeExchange()
-                .pathMatchers("/login","/favicon.ico").permitAll()
+                .pathMatchers("/come","/favicon.ico").permitAll()
                 .pathMatchers("/foradmin").hasRole("ADMIN")
                 .anyExchange().authenticated()
                 .and()

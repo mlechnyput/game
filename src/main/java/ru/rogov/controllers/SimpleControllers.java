@@ -10,4 +10,9 @@ public class SimpleControllers {
     public Mono<String> adm() {
         return Mono.just("index.html");
     }
+
+    @GetMapping("/come")
+    public Mono<String> come() {
+        return Mono.just("custom_login.html");
+    }
 }
