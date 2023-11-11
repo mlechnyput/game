@@ -73,7 +73,7 @@ body {
     font-size: 12px;
 }
 
-.submit_1{
+.box input[type="submit"]{
     /*background: transparent;*/
     border: none;
     outline: none;
