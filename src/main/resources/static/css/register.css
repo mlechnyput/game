@@ -73,13 +73,13 @@ body {
     font-size: 12px;
 }
 
-.box input[type="submit"] {
-    background: transparent;
+.submit_1{
+    /*background: transparent;*/
     border: none;
     outline: none;
     color: #fff;
     background: #03a9f4;
-    padding: 10px 20px;
+    padding: 10px 10px;
     cursor: pointer;
     border-radius: 5px;
 }

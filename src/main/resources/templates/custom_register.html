@@ -13,17 +13,17 @@
     <h2>Регистрация</h2>
     <form>
         <div class="inputbox">
-            <input type="text" name="username" required=""/>
+            <input type="text" autocomplete="off" id="reg_username" required=""/>
             <label>Погонялово</label>
         </div>
         <div class="inputbox">
-            <input type="password" name="password" required=""/>
+            <input type="password" autocomplete="off" id="reg_password" required=""/>
             <label>Пароль</label>
         </div>
         <div class="txt">
             <a href="http://localhost:8080/come">Вернуться ко входу</a>
         </div>
-        <input type="submit" name="" value="Отправить"/>
+        <input class="submit_1" value="Отправить" onclick="reg()"/>
     </form>
 </div>
 </body>

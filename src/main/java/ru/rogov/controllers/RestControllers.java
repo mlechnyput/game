@@ -29,9 +29,9 @@ public class RestControllers {
     @PostMapping("/register")
     public ResponseEntity<String> reg(@RequestBody Visitor visitor) {
         if (visitorService.checkAndSave(visitor).equals("busy")) {
-            return new ResponseEntity<>("busy", HttpStatus.PRECONDITION_FAILED);
+            return new ResponseEntity<>("busy", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("saved", HttpStatus.CREATED);
+            return new ResponseEntity<>("saved", HttpStatus.OK);
         }
     }
 }
