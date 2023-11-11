@@ -16,6 +16,7 @@ import java.util.List;
 public class Visitor implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     @Column(name = "login")
@@ -36,7 +37,7 @@ public class Visitor implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        ArrayList<GrantedAuthority>list=new ArrayList<>();
+        ArrayList<GrantedAuthority> list = new ArrayList<>();
         list.add(new SimpleGrantedAuthority(authority.getRole()));
         return list;
     }

@@ -24,3 +24,15 @@ insert into authority(role) values ('ROLE_ADMIN');
 insert into visitors(login, password, authority_id,level,score) values ('Alex','123',2,0,0);
 insert into visitors(login, password, authority_id,level,score) values ('Elena','456',1,0,0);
 insert into visitors(login, password, authority_id,level,score) values ('Leo','789',1,0,0);
+
+alter table visitors add constraint visitors_uc unique (login);
+alter table visitors drop constraint visitors_uc;
+
+SELECT con.*
+FROM pg_catalog.pg_constraint con
+         INNER JOIN pg_catalog.pg_class rel
+                    ON rel.oid = con.conrelid
+         INNER JOIN pg_catalog.pg_namespace nsp
+                    ON nsp.oid = connamespace
+WHERE nsp.nspname = 'public'
+  AND rel.relname = 'visitors';
