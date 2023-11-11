@@ -13,18 +13,18 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class WebSecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity){
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity
                 .csrf().disable()
                 .formLogin().loginPage("/come").and()
                 .httpBasic().disable()
                 .authorizeExchange()
-                .pathMatchers("/come","/favicon.ico","/register").permitAll()
+                .pathMatchers("/come", "/favicon.ico", "/register", "/js/**", "/css/**").permitAll()
                 .pathMatchers("/foradmin").hasRole("ADMIN")
                 .anyExchange().authenticated()
                 .and()
