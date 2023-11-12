@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 public class SimpleControllers {
     @GetMapping("/")
     public Mono<String> main() {
-        return Mono.just("main.html");
+        return Mono.just("index.html");
     }
 
     @GetMapping("/come")
