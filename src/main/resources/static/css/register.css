@@ -26,6 +26,10 @@ body {
     text-align: center;
 }
 
+.box p{
+    font-size: 12px;
+}
+
 .txt{
     margin-bottom: 30px;
 }
