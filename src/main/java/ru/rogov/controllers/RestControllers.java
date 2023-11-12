@@ -21,7 +21,7 @@ public class RestControllers {
         this.visitorService = visitorService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/foradmin")
     public Iterable<Visitor> index() {
         return visitorService.findAll();
     }

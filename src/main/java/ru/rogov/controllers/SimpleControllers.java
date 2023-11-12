@@ -6,9 +6,9 @@ import reactor.core.publisher.Mono;
 
 @Controller
 public class SimpleControllers {
-    @GetMapping("/foradmin")
-    public Mono<String> adm() {
-        return Mono.just("index.html");
+    @GetMapping("/")
+    public Mono<String> main() {
+        return Mono.just("main.html");
     }
 
     @GetMapping("/come")
