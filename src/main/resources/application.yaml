@@ -10,3 +10,6 @@ spring:
     username: gen_user
     password: <~&ztY!8FOSg^D
     driver-class-name: org.postgresql.Driver
+
+#server:
+#  address: 176.57.213.155
