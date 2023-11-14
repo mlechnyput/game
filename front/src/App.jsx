@@ -1,5 +1,4 @@
-import React, {useState} from "react";
-import "./styles.css";
+import React, {} from "react";
 import Screen from "./Screen";
 
 export default function App() {

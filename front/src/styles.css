@@ -14,11 +14,17 @@
 .player {
     background: #676767;
     grid-area: player;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .hat {
     background: #707070;
     grid-area: hat;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 .field {
