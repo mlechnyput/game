@@ -15,14 +15,14 @@ public class MsgProcessor {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Set<SessionState> subscribers = ConcurrentHashMap.newKeySet();
 
-    public void process(SessionState sessionState, WebSocketMessage webSocketMessage) {
+    public void process(SessionState sessionState, WebSocketMessage webSocketMessage, String name) {
         try {
             Message message = objectMapper.readValue(webSocketMessage.getPayloadAsText(), Message.class);
             switch (message.getType()) {
                 case HANDSHAKE_REQUEST:
                     addSubscriber(sessionState);
                     System.out.println("отправляю одному");
-                    Message<String> msg1 = new Message<>(MessageType.HANDSHAKE_RESPONSE, "Hello");
+                    Message<String> msg1 = new Message<>(MessageType.HANDSHAKE_RESPONSE, name);
                     sessionState.sendAsText(msg1);
                     break;
                 case CHAT_MESSAGE:

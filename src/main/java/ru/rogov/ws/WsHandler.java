@@ -10,6 +10,8 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
+import java.security.Principal;
+
 @Component
 public class WsHandler implements WebSocketHandler {
 
@@ -25,14 +27,14 @@ public class WsHandler implements WebSocketHandler {
     public Mono<Void> handle(@NonNull WebSocketSession session) {
         Sinks.Many<WebSocketMessage> sink = Sinks.many().unicast().onBackpressureError();
         SessionState sessionState = new SessionState(session, sink);
+        Mono<Principal> principal = session.getHandshakeInfo().getPrincipal();
 
-        Mono<Void> input = session
-                .receive()
-                .doOnNext(msg -> {
-                    msgProcessor.process(sessionState, msg);
-                })
-                .doOnError(Throwable::printStackTrace)
-                .then();
+        Mono<Void> input = principal.map(Principal::getName)
+                .flatMap(s -> {
+                    return session.receive().doOnNext(msg -> {
+                    msgProcessor.process(sessionState, msg, s);
+                }).then();
+        });
 
         Mono<Void> output = session.send(
                 sink.asFlux()
