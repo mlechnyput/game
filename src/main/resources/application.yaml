@@ -1,8 +1,3 @@
-#spring:
-#  r2dbc:
-#    url: r2dbc:postgresql://5.23.49.13:5432/default_db
-#    username: gen_user
-#    password: <~&ztY!8FOSg^D
 
 spring:
   datasource:
@@ -10,7 +5,6 @@ spring:
     username: username
     password: password
     driver-class-name: org.postgresql.Driver
-  config:
-    maxFrameSize: 255
+
 #server:
 #  address: 176.57.213.155
