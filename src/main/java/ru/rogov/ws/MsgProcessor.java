@@ -31,16 +31,14 @@ public class MsgProcessor {
             switch (message.getType()) {
                 case HANDSHAKE_REQUEST:
                     addSubscriber(sessionState);
-                    System.out.println("отправляю одному");
+                    System.out.println("прилетел handshake");
                     Visitor vis = visitorService.findVisitor(name);
                     Message<Visitor> msg1 = new Message<>(MessageType.HANDSHAKE_RESPONSE, vis);
                     sessionState.sendAsText(msg1);
                     break;
                 case CHAT_MESSAGE:
-                    System.out.println("отправляю всем");
-                    ChatMessage body = new ChatMessage("2023-11-15", "Alex", "Hello world");
-                    Message<ChatMessage> msg2 = new Message<>(MessageType.CHAT_MESSAGE, body);
-                    sendToEveryone(msg2);
+                    System.out.println("прилетело чат-сообщение");
+                    sendToEveryone(message);
                     break;
             }
         } catch (JsonProcessingException e) {

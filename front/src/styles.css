@@ -3,7 +3,7 @@
     grid-template-areas:
     "player hat hat"
     "field field chat"
-    "tools tools chat_control";
+    "tool tool chat_control";
     grid-template-rows: 50px 1fr 50px;
     grid-template-columns: 15% 1fr 18%;
     grid-gap: 3px;
@@ -42,11 +42,11 @@
     grid-area: chat_control;
 }
 
-.tools {
+.tool {
     background: #707070;
-    grid-area: tools;
+    grid-area: tool;
 }
 
-.tools, .chat_control, .chat, .field, .hat, .player {
+.tool, .chat_control, .chat, .field, .hat, .player {
     padding: 5px;
 }
