@@ -30,11 +30,9 @@ public class WsHandler implements WebSocketHandler {
         Mono<Principal> principal = session.getHandshakeInfo().getPrincipal();
 
         Mono<Void> input = principal.map(Principal::getName)
-                .flatMap(s -> {
-                    return session.receive().doOnNext(msg -> {
-                    msgProcessor.process(sessionState, msg, s);
-                }).then();
-        });
+                .flatMap(s ->
+                        session.receive().doOnNext(msg ->
+                                msgProcessor.process(sessionState, msg, s)).then());
 
         Mono<Void> output = session.send(
                 sink.asFlux()
