@@ -49,4 +49,8 @@ public class VisitorService implements ReactiveUserDetailsService {
         Mono<Visitor> mono = Mono.just(visitorDao.findVisitorByUsername(username));
         return mono.cast(UserDetails.class);
     }
+
+    public Visitor findVisitor(String username) {
+        return visitorDao.findVisitorByUsername(username);
+    }
 }

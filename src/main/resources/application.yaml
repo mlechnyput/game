@@ -7,8 +7,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://5.23.49.13:5432/default_db
-    username: gen_user
-    password: <~&ztY!8FOSg^D
+    username: username
+    password: password
     driver-class-name: org.postgresql.Driver
   config:
     maxFrameSize: 255

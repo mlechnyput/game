@@ -3,9 +3,12 @@ package ru.rogov.ws;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketMessage;
+import reactor.core.publisher.Mono;
 import ru.rogov.model.Visitor;
+import ru.rogov.service.VisitorService;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,6 +18,13 @@ public class MsgProcessor {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Set<SessionState> subscribers = ConcurrentHashMap.newKeySet();
 
+    VisitorService visitorService;
+
+    @Autowired
+    public MsgProcessor(VisitorService visitorService) {
+        this.visitorService = visitorService;
+    }
+
     public void process(SessionState sessionState, WebSocketMessage webSocketMessage, String name) {
         try {
             Message message = objectMapper.readValue(webSocketMessage.getPayloadAsText(), Message.class);
@@ -22,7 +32,8 @@ public class MsgProcessor {
                 case HANDSHAKE_REQUEST:
                     addSubscriber(sessionState);
                     System.out.println("отправляю одному");
-                    Message<String> msg1 = new Message<>(MessageType.HANDSHAKE_RESPONSE, name);
+                    Visitor vis = visitorService.findVisitor(name);
+                    Message<Visitor> msg1 = new Message<>(MessageType.HANDSHAKE_RESPONSE, vis);
                     sessionState.sendAsText(msg1);
                     break;
                 case CHAT_MESSAGE:
