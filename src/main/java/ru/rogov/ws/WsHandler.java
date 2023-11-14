@@ -4,6 +4,7 @@ package ru.rogov.ws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -12,7 +13,7 @@ import reactor.core.publisher.Sinks;
 
 import java.security.Principal;
 
-@Component
+@Service
 public class WsHandler implements WebSocketHandler {
 
     private final MsgProcessor msgProcessor;
