@@ -10,6 +10,7 @@ spring:
     username: gen_user
     password: <~&ztY!8FOSg^D
     driver-class-name: org.postgresql.Driver
-
+  config:
+    maxFrameSize: 255
 #server:
 #  address: 176.57.213.155
