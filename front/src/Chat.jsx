@@ -2,11 +2,11 @@ import React, {useState} from "react";
 import "./styles.css";
 
 
-function Chat() {
+function Chat(props) {
 
     return (
         <div className="chat">
-            bla bla
+            {props.obj}
         </div>
     );
 }

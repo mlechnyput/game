@@ -20,8 +20,16 @@ export default function Screen() {
         score: -999
     });
 
+    const socket = useRef(null);
 
     useEffect(() => {
+        let obj = {
+            type: 'CHAT_MESSAGE',
+            body: msgToChat
+        };
+        if (msgToChat.length > 0) {
+            socket.current.send(JSON.stringify(obj));
+        }
     }, [msgToChat]);
 
 
@@ -29,7 +37,7 @@ export default function Screen() {
         const ws = new WebSocket(`${frontProperties.ws_base_url}chat`);
 
         ws.onopen = function () {
-            console.log('connected');
+            console.log('ws connected');
             const obj = {
                 type: 'HANDSHAKE_REQUEST'
             };
@@ -50,6 +58,17 @@ export default function Screen() {
                     break;
             }
         };
+
+        ws.onclose = function (ev) {
+            console.log('ws closed');
+        };
+
+        ws.onerror = function (ev) {
+            console.log('ws error');
+        };
+
+        socket.current = ws;
+
     }, [])
 
     return (
@@ -58,7 +77,7 @@ export default function Screen() {
                 <Player obj={player}/>
                 <Score obj={player}/>
                 <Field/>
-                <Chat odj={chat}/>
+                <Chat obj={chat}/>
                 <Chat_control obj={player}/>
                 <Tool/>
             </GameContext.Provider>
