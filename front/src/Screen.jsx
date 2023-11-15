@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import frontProperties from "./front.properties.json"
 import "./styles.css";
 import Chat from "./Chat";
@@ -20,6 +20,11 @@ export default function Screen() {
         score: -999
     });
 
+
+    useEffect(() => {
+    }, [msgToChat]);
+
+
     useEffect(() => {
         const ws = new WebSocket(`${frontProperties.ws_base_url}chat`);
 
@@ -33,9 +38,9 @@ export default function Screen() {
         };
 
         ws.onmessage = function (event) {
-            console.log('msg')
-            console.log(event.data)
-            const gotFromBack = JSON.parse(event.data)
+            console.log('msg');
+            console.log(event.data);
+            const gotFromBack = JSON.parse(event.data);
             switch (gotFromBack.type) {
                 case 'HANDSHAKE_RESPONSE':
                     setPlayer(gotFromBack.body);
@@ -54,7 +59,7 @@ export default function Screen() {
                 <Score obj={player}/>
                 <Field/>
                 <Chat odj={chat}/>
-                <Chat_control obj={{txt: 'hello'}}/>
+                <Chat_control obj={player}/>
                 <Tool/>
             </GameContext.Provider>
         </div>
