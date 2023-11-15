@@ -7,7 +7,7 @@
     grid-template-rows: 50px 1fr 50px;
     grid-template-columns: 15% 1fr 18%;
     grid-gap: 3px;
-    height: 100vh;
+    height: 98.3vh;
     margin: 3px;
 }
 
@@ -35,6 +35,7 @@
 .chat {
     background: #505050;
     grid-area: chat;
+    color: #5cbeea;
 }
 
 .chat_control {

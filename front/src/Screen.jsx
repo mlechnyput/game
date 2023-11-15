@@ -54,7 +54,10 @@ export default function Screen() {
                     setPlayer(gotFromBack.body);
                     break;
                 case 'CHAT_MESSAGE':
-                    setChat(gotFromBack.body);
+                    console.log('chat-->'+chat);
+                    const str = chat + '\n' + gotFromBack.body;
+                    console.log('str-->'+str);
+                    setChat(str);
                     break;
             }
         };
