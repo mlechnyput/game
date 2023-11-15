@@ -1,13 +1,11 @@
-import React, {useContext, useState} from "react";
-import {GameContext} from "./GameContext";
+import React, {useState} from "react";
 import "./styles.css";
 
 
-function Score() {
-    const [player]=useContext(GameContext);
+function Score(props) {
 
     return (
-        <div className="hat">{player.score}</div>
+        <div className="hat">{props.obj.score}</div>
     );
 }
 

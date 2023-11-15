@@ -11,12 +11,14 @@ import Tool from "./Tool";
 
 export default function Screen() {
 
-    const [chat, setChat] = useState('')
+    const [chat, setChat] = useState('');
+
+    const [msgToChat, setMsgToChat] = useState('');
 
     const [player, setPlayer] = useState({
         username: '...',
         score: -999
-    })
+    });
 
     useEffect(() => {
         const ws = new WebSocket(`${frontProperties.ws_base_url}chat`);
@@ -47,12 +49,12 @@ export default function Screen() {
 
     return (
         <div className="body">
-            <GameContext.Provider value={[chat, player]}>
-                <Player/>
-                <Score/>
+            <GameContext.Provider value={[setMsgToChat]}>
+                <Player obj={player}/>
+                <Score obj={player}/>
                 <Field/>
-                <Chat/>
-                <Chat_control/>
+                <Chat odj={chat}/>
+                <Chat_control obj={{txt: 'hello'}}/>
                 <Tool/>
             </GameContext.Provider>
         </div>

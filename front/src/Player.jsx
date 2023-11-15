@@ -1,13 +1,11 @@
-import React, {useContext, useState} from "react";
-import {GameContext} from "./GameContext";
+import React, {useState} from "react";
 import "./styles.css";
 
 
-function Player() {
-    const [player]=useContext(GameContext);
+function Player(props) {
 
     return (
-        <div className="player">{player.username}</div>
+        <div className="player">{props.obj.username}</div>
     );
 }
 

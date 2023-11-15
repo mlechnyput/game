@@ -1,14 +1,12 @@
-import React, {useContext, useState} from "react";
-import {GameContext} from "./GameContext";
+import React, {useState} from "react";
 import "./styles.css";
 
 
 function Chat() {
-    const [chat]=useContext(GameContext);
 
     return (
         <div className="chat">
-            {chat}
+            bla bla
         </div>
     );
 }
