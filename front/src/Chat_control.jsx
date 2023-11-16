@@ -1,17 +1,18 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import "./styles.css";
-import {GameContext} from "./GameContext";
-
+import {ws} from "./websocket";
 
 function Chat_control(props) {
     const username = props.obj.username;
     const [chatControl, setChatControl] = useState('');
-    const [setMsgToChat] = useContext(GameContext);
     const handleKeyDown = ev => {
         if (ev.key === 'Enter') {
             let d = new Date();
             let str = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ' ' + username + ' ' + chatControl;
-            setMsgToChat(str);
+            ws.send(JSON.stringify({
+                type:'CHAT_MESSAGE',
+                body:str
+            }));
             setChatControl('');
         }
     }
