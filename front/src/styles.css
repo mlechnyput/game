@@ -36,6 +36,13 @@
     background: #505050;
     grid-area: chat;
     color: #5cbeea;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.chat_item {
+    width: 100%;
 }
 
 .chat_control {

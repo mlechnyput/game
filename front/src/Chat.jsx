@@ -20,7 +20,7 @@ function Chat(props) {
     return (
         <div className="chat">
             {arr.map((record, index) => (
-                <div key={index}>{record}</div>
+                <div className="chat_item" key={index}>{record}</div>
             ))}
         </div>
     );
