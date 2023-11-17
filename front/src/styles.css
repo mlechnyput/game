@@ -1,4 +1,10 @@
 .body {
+    background: linear-gradient(45deg,
+    #3e3e3e,
+    #c5dde8,
+    #414141,
+    #c5dde8,
+    #414141);
     display: grid;
     grid-template-areas:
     "player hat hat"
@@ -6,13 +12,14 @@
     "tool tool chat_control";
     grid-template-rows: 50px 1fr 50px;
     grid-template-columns: 15% 1fr 18%;
-    grid-gap: 3px;
-    height: 98.3vh;
+    grid-gap: 4px;
+    height: 97.3vh;
     margin: 3px;
+    padding: 5px;
 }
 
 .player {
-    background: #676767;
+    background: linear-gradient(45deg, #757575, #303030);
     grid-area: player;
     color: white;
     font-size: 30px;
@@ -20,7 +27,7 @@
 }
 
 .hat {
-    background: #707070;
+    background: linear-gradient(45deg, #454545, #d4d4d4, #303030);
     grid-area: hat;
     color: white;
     font-size: 30px;
@@ -33,7 +40,7 @@
 }
 
 .chat {
-    background: #505050;
+    background: linear-gradient(45deg, #343434, #6b6b6b, #353535);
     grid-area: chat;
     display: flex;
     flex-direction: column;
@@ -46,26 +53,26 @@
     word-wrap: break-word;
 }
 
-.chat_item_time{
+.chat_item_time {
     color: burlywood;
 }
 
-.chat_item_login{
+.chat_item_login {
     font-weight: bold;
     color: chartreuse;
 }
 
-.chat_item_msg{
+.chat_item_msg {
     color: #5cbeea;
 }
 
 .chat_control {
-    background: #7c7c7c;
+    background: linear-gradient(45deg, #303030,#757575);
     grid-area: chat_control;
 }
 
 .tool {
-    background: #707070;
+    background: linear-gradient(45deg, #2d2d2d, #757575, #303030);
     grid-area: tool;
 }
 
