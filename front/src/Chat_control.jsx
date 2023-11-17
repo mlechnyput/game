@@ -8,10 +8,14 @@ function Chat_control(props) {
     const handleKeyDown = ev => {
         if (ev.key === 'Enter' && chatControl.length > 0) {
             let d = new Date();
-            let str = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ' ' + username + ' ' + chatControl;
+            let time_msg = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
             ws.send(JSON.stringify({
                 type: 'CHAT_MESSAGE',
-                body: str
+                body: {
+                    time: time_msg,
+                    login: username,
+                    msg: chatControl
+                }
             }));
             setChatControl('');
         }
