@@ -33,7 +33,15 @@ public class WsHandler implements WebSocketHandler {
         Mono<Void> input = principal.map(Principal::getName)
                 .flatMap(s ->
                         session.receive().doOnNext(msg ->
-                                msgProcessor.process(sessionState, msg, s)).then());
+                                msgProcessor.process(sessionState, msg, s))
+                                .doOnError(throwable -> System.out.println("Exception" + throwable.getMessage()))
+                                .doAfterTerminate(() -> {
+                                    MsgProcessor.getSubscribers().remove(session);
+                                    int quantity = MsgProcessor.getSubscribers().size();
+                                    Message<Integer> quantityMsg = new Message<>(MessageType.QUANTITY_OF_VISITORS, quantity);
+                                    msgProcessor.sendToEveryone(quantityMsg);
+                                })
+                                .then());
 
         Mono<Void> output = session.send(
                 sink.asFlux()

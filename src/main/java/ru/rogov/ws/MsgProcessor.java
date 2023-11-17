@@ -6,17 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketMessage;
+import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
 import ru.rogov.model.Visitor;
 import ru.rogov.service.VisitorService;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class MsgProcessor {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Set<SessionState> subscribers = ConcurrentHashMap.newKeySet();
+    private static final Map<WebSocketSession, SessionState> subscribers = new ConcurrentHashMap<>();
 
     VisitorService visitorService;
 
@@ -33,8 +35,8 @@ public class MsgProcessor {
                     addSubscriber(sessionState);
                     System.out.println("прилетел handshake");
                     Visitor vis = visitorService.findVisitor(name);
-                    Message<Visitor> msg1 = new Message<>(MessageType.HANDSHAKE_RESPONSE, vis);
-                    sessionState.sendAsText(msg1);
+                    Message<Visitor> handshakeMsg = new Message<>(MessageType.HANDSHAKE_RESPONSE, vis);
+                    sessionState.sendAsText(handshakeMsg);
                     break;
                 case CHAT_MESSAGE:
                     System.out.println("прилетело чат-сообщение");
@@ -46,18 +48,20 @@ public class MsgProcessor {
         }
     }
 
+    public static Map<WebSocketSession, SessionState> getSubscribers() {
+        return subscribers;
+    }
+
     public void addSubscriber(SessionState sessionState) {
-        subscribers.add(sessionState);
+        subscribers.put(sessionState.getSession(), sessionState);
+        int quantity = subscribers.size();
+        Message<Integer> quantityMsg = new Message<>(MessageType.QUANTITY_OF_VISITORS, quantity);
+        sendToEveryone(quantityMsg);
     }
 
     public void sendToEveryone(Message<?> message) {
-        subscribers.forEach(o -> {
-            if (o.getSession().isOpen()) {
-                o.sendAsText(message);
-            } else {
-                subscribers.remove(o);
-                System.out.println("Удалил не живую подписку на чат-рассылку");
-            }
+        subscribers.forEach((k, v) -> {
+            v.sendAsText(message);
         });
     }
 }

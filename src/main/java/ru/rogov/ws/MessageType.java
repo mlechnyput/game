@@ -3,5 +3,6 @@ package ru.rogov.ws;
 public enum MessageType {
     CHAT_MESSAGE,
     HANDSHAKE_REQUEST,
-    HANDSHAKE_RESPONSE
+    HANDSHAKE_RESPONSE,
+    QUANTITY_OF_VISITORS
 }
