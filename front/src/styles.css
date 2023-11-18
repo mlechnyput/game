@@ -10,7 +10,7 @@
     "player hat hat"
     "field field chat"
     "tool tool chat_control";
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 60px 1fr 50px;
     grid-template-columns: 15% 1fr 18%;
     grid-gap: 4px;
     height: 97.3vh;
@@ -29,9 +29,37 @@
 .hat {
     background: linear-gradient(45deg, #454545, #d4d4d4, #303030);
     grid-area: hat;
+    display: grid;
+    grid-template-areas: "score people quantity hat_right";
+    grid-template-columns: 30% 4% 12% 54%;
+}
+
+.score {
+    grid-area: score;
     color: white;
     font-size: 30px;
     font-weight: bold;
+}
+
+.people{
+    grid-area: people;
+    background-image: url("./images/ico_people.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    filter: drop-shadow(5px 5px 5px #606060);
+}
+
+.quantity{
+    grid-area: quantity;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    margin-left: 5px;
+}
+
+.hat_right{
+    grid-area: hat_right;
 }
 
 .field {

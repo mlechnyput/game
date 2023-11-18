@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./styles.css";
 import Chat from "./Chat";
 import Player from "./Player";
-import Score from "./Score";
+import Hat from "./Hat";
 import Field from "./Field";
 import Chat_control from "./Chat_control";
 import Tool from "./Tool";
@@ -16,6 +16,8 @@ export default function Screen() {
         username: '...',
         score: -999
     });
+
+    const [quantity, setQuantity] = useState(0);
 
     useEffect(() => {
 
@@ -39,6 +41,9 @@ export default function Screen() {
                 case 'CHAT_MESSAGE':
                     setChat(gotFromBack.body);
                     break;
+                case 'QUANTITY_OF_VISITORS':
+                    setQuantity(gotFromBack.body);
+                    break;
             }
         };
 
@@ -55,12 +60,13 @@ export default function Screen() {
 
     return (
         <div className="body">
-                <Player obj={player}/>
-                <Score obj={player}/>
-                <Field/>
-                <Chat obj={chat}/>
-                <Chat_control obj={player}/>
-                <Tool/>
+            <Player obj={player}/>
+            <Hat objPlayer={player}
+                 visitorsQuantity={quantity}/>
+            <Field/>
+            <Chat obj={chat}/>
+            <Chat_control obj={player}/>
+            <Tool/>
         </div>
     );
 }
