@@ -9,7 +9,8 @@ function Hat(props) {
             <div className="score">{props.objPlayer.score}</div>
             <div className="people"/>
             <div className="quantity">{props.visitorsQuantity}</div>
-            <div className="hat_right"/>
+            <div className="winner"/>
+            <div className="logo"/>
         </div>
     );
 }
