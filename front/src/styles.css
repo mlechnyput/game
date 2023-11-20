@@ -121,8 +121,11 @@
     width: 120px;
     background-color: burlywood;
 }
-
+/*
+элементы pointer-events none не попадут в поле действия слушателя mouse events
+*/
 .legs {
+    pointer-events: none;
     position: absolute;
     height: 160px;
     width: 50px;
@@ -130,6 +133,7 @@
 }
 
 .torso {
+    pointer-events: none;
     position: absolute;
     height: 250px;
     width: 200px;

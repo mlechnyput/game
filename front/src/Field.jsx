@@ -8,9 +8,15 @@ function Field() {
         forest: {x: 0, y: 0}
     });
 
+    const [mouse, setMouse] = useState({
+        mouse_x: 0,
+        mouse_y: 0
+    });
+
     useEffect(() => {
         getPosition();
         window.addEventListener('resize', getPosition);
+        window.addEventListener('mousemove', (e)=>getCursor(e));
     }, []);
 
     const forest_ref = useRef();
@@ -46,6 +52,17 @@ function Field() {
         setPosition(pos);
     }
 
+    const getCursor = (ev) => {
+        const target = ev.target;
+        const rect = target.getBoundingClientRect();
+        const mouse_x = ev.clientX - rect.left;
+        const mouse_y = ev.clientY - rect.top;
+        setMouse({
+            mouse_x: mouse_x,
+            mouse_y: mouse_y
+        })
+    }
+
     async function moveAll() {
         let x_forest = position.forest.x;
         let x_legs = position.marker_right_bottom.x * 0.66;
@@ -72,6 +89,7 @@ function Field() {
         <div className="field">
             <div className="target">
                 <button onClick={moveAll}>GO</button>
+                <p>Mouse X:{mouse.mouse_x}, Y:{mouse.mouse_y}</p>
             </div>
             <div className="you">
                 <div className="sky"/>
