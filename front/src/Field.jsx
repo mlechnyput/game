@@ -16,7 +16,7 @@ function Field() {
     useEffect(() => {
         getPosition();
         window.addEventListener('resize', getPosition);
-        window.addEventListener('mousemove', (e)=>getCursor(e));
+        window.addEventListener('mousemove', (e) => getCursor(e));
     }, []);
 
     const forest_ref = useRef();
@@ -54,13 +54,15 @@ function Field() {
 
     const getCursor = (ev) => {
         const target = ev.target;
-        const rect = target.getBoundingClientRect();
-        const mouse_x = ev.clientX - rect.left;
-        const mouse_y = ev.clientY - rect.top;
-        setMouse({
-            mouse_x: mouse_x,
-            mouse_y: mouse_y
-        })
+        if (target.className === 'forest') {
+            const rect = target.getBoundingClientRect();
+            const mouse_x = ev.clientX - rect.left;
+            const mouse_y = ev.clientY - rect.top;
+            setMouse({
+                mouse_x: mouse_x,
+                mouse_y: mouse_y
+            })
+        }
     }
 
     async function moveAll() {
