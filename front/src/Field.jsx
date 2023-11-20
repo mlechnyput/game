@@ -55,6 +55,7 @@ function Field() {
                 <button onClick={moveAll}>GO</button>
             </div>
             <div className="you">
+                <div className="sky"/>
                 <div className="forest" ref={forest_ref}/>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
                     X:{position.marker_right_bottom.x}, Y:{position.marker_right_bottom.y}
