@@ -41,7 +41,7 @@
     font-weight: bold;
 }
 
-.people{
+.people {
     grid-area: people;
     background-image: url("./images/ico_people.png");
     background-repeat: no-repeat;
@@ -50,7 +50,7 @@
     filter: drop-shadow(5px 5px 5px #606060);
 }
 
-.quantity{
+.quantity {
     grid-area: quantity;
     font-size: 30px;
     font-weight: bold;
@@ -58,7 +58,7 @@
     margin-left: 5px;
 }
 
-.winner{
+.winner {
     grid-area: winner;
     background-image: url("./images/ico_winners.png");
     background-repeat: no-repeat;
@@ -68,7 +68,8 @@
 }
 
 
-.logo{
+.logo {
+    margin: 5px;
     grid-area: logo;
     background-image: url("./images/logo.png");
     background-repeat: no-repeat;
@@ -78,8 +79,47 @@
 }
 
 .field {
-    background: #ABABAB;
     grid-area: field;
+    display: grid;
+    grid-template-areas: "target you";
+    grid-template-columns: 30% 70%;
+}
+
+.target {
+    background-color: white;
+}
+
+.you {
+    grid-area: you;
+    position: relative;
+    overflow: hidden;
+}
+
+.forest {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 1078px;
+    width: 2766px;
+    background-image: url("./images/fon.png");
+}
+
+.marker_right_bottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 120px;
+    width: 120px;
+    background-color: burlywood;
+}
+
+.marker_left_top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 120px;
+    width: 120px;
+    background-color: burlywood;
 }
 
 .chat {
@@ -110,7 +150,7 @@
 }
 
 .chat_control {
-    background: linear-gradient(45deg, #303030,#757575);
+    background: linear-gradient(45deg, #303030, #757575);
     grid-area: chat_control;
 }
 
@@ -119,6 +159,3 @@
     grid-area: tool;
 }
 
-.tool, .chat_control, .chat, .field, .hat, .player {
-    padding: 5px;
-}
