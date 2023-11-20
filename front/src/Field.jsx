@@ -14,11 +14,6 @@ function Field() {
         window.addEventListener('resize', getPosition);
     }, []);
 
-    // useEffect(() => {
-    //     box_ref.current.style.left = x + 'px';
-    //     box_ref.current.style.top = y + 'px';
-    // }, [x, y]);
-
     const forest_ref = useRef();
     const marker_right_bottom_ref = useRef();
     const marker_left_top_ref = useRef();
@@ -39,23 +34,25 @@ function Field() {
         console.log('forest X:' + forest_x + ', Y:' + forest_y)
     }
 
-    const moveOne = () => {
+    async function moveAll() {
         let x_forest = position.forest.x;
-        x_forest++;
-        forest_ref.current.style.left = x_forest + 'px';
-        const new_pos = {
-            marker_right_bottom: position.marker_right_bottom,
-            marker_left_top: position.marker_left_top,
-            forest: {x: x_forest, y: position.forest.y}
+        const max = x_forest + 2000;
+        while (x_forest < max) {
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    x_forest += 10;
+                    forest_ref.current.style.left = x_forest + 'px';
+                    resolve("готово");
+                }, 10)
+            });
+            let result = await promise;
         }
-        setPosition(new_pos);
     }
-
 
     return (
         <div className="field">
             <div className="target">
-                <button>GO</button>
+                <button onClick={moveAll}>GO</button>
             </div>
             <div className="you">
                 <div className="forest" ref={forest_ref}/>
