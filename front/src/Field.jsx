@@ -3,21 +3,60 @@ import "./styles.css";
 
 
 function Field() {
+    const forest_horizon = 3500;
+    const forest_vertical = 1000;
+
+    /**
+     * marker_right_bottom фактически содержит размеры окошка "you" по горизонтали и вертикали
+     * */
     const [position, setPosition] = useState({
         marker_right_bottom: {x: 0, y: 0},
         forest: {x: 0, y: 0}
     });
 
+    /**
+     * Слушатель мышки пишет в состояние координаты мышки (х,у),
+     * измеренные в координатной сетке изображения forest,
+     * где верхний левый угол картинки = (0,0)
+     * */
     const [mouse, setMouse] = useState({
         mouse_x: 0,
         mouse_y: 0
     });
+
+
+    const [angle, setAngle] = useState(0);
 
     useEffect(() => {
         getPosition();
         window.addEventListener('resize', getPosition);
         window.addEventListener('mousemove', (e) => getCursor(e));
     }, []);
+
+    useEffect(() => {
+        /**
+         * Центр торса в координатной сетке изображения forest
+         * */
+        const torso_center_x = forest_horizon - (position.marker_right_bottom.x * 0.33);
+        const torso_center_y = 595;
+        /**
+         * Мышка должна попасть в прямоугольник, диагональ которого проходит
+         * от верхнего левого угла "you" до середины торса
+         * */
+        if (mouse.mouse_y < torso_center_y &&
+            mouse.mouse_x < torso_center_x) {
+            const pril_katet = torso_center_x - mouse.mouse_x;
+            const protivol_katet = torso_center_y - mouse.mouse_y;
+            const tg = protivol_katet / pril_katet;
+            const angle_radian = Math.atan(tg);
+            const angle_degree = 180 / Math.PI * angle_radian;
+            setAngle(angle_degree);
+            /**
+             * Поворачиваем торс
+             * */
+            torso_ref.current.style.transform='rotate('+angle_degree+'deg)';
+        }
+    }, [mouse]);
 
     const forest_ref = useRef();
     const marker_right_bottom_ref = useRef();
@@ -37,14 +76,16 @@ function Field() {
             forest: {x: forest_x, y: forest_y}
         }
         /**
-         * Ставим ноги на землю (высота ног 160).
+         * В координатной сетке окошка "you"
+         * ставим ноги на землю (высота ног 160).
          * X: треть от правого края, У: 280рх от нижнего края
          * (стопы ног на 120рх выше нтжнего края).
          * */
         legs_ref.current.style.left = marker_right_bottom_x * 0.66 + 'px';
         legs_ref.current.style.top = (marker_right_bottom_y - 280) + 'px';
         /**
-         * Ставим торс (высота торса 250).
+         * В координатной сетке окошка "you"
+         * ставим торс (высота торса 250).
          * X: на 75 левее ноги, У: 530рх от нижнего края
          * */
         torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 75) + 'px';
@@ -69,7 +110,7 @@ function Field() {
         let x_forest = position.forest.x;
         let x_legs = position.marker_right_bottom.x * 0.66;
         let x_torso = x_legs - 75;
-        const step = 10;
+        const step = 5;
         const max = x_forest + 2000;
         while (x_forest < max) {
             let promise = new Promise((resolve, reject) => {
@@ -91,7 +132,12 @@ function Field() {
         <div className="field">
             <div className="target">
                 <button onClick={moveAll}>GO</button>
-                <p>Mouse X:{mouse.mouse_x}, Y:{mouse.mouse_y}</p>
+                <div>
+                    <p>Mouse X:{mouse.mouse_x}, Y:{mouse.mouse_y}</p>
+                </div>
+                <div>
+                    <p>Angle:{angle}</p>
+                </div>
             </div>
             <div className="you">
                 <div className="sky"/>
