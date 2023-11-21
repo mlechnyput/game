@@ -84,7 +84,7 @@ function Field() {
         /**
          * В координатной сетке окошка "you" ставим ноги на землю.
          * X: треть от правого края, У: 280рх от нижнего края
-         * (стопы ног на 120рх выше нтжнего края).
+         * (стопы ног на 120рх выше нижнего края).
          * */
         legs_ref.current.style.left = marker_right_bottom_x * 0.66 + 'px';
         legs_ref.current.style.top = (marker_right_bottom_y - 280) + 'px';
@@ -94,6 +94,7 @@ function Field() {
          * */
         torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 135) + 'px';
         torso_ref.current.style.top = (marker_right_bottom_y - 475) + 'px';
+        /**TO DO добавить в pos ноги с торсом чтобы потом взять их в moveAll()*/
         setPosition(pos);
     }
 
@@ -122,8 +123,8 @@ function Field() {
 
     async function moveAll() {
         let x_forest = position.forest.x;
-        let x_legs = position.marker_right_bottom.x * 0.66;
-        let x_torso = x_legs - 75;
+        let x_legs = legs_ref.current.offsetLeft;
+        let x_torso = torso_ref.current.offsetLeft;
         const step = 5;
         const max = x_forest + 2000;
         while (x_forest < max) {
