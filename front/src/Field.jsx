@@ -57,7 +57,7 @@ function Field() {
             const angle_degree = 180 / Math.PI * angle_radian;
             setAngle(Math.round(angle_degree));
             /**
-             * Поворачиваем торс
+             * Наклоняем торс
              * */
             torso_ref.current.style.transform = 'rotate(' + angle_degree + 'deg)';
         }
@@ -82,20 +82,18 @@ function Field() {
             forest: {x: forest_x, y: forest_y}
         }
         /**
-         * В координатной сетке окошка "you"
-         * ставим ноги на землю (высота ног 160).
+         * В координатной сетке окошка "you" ставим ноги на землю.
          * X: треть от правого края, У: 280рх от нижнего края
          * (стопы ног на 120рх выше нтжнего края).
          * */
         legs_ref.current.style.left = marker_right_bottom_x * 0.66 + 'px';
         legs_ref.current.style.top = (marker_right_bottom_y - 280) + 'px';
         /**
-         * В координатной сетке окошка "you"
-         * ставим торс (высота торса 250).
-         * X: на 75 левее ноги, У: 530рх от нижнего края
+         * В координатной сетке окошка "you" ставим торс.
+         * X: на 135 левее ноги, У: 475рх от нижнего края
          * */
-        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 75) + 'px';
-        torso_ref.current.style.top = (marker_right_bottom_y - 530) + 'px';
+        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 135) + 'px';
+        torso_ref.current.style.top = (marker_right_bottom_y - 475) + 'px';
         setPosition(pos);
     }
 
