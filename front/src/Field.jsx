@@ -27,6 +27,11 @@ function Field() {
 
     const [angle, setAngle] = useState(0);
 
+    /**
+     *Сила выстрела. От 0 до 160
+     * */
+    const [power, setPower] = useState(10);
+
     useEffect(() => {
         getPosition();
         window.addEventListener('resize', getPosition);
@@ -62,6 +67,7 @@ function Field() {
     const marker_right_bottom_ref = useRef();
     const legs_ref = useRef();
     const torso_ref = useRef();
+    const velocity_bar_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -106,6 +112,16 @@ function Field() {
         }
     }
 
+    const getPower = (ev) => {
+        ev.preventDefault();
+        let delta = ev.deltaY * 0.1;
+        let res = power + delta;
+        if (res >= 0 && res <= 160) {
+            velocity_bar_ref.current.style.height = res + 'px';
+            setPower(res);
+        }
+    }
+
     async function moveAll() {
         let x_forest = position.forest.x;
         let x_legs = position.marker_right_bottom.x * 0.66;
@@ -136,10 +152,10 @@ function Field() {
                     <p>Mouse X:{mouse.mouse_x}, Y:{mouse.mouse_y}</p>
                 </div>
                 <div>
-                    <p>Angle:{angle}</p>
+                    <p>Power:{power}</p>
                 </div>
             </div>
-            <div className="you">
+            <div className="you" onWheel={getPower}>
                 <div className="sky"/>
                 <div className="forest" ref={forest_ref}/>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
@@ -147,7 +163,9 @@ function Field() {
                 </div>
                 <div className="you_control">
                     <div className="angle">{angle}</div>
-                    <div className="velocity"/>
+                    <div className="velocity">
+                        <div className="velocity_bar" ref={velocity_bar_ref}/>
+                    </div>
                 </div>
                 <div className="legs" ref={legs_ref}/>
                 <div className="torso" ref={torso_ref}/>
