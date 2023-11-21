@@ -142,6 +142,34 @@
     transform: rotate(0deg);
 }
 
+.you_control{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 170px;
+    width: 170px;
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+
+}
+
+.velocity{
+    height: 170px;
+    width: 30px;
+    background-color: white;
+    border-radius: 12px;
+    border: 5px solid #000000;
+}
+
+.angle{
+    height: 170px;
+    width: 120px;
+    color: white;
+    font-size: 80px;
+    font-weight: bold;
+}
+
 .chat {
     background: linear-gradient(45deg, #343434, #6b6b6b, #353535);
     grid-area: chat;

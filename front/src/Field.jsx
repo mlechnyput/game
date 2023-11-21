@@ -50,11 +50,11 @@ function Field() {
             const tg = protivol_katet / pril_katet;
             const angle_radian = Math.atan(tg);
             const angle_degree = 180 / Math.PI * angle_radian;
-            setAngle(angle_degree);
+            setAngle(Math.round(angle_degree));
             /**
              * Поворачиваем торс
              * */
-            torso_ref.current.style.transform='rotate('+angle_degree+'deg)';
+            torso_ref.current.style.transform = 'rotate(' + angle_degree + 'deg)';
         }
     }, [mouse]);
 
@@ -144,6 +144,10 @@ function Field() {
                 <div className="forest" ref={forest_ref}/>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
                     X:{position.marker_right_bottom.x}, Y:{position.marker_right_bottom.y}
+                </div>
+                <div className="you_control">
+                    <div className="angle">{angle}</div>
+                    <div className="velocity"/>
                 </div>
                 <div className="legs" ref={legs_ref}/>
                 <div className="torso" ref={torso_ref}/>
