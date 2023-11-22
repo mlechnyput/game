@@ -119,7 +119,9 @@
     right: 0;
     height: 120px;
     width: 120px;
-    background-color: burlywood;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 /*
@@ -133,6 +135,16 @@
     background-image: url("./images/legs.png");
     background-repeat: no-repeat;
 }
+
+.legs_folded_1 {
+    pointer-events: none;
+    position: absolute;
+    height: 131px;
+    width: 122px;
+    background-image: url("./images/legs_folded_1.png");
+    background-repeat: no-repeat;
+}
+
 
 .torso {
     pointer-events: none;
@@ -176,6 +188,7 @@
 }
 
 .angle {
+    filter: blur(3px);
     height: 170px;
     width: 120px;
     color: white;

@@ -23,7 +23,11 @@ function Field() {
         mouse_x: 0,
         mouse_y: 0
     });
-
+    /**
+     * true - стоит
+     * false - сидит на кортчочках
+     * */
+    const [standing_squatting, setStanding_squatting] = useState(true);
 
     const [angle, setAngle] = useState(0);
 
@@ -40,6 +44,10 @@ function Field() {
 
     useEffect(() => {
         /**
+         * Ограничитель макимального угла наклона
+         * */
+        const limit = 80;
+        /**
          * Центр торса в координатной сетке изображения forest
          * */
         const torso_center_x = forest_horizon - (position.marker_right_bottom.x * 0.33);
@@ -49,7 +57,7 @@ function Field() {
          * от верхнего левого угла "you" до середины торса
          * */
         if (mouse.mouse_y < torso_center_y &&
-            mouse.mouse_x < torso_center_x) {
+            mouse.mouse_x < torso_center_x - limit) {
             const pril_katet = torso_center_x - mouse.mouse_x;
             const protivol_katet = torso_center_y - mouse.mouse_y;
             const tg = protivol_katet / pril_katet;
@@ -60,12 +68,21 @@ function Field() {
              * Наклоняем торс
              * */
             torso_ref.current.style.transform = 'rotate(' + angle_degree + 'deg)';
+            if (angle_degree > 40) {
+                /**
+                 * Если угол > 40, то усаживаем на корточки
+                 * */
+                setStanding_squatting(false);
+            } else {
+                setStanding_squatting(true);
+            }
         }
     }, [mouse]);
 
     const forest_ref = useRef();
     const marker_right_bottom_ref = useRef();
     const legs_ref = useRef();
+    const legs_folded_1_ref = useRef();
     const torso_ref = useRef();
     const velocity_bar_ref = useRef();
 
@@ -81,6 +98,7 @@ function Field() {
             marker_right_bottom: {x: marker_right_bottom_x, y: marker_right_bottom_y},
             forest: {x: forest_x, y: forest_y}
         }
+
         /**
          * В координатной сетке окошка "you" ставим ноги на землю.
          * X: треть от правого края, У: 280рх от нижнего края
@@ -88,12 +106,16 @@ function Field() {
          * */
         legs_ref.current.style.left = marker_right_bottom_x * 0.66 + 'px';
         legs_ref.current.style.top = (marker_right_bottom_y - 280) + 'px';
+
+        legs_folded_1_ref.current.style.left = marker_right_bottom_x * 0.66 - 20 + 'px';
+        legs_folded_1_ref.current.style.top = (marker_right_bottom_y - 265) + 'px';
+
         /**
          * В координатной сетке окошка "you" ставим торс.
          * X: на 135 левее ноги, У: 475рх от нижнего края
          * */
         torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 135) + 'px';
-        torso_ref.current.style.top = (marker_right_bottom_y - 475) + 'px';
+        torso_ref.current.style.top = (marker_right_bottom_y - 465) + 'px';
         /**TO DO добавить в pos ноги с торсом чтобы потом взять их в moveAll()*/
         setPosition(pos);
     }
@@ -124,6 +146,7 @@ function Field() {
     async function moveAll() {
         let x_forest = position.forest.x;
         let x_legs = legs_ref.current.offsetLeft;
+        let x_legs_folded_1 = legs_folded_1_ref.current.offsetLeft;
         let x_torso = torso_ref.current.offsetLeft;
         const step = 5;
         const max = x_forest + 2000;
@@ -133,8 +156,10 @@ function Field() {
                     x_forest += step;
                     x_legs += step;
                     x_torso += step;
+                    x_legs_folded_1 += step;
                     forest_ref.current.style.left = x_forest + 'px';
                     legs_ref.current.style.left = x_legs + 'px';
+                    legs_folded_1_ref.current.style.left = x_legs_folded_1 + 'px';
                     torso_ref.current.style.left = x_torso + 'px';
                     resolve("готово");
                 }, 10)
@@ -166,7 +191,8 @@ function Field() {
                         <div className="velocity_bar" ref={velocity_bar_ref}/>
                     </div>
                 </div>
-                <div className="legs" ref={legs_ref}/>
+                <div className="legs" ref={legs_ref} hidden={!standing_squatting}/>
+                <div className="legs_folded_1" ref={legs_folded_1_ref} hidden={standing_squatting}/>
                 <div className="torso" ref={torso_ref}/>
             </div>
         </div>
