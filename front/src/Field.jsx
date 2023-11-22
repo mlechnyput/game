@@ -6,6 +6,7 @@ function Field() {
     const forest_horizon = 3500;
     const forest_vertical = 1000;
 
+    const [kim_control, setKim_control] = useState(1);
     /**
      * marker_right_bottom фактически содержит размеры окошка "you" по горизонтали и вертикали
      * */
@@ -40,6 +41,7 @@ function Field() {
         getPosition();
         window.addEventListener('resize', getPosition);
         window.addEventListener('mousemove', (e) => getCursor(e));
+        setInterval(kimTurns, 15000);
     }, []);
 
     useEffect(() => {
@@ -114,8 +116,8 @@ function Field() {
          * В координатной сетке окошка "you" ставим торс.
          * X: на 135 левее ноги, У: 475рх от нижнего края
          * */
-        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 135) + 'px';
-        torso_ref.current.style.top = (marker_right_bottom_y - 465) + 'px';
+        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 160) + 'px';
+        torso_ref.current.style.top = (marker_right_bottom_y - 565) + 'px';
         /**TO DO добавить в pos ноги с торсом чтобы потом взять их в moveAll()*/
         setPosition(pos);
     }
@@ -140,6 +142,37 @@ function Field() {
         if (res >= 0 && res <= 160) {
             velocity_bar_ref.current.style.height = res + 'px';
             setPower(res);
+        }
+    }
+
+    async function kimTurns() {
+        let i_kim = 1;
+        while (i_kim < 6) {
+            let time;
+            switch (i_kim) {
+                case 1:
+                    time = 10000;
+                    break;
+                case 2:
+                    time = 80;
+                    break;
+                case 3:
+                    time = 30;
+                    break;
+                case 4:
+                    time = 40;
+                    break;
+                case 5:
+                    time = 0;
+                    break;
+            }
+            setKim_control(i_kim);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(i_kim++);
+                }, time)
+            });
+            let result = await promise;
         }
     }
 
@@ -193,7 +226,13 @@ function Field() {
                 </div>
                 <div className="legs" ref={legs_ref} hidden={!standing_squatting}/>
                 <div className="legs_folded_1" ref={legs_folded_1_ref} hidden={standing_squatting}/>
-                <div className="torso" ref={torso_ref}/>
+                <div className="torso" ref={torso_ref}>
+                    <div className="kim1" hidden={kim_control !== 1}/>
+                    <div className="kim2" hidden={kim_control !== 2}/>
+                    <div className="kim3" hidden={kim_control !== 3}/>
+                    <div className="kim4" hidden={kim_control !== 4}/>
+                    <div className="kim5" hidden={kim_control !== 5}/>
+                </div>
             </div>
         </div>
     );

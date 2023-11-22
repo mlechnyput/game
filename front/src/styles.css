@@ -149,12 +149,53 @@
 .torso {
     pointer-events: none;
     position: absolute;
-    height: 270px;
-    width: 302px;
-    background-image: url("./images/torso.png");
+    display:block;
+    height: 400px;
+    width: 350px;
+    transform-origin: 196px 329px;
+}
+
+.kim1{
+    pointer-events: none;
+    height: 400px;
+    width: 350px;
+    background-image: url("./images/kimm/kimm0001.png");
     background-repeat: no-repeat;
-    transform-origin: 170px 240px;
-    transform: rotate(0deg);
+}
+
+.kim2{
+    pointer-events: none;
+    height: 400px;
+    width: 350px;
+    background-image: url("./images/kimm/kimm0002.png");
+    background-repeat: no-repeat;
+}
+
+
+.kim3{
+    pointer-events: none;
+    height: 400px;
+    width: 350px;
+    background-image: url("./images/kimm/kimm0003.png");
+    background-repeat: no-repeat;
+}
+
+
+.kim4{
+    pointer-events: none;
+    height: 400px;
+    width: 350px;
+    background-image: url("./images/kimm/kimm0004.png");
+    background-repeat: no-repeat;
+}
+
+
+.kim5{
+    pointer-events: none;
+    height: 400px;
+    width: 350px;
+    background-image: url("./images/kimm/kimm0005.png");
+    background-repeat: no-repeat;
 }
 
 .you_control {
