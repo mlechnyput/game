@@ -10,7 +10,7 @@
     "player hat hat"
     "field field chat"
     "tool tool chat_control";
-    grid-template-rows: 60px 1fr 50px;
+    grid-template-rows: 60px 1fr 60px;
     grid-template-columns: 15% 1fr 18%;
     grid-gap: 4px;
     height: 97.3vh;
@@ -272,5 +272,39 @@
 .tool {
     background: linear-gradient(45deg, #2d2d2d, #757575, #303030);
     grid-area: tool;
+    display: grid;
+    grid-template-areas: "love atomic_num atomic arrow_num arrow something";
+    grid-template-columns: 33% 3% 10% 3% 10% 41%;
 }
 
+.atomic{
+    grid-area: atomic;
+    background-image: url("./images/ico/ico_atomic.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.arrow{
+    grid-area: arrow;
+    background-image: url("./images/ico/ico_arrow.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.atomic_num {
+    grid-area: atomic_num;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: right;
+    margin-right: 5px;
+}
+
+.arrow_num {
+    grid-area: arrow_num;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: right;
+    margin-right: 5px;
+}
