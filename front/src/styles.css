@@ -151,14 +151,14 @@
     position: absolute;
     display:block;
     height: 400px;
-    width: 350px;
-    transform-origin: 210px 329px;
+    width: 400px;
+    transform-origin: 260px 329px;
 }
 
 .kim1{
     pointer-events: none;
     height: 400px;
-    width: 350px;
+    width: 400px;
     background-image: url("./images/kimm/kimm0001.png");
     background-repeat: no-repeat;
 }
@@ -166,7 +166,7 @@
 .kim2{
     pointer-events: none;
     height: 400px;
-    width: 350px;
+    width: 400px;
     background-image: url("./images/kimm/kimm0002.png");
     background-repeat: no-repeat;
 }
@@ -175,7 +175,7 @@
 .kim3{
     pointer-events: none;
     height: 400px;
-    width: 350px;
+    width: 400px;
     background-image: url("./images/kimm/kimm0003.png");
     background-repeat: no-repeat;
 }
@@ -184,7 +184,7 @@
 .kim4{
     pointer-events: none;
     height: 400px;
-    width: 350px;
+    width: 400px;
     background-image: url("./images/kimm/kimm0004.png");
     background-repeat: no-repeat;
 }
@@ -193,7 +193,7 @@
 .kim5{
     pointer-events: none;
     height: 400px;
-    width: 350px;
+    width: 400px;
     background-image: url("./images/kimm/kimm0005.png");
     background-repeat: no-repeat;
 }

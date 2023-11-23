@@ -116,7 +116,7 @@ function Field() {
          * В координатной сетке окошка "you" ставим торс.
          * X: на 135 левее ноги, У: 475рх от нижнего края
          * */
-        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 160) + 'px';
+        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 210) + 'px';
         torso_ref.current.style.top = (marker_right_bottom_y - 565) + 'px';
         /**TO DO добавить в pos ноги с торсом чтобы потом взять их в moveAll()*/
         setPosition(pos);
