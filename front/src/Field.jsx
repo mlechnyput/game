@@ -1,7 +1,16 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import "./styles.css";
 import {GameContext} from "./GameContext";
-
+import kim1 from "./images/kimm/kimm0001.png";
+import kim2 from "./images/kimm/kimm0002.png";
+import kim3 from "./images/kimm/kimm0003.png";
+import kim4 from "./images/kimm/kimm0004.png";
+import kim5 from "./images/kimm/kimm0005.png";
+import kim6 from "./images/kimm/kimm0006.png";
+import kim7 from "./images/kimm/kimm0007.png";
+import kim8 from "./images/kimm/kimm0008.png";
+import kim9 from "./images/kimm/kimm0009.png";
+import kim10 from "./images/kimm/kimm0010.png";
 
 function Field() {
     const forest_horizon = 3500;
@@ -268,16 +277,16 @@ function Field() {
                 <div className="legs" ref={legs_ref} hidden={!standing_squatting}/>
                 <div className="legs_folded_1" ref={legs_folded_1_ref} hidden={standing_squatting}/>
                 <div className="torso" ref={torso_ref}>
-                    <div className="kim1" hidden={kim_control !== 1}/>
-                    <div className="kim2" hidden={kim_control !== 2}/>
-                    <div className="kim3" hidden={kim_control !== 3}/>
-                    <div className="kim4" hidden={kim_control !== 4}/>
-                    <div className="kim5" hidden={kim_control !== 5}/>
-                    <div className="kim6" hidden={kim_control !== 6}/>
-                    <div className="kim7" hidden={kim_control !== 7}/>
-                    <div className="kim8" hidden={kim_control !== 8}/>
-                    <div className="kim9" hidden={kim_control !== 9}/>
-                    <div className="kim10" hidden={kim_control !== 10}/>
+                    <img src={kim1} hidden={kim_control !== 1} alt={""}/>
+                    <img src={kim2} hidden={kim_control !== 2} alt={""}/>
+                    <img src={kim3} hidden={kim_control !== 3} alt={""}/>
+                    <img src={kim4} hidden={kim_control !== 4} alt={""}/>
+                    <img src={kim5} hidden={kim_control !== 5} alt={""}/>
+                    <img src={kim6} hidden={kim_control !== 6} alt={""}/>
+                    <img src={kim7} hidden={kim_control !== 7} alt={""}/>
+                    <img src={kim8} hidden={kim_control !== 8} alt={""}/>
+                    <img src={kim9} hidden={kim_control !== 9} alt={""}/>
+                    <img src={kim10} hidden={kim_control !== 10} alt={""}/>
                 </div>
             </div>
         </div>
