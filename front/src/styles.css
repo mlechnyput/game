@@ -314,7 +314,7 @@
     grid-area: tool;
     display: grid;
     grid-template-areas: "love atomic_num atomic distance arrow_num arrow something";
-    grid-template-columns: 33% 3% 8% 5% 3% 6% 42%;
+    grid-template-columns: 33% 3% 8% 5% 3% 8% 40%;
 }
 
 .atomic{
