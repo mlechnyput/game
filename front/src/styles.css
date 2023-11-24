@@ -198,6 +198,46 @@
     background-repeat: no-repeat;
 }
 
+.kim6{
+    pointer-events: none;
+    height: 400px;
+    width: 400px;
+    background-image: url("./images/kimm/kimm0006.png");
+    background-repeat: no-repeat;
+}
+
+.kim7{
+    pointer-events: none;
+    height: 400px;
+    width: 400px;
+    background-image: url("./images/kimm/kimm0007.png");
+    background-repeat: no-repeat;
+}
+
+.kim8{
+    pointer-events: none;
+    height: 400px;
+    width: 400px;
+    background-image: url("./images/kimm/kimm0008.png");
+    background-repeat: no-repeat;
+}
+
+.kim9{
+    pointer-events: none;
+    height: 400px;
+    width: 400px;
+    background-image: url("./images/kimm/kimm0009.png");
+    background-repeat: no-repeat;
+}
+
+.kim10{
+    pointer-events: none;
+    height: 400px;
+    width: 400px;
+    background-image: url("./images/kimm/kimm0010.png");
+    background-repeat: no-repeat;
+}
+
 .you_control {
     position: absolute;
     top: 0;
@@ -273,8 +313,8 @@
     background: linear-gradient(45deg, #2d2d2d, #757575, #303030);
     grid-area: tool;
     display: grid;
-    grid-template-areas: "love atomic_num atomic arrow_num arrow something";
-    grid-template-columns: 33% 3% 10% 3% 10% 41%;
+    grid-template-areas: "love atomic_num atomic distance arrow_num arrow something";
+    grid-template-columns: 33% 3% 8% 5% 3% 6% 42%;
 }
 
 .atomic{
@@ -282,6 +322,7 @@
     background-image: url("./images/ico/ico_atomic.png");
     background-repeat: no-repeat;
     background-size: contain;
+    cursor: pointer;
 }
 
 .arrow{
@@ -289,6 +330,7 @@
     background-image: url("./images/ico/ico_arrow.png");
     background-repeat: no-repeat;
     background-size: contain;
+    cursor: pointer;
 }
 
 .atomic_num {

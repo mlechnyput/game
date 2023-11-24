@@ -1,11 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import "./styles.css";
+import {GameContext} from "./GameContext";
 
 
 function Field() {
     const forest_horizon = 3500;
     const forest_vertical = 1000;
-
+    /**
+     *Текущий кадр персонажа
+     * */
     const [kim_control, setKim_control] = useState(1);
     /**
      * marker_right_bottom фактически содержит размеры окошка "you" по горизонтали и вертикали
@@ -30,17 +33,43 @@ function Field() {
      * */
     const [standing_squatting, setStanding_squatting] = useState(true);
 
+    /**
+     * Угол наклона торса
+     * */
     const [angle, setAngle] = useState(0);
 
     /**
      *Сила выстрела. От 0 до 160
      * */
     const [power, setPower] = useState(10);
+    /**
+     * Из компонента Tools в переменную something_in_the_hands передается - что в руке у персонажа:
+     * nothing
+     * arrow
+     * granada
+     * atomic
+     * */
+    const [something_in_the_hands, setSomething_in_the_hands] = useContext(GameContext);
+    /**
+     * Из something_in_the_hands перекладываем значение в Ref и устанавливаем персонажа в
+     * начальный кадр для выполнения rerender.
+     * */
+    useEffect(() => {
+        item_in_the_hands_ref.current = something_in_the_hands;
+        if (something_in_the_hands === 'nothing') {
+            setKim_control(1);
+        } else {
+            if (something_in_the_hands === 'arrow') {
+                setKim_control(6);
+            }
+        }
+    }, [something_in_the_hands]);
 
     useEffect(() => {
         getPosition();
         window.addEventListener('resize', getPosition);
         window.addEventListener('mousemove', (e) => getCursor(e));
+        item_in_the_hands_ref.current = something_in_the_hands;
         setInterval(kimTurns, 15000);
     }, []);
 
@@ -87,6 +116,7 @@ function Field() {
     const legs_folded_1_ref = useRef();
     const torso_ref = useRef();
     const velocity_bar_ref = useRef();
+    const item_in_the_hands_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -114,11 +144,11 @@ function Field() {
 
         /**
          * В координатной сетке окошка "you" ставим торс.
-         * X: на 135 левее ноги, У: 475рх от нижнего края
+         * X: на 210 левее ноги, У: 565рх от нижнего края
          * */
         torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 210) + 'px';
         torso_ref.current.style.top = (marker_right_bottom_y - 565) + 'px';
-        /**TO DO добавить в pos ноги с торсом чтобы потом взять их в moveAll()*/
+
         setPosition(pos);
     }
 
@@ -148,6 +178,17 @@ function Field() {
     async function kimTurns() {
         let i_kim = 1;
         while (i_kim < 6) {
+            /**
+             * shift смещает последовательность кадров, в зависимости от того, что находится в руках
+             * */
+            let shift;
+            if (item_in_the_hands_ref.current === 'nothing') {
+                shift = 0;
+            } else {
+                if (item_in_the_hands_ref.current === 'arrow') {
+                    shift = 5;
+                }
+            }
             let time;
             switch (i_kim) {
                 case 1:
@@ -166,7 +207,7 @@ function Field() {
                     time = 0;
                     break;
             }
-            setKim_control(i_kim);
+            setKim_control(i_kim + shift);
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(i_kim++);
@@ -232,6 +273,11 @@ function Field() {
                     <div className="kim3" hidden={kim_control !== 3}/>
                     <div className="kim4" hidden={kim_control !== 4}/>
                     <div className="kim5" hidden={kim_control !== 5}/>
+                    <div className="kim6" hidden={kim_control !== 6}/>
+                    <div className="kim7" hidden={kim_control !== 7}/>
+                    <div className="kim8" hidden={kim_control !== 8}/>
+                    <div className="kim9" hidden={kim_control !== 9}/>
+                    <div className="kim10" hidden={kim_control !== 10}/>
                 </div>
             </div>
         </div>

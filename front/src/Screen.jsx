@@ -7,6 +7,7 @@ import Field from "./Field";
 import Chat_control from "./Chat_control";
 import Tool from "./Tool";
 import {ws} from "./websocket";
+import {GameContext} from "./GameContext"
 
 export default function Screen() {
 
@@ -18,6 +19,8 @@ export default function Screen() {
     });
 
     const [quantity, setQuantity] = useState(0);
+
+    const [something_in_the_hands, setSomething_in_the_hands] = useState('nothing');
 
     useEffect(() => {
 
@@ -60,13 +63,15 @@ export default function Screen() {
 
     return (
         <div className="body">
-            <Player obj={player}/>
-            <Hat objPlayer={player}
-                 visitorsQuantity={quantity}/>
-            <Field/>
-            <Chat obj={chat}/>
-            <Chat_control obj={player}/>
-            <Tool/>
+            <GameContext.Provider value={[something_in_the_hands, setSomething_in_the_hands]}>
+                <Player obj={player}/>
+                <Hat objPlayer={player}
+                     visitorsQuantity={quantity}/>
+                <Field/>
+                <Chat obj={chat}/>
+                <Chat_control obj={player}/>
+                <Tool/>
+            </GameContext.Provider>
         </div>
     );
 }
