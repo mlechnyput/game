@@ -21,12 +21,51 @@ import kim17 from "./images/kimm/kimm0017.png";
 import kim18 from "./images/kimm/kimm0018.png";
 import kim19 from "./images/kimm/kimm0019.png";
 import kim20 from "./images/kimm/kimm0020.png";
+import electricity1 from "./images/electricity/electricity0001.png";
+import electricity2 from "./images/electricity/electricity0002.png";
+import electricity3 from "./images/electricity/electricity0003.png";
+import electricity4 from "./images/electricity/electricity0004.png";
+import electricity5 from "./images/electricity/electricity0005.png";
+import electricity6 from "./images/electricity/electricity0006.png";
+import electricity7 from "./images/electricity/electricity0007.png";
+import electricity8 from "./images/electricity/electricity0008.png";
+import electricity9 from "./images/electricity/electricity0009.png";
+import electricity10 from "./images/electricity/electricity0010.png";
+import electricity11 from "./images/electricity/electricity0011.png";
+import electricity12 from "./images/electricity/electricity0012.png";
+import electricity13 from "./images/electricity/electricity0013.png";
+import electricity14 from "./images/electricity/electricity0014.png";
+import electricity15 from "./images/electricity/electricity0015.png";
+import electricity16 from "./images/electricity/electricity0016.png";
+import electricity17 from "./images/electricity/electricity0017.png";
+import electricity18 from "./images/electricity/electricity0018.png";
+import electricity19 from "./images/electricity/electricity0019.png";
+import electricity20 from "./images/electricity/electricity0020.png";
+import electricity21 from "./images/electricity/electricity0021.png";
+import electricity22 from "./images/electricity/electricity0022.png";
+import electricity23 from "./images/electricity/electricity0023.png";
+import electricity24 from "./images/electricity/electricity0024.png";
+import electricity25 from "./images/electricity/electricity0025.png";
+import electricity26 from "./images/electricity/electricity0026.png";
+import electricity27 from "./images/electricity/electricity0027.png";
+import electricity28 from "./images/electricity/electricity0028.png";
+import electricity29 from "./images/electricity/electricity0029.png";
+import electricity30 from "./images/electricity/electricity0030.png";
+import electricity31 from "./images/electricity/electricity0031.png";
+import electricity32 from "./images/electricity/electricity0032.png";
+import electricity33 from "./images/electricity/electricity0033.png";
+import electricity34 from "./images/electricity/electricity0034.png";
 
 function Field() {
     const forest_horizon = 3500;
     const forest_vertical = 1000;
     /**
-     *Текущий кадр персонажа
+     *Текущий кадр персонажа:
+     * 1-5 безо всего
+     * 6-10 со стрелой
+     * 11-15 с гранатой
+     * 16-20 с бомбой
+     * 21-53 с электричеством
      * */
     const [kim_control, setKim_control] = useState(1);
     /**
@@ -70,22 +109,37 @@ function Field() {
      * */
     const [something_in_the_hands, setSomething_in_the_hands] = useContext(GameContext);
     /**
+     * Блокировка поворота головы
+     * */
+    const [kimTurnsBlocked, setKimTurnsBlocked] = useState(false);
+
+    /**
      * Из something_in_the_hands перекладываем значение в Ref и устанавливаем персонажа в
      * начальный кадр для выполнения rerender.
      * */
     useEffect(() => {
         item_in_the_hands_ref.current = something_in_the_hands;
         if (something_in_the_hands === 'nothing') {
+            electricity_stopped_ref.current = true;
             setKim_control(1);
         } else {
             if (something_in_the_hands === 'arrow') {
+                electricity_stopped_ref.current = true;
                 setKim_control(6);
             } else {
                 if (something_in_the_hands === 'grenade') {
+                    electricity_stopped_ref.current = true;
                     setKim_control(11);
                 } else {
                     if (something_in_the_hands === 'atomic') {
-                        setKim_control(16);
+                        // setKim_control(16);
+                        electricity_stopped_ref.current = false;
+                        runElectricity().then(r => {
+                            /**
+                             * По завершению работы функции снимаем блокировку поворота головы
+                             * */
+                            setKimTurnsBlocked(false);
+                        });
                     }
                 }
             }
@@ -144,6 +198,10 @@ function Field() {
     const torso_ref = useRef();
     const velocity_bar_ref = useRef();
     const item_in_the_hands_ref = useRef();
+    /**
+     * Для остановки отрисовки электричества
+     * */
+    const electricity_stopped_ref = useRef(false);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -202,6 +260,46 @@ function Field() {
         }
     }
 
+    async function runElectricity() {
+        /**
+         *На время работы функции ставим блокировку поворота головы
+         * */
+        setKimTurnsBlocked(true);
+        let i_kim = 21;
+        let time;
+        while (i_kim <= 54) {
+            if (!electricity_stopped_ref.current) {
+                /**
+                 * Рисуем электричество
+                 * */
+                setKim_control(i_kim);
+            }
+            if (i_kim === 22) {
+                time = 90
+            } else {
+                if (i_kim === 24) {
+                    time = 60;
+                } else {
+                    if (i_kim === 31 || i_kim === 32 || i_kim === 33) {
+                        time = 30;
+                    } else {
+                        if (i_kim === 34 || i_kim === 35) {
+                            time = 50;
+                        } else {
+                            time = 40;
+                        }
+                    }
+                }
+            }
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(i_kim++);
+                }, time)
+            });
+            let result = await promise;
+        }
+    }
+
     async function kimTurns() {
         let i_kim = 1;
         while (i_kim < 6) {
@@ -242,7 +340,12 @@ function Field() {
                     time = 0;
                     break;
             }
-            setKim_control(i_kim + shift);
+            if (!kimTurnsBlocked) {
+                /**
+                 * Поворот головы
+                 * */
+                setKim_control(i_kim + shift);
+            }
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(i_kim++);
@@ -323,6 +426,40 @@ function Field() {
                     <img src={kim18} hidden={kim_control !== 18} alt={""}/>
                     <img src={kim19} hidden={kim_control !== 19} alt={""}/>
                     <img src={kim20} hidden={kim_control !== 20} alt={""}/>
+                    <img src={electricity1} hidden={kim_control !== 21} alt={""}/>
+                    <img src={electricity2} hidden={kim_control !== 22} alt={""}/>
+                    <img src={electricity3} hidden={kim_control !== 23} alt={""}/>
+                    <img src={electricity4} hidden={kim_control !== 24} alt={""}/>
+                    <img src={electricity5} hidden={kim_control !== 25} alt={""}/>
+                    <img src={electricity6} hidden={kim_control !== 26} alt={""}/>
+                    <img src={electricity7} hidden={kim_control !== 27} alt={""}/>
+                    <img src={electricity8} hidden={kim_control !== 28} alt={""}/>
+                    <img src={electricity9} hidden={kim_control !== 29} alt={""}/>
+                    <img src={electricity10} hidden={kim_control !== 30} alt={""}/>
+                    <img src={electricity11} hidden={kim_control !== 31} alt={""}/>
+                    <img src={electricity12} hidden={kim_control !== 32} alt={""}/>
+                    <img src={electricity13} hidden={kim_control !== 33} alt={""}/>
+                    <img src={electricity14} hidden={kim_control !== 34} alt={""}/>
+                    <img src={electricity15} hidden={kim_control !== 35} alt={""}/>
+                    <img src={electricity16} hidden={kim_control !== 36} alt={""}/>
+                    <img src={electricity17} hidden={kim_control !== 37} alt={""}/>
+                    <img src={electricity18} hidden={kim_control !== 38} alt={""}/>
+                    <img src={electricity19} hidden={kim_control !== 39} alt={""}/>
+                    <img src={electricity20} hidden={kim_control !== 40} alt={""}/>
+                    <img src={electricity21} hidden={kim_control !== 41} alt={""}/>
+                    <img src={electricity22} hidden={kim_control !== 42} alt={""}/>
+                    <img src={electricity23} hidden={kim_control !== 43} alt={""}/>
+                    <img src={electricity24} hidden={kim_control !== 44} alt={""}/>
+                    <img src={electricity25} hidden={kim_control !== 45} alt={""}/>
+                    <img src={electricity26} hidden={kim_control !== 46} alt={""}/>
+                    <img src={electricity27} hidden={kim_control !== 47} alt={""}/>
+                    <img src={electricity28} hidden={kim_control !== 48} alt={""}/>
+                    <img src={electricity29} hidden={kim_control !== 49} alt={""}/>
+                    <img src={electricity30} hidden={kim_control !== 50} alt={""}/>
+                    <img src={electricity31} hidden={kim_control !== 51} alt={""}/>
+                    <img src={electricity32} hidden={kim_control !== 52} alt={""}/>
+                    <img src={electricity33} hidden={kim_control !== 53} alt={""}/>
+                    <img src={electricity34} hidden={kim_control !== 54} alt={""}/>
                 </div>
             </div>
         </div>
