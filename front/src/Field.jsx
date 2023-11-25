@@ -55,7 +55,7 @@ function Field() {
      * Из компонента Tools в переменную something_in_the_hands передается - что в руке у персонажа:
      * nothing
      * arrow
-     * granada
+     * grenade
      * atomic
      * */
     const [something_in_the_hands, setSomething_in_the_hands] = useContext(GameContext);

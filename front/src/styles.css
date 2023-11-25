@@ -149,7 +149,7 @@
 .torso {
     pointer-events: none;
     position: absolute;
-    display:block;
+    display: block;
     height: 400px;
     width: 400px;
     transform-origin: 260px 329px;
@@ -230,11 +230,12 @@
     background: linear-gradient(45deg, #2d2d2d, #757575, #303030);
     grid-area: tool;
     display: grid;
-    grid-template-areas: "love atomic_num atomic distance arrow_num arrow something";
-    grid-template-columns: 33% 3% 8% 5% 3% 8% 40%;
+    grid-template-areas:
+            "love atomic_num atomic  grenade_num grenade  arrow_num arrow  non";
+    grid-template-columns: 33% 3% 8%  3% 8%  3% 8%  12%;
 }
 
-.atomic{
+.atomic {
     grid-area: atomic;
     background-image: url("./images/ico/ico_atomic.png");
     background-repeat: no-repeat;
@@ -243,7 +244,7 @@
     filter: drop-shadow(5px 5px 5px #343434);
 }
 
-.arrow{
+.arrow {
     grid-area: arrow;
     background-image: url("./images/ico/ico_arrow.png");
     background-repeat: no-repeat;
@@ -252,8 +253,35 @@
     filter: drop-shadow(5px 5px 5px #343434);
 }
 
+.grenade {
+    grid-area: grenade;
+    background-image: url("./images/ico/ico_grenade.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    filter: drop-shadow(5px 5px 5px #343434);
+}
+
+.non {
+    grid-area: non;
+    background-image: url("./images/ico/ico_none.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    filter: drop-shadow(5px 5px 5px #343434);
+}
+
 .atomic_num {
     grid-area: atomic_num;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: right;
+    margin-right: 5px;
+}
+
+.grenade_num {
+    grid-area: grenade_num;
     color: white;
     font-size: 30px;
     font-weight: bold;
