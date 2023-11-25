@@ -11,6 +11,16 @@ import kim7 from "./images/kimm/kimm0007.png";
 import kim8 from "./images/kimm/kimm0008.png";
 import kim9 from "./images/kimm/kimm0009.png";
 import kim10 from "./images/kimm/kimm0010.png";
+import kim11 from "./images/kimm/kimm0011.png";
+import kim12 from "./images/kimm/kimm0012.png";
+import kim13 from "./images/kimm/kimm0013.png";
+import kim14 from "./images/kimm/kimm0014.png";
+import kim15 from "./images/kimm/kimm0015.png";
+import kim16 from "./images/kimm/kimm0016.png";
+import kim17 from "./images/kimm/kimm0017.png";
+import kim18 from "./images/kimm/kimm0018.png";
+import kim19 from "./images/kimm/kimm0019.png";
+import kim20 from "./images/kimm/kimm0020.png";
 
 function Field() {
     const forest_horizon = 3500;
@@ -70,6 +80,14 @@ function Field() {
         } else {
             if (something_in_the_hands === 'arrow') {
                 setKim_control(6);
+            } else {
+                if (something_in_the_hands === 'grenade') {
+                    setKim_control(11);
+                } else {
+                    if (something_in_the_hands === 'atomic') {
+                        setKim_control(16);
+                    }
+                }
             }
         }
     }, [something_in_the_hands]);
@@ -153,9 +171,9 @@ function Field() {
 
         /**
          * В координатной сетке окошка "you" ставим торс.
-         * X: на 210 левее ноги, У: 565рх от нижнего края
+         * X: на 310 левее ноги, У: 565рх от нижнего края
          * */
-        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 210) + 'px';
+        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 310) + 'px';
         torso_ref.current.style.top = (marker_right_bottom_y - 565) + 'px';
 
         setPosition(pos);
@@ -196,6 +214,14 @@ function Field() {
             } else {
                 if (item_in_the_hands_ref.current === 'arrow') {
                     shift = 5;
+                } else {
+                    if (item_in_the_hands_ref.current === 'grenade') {
+                        shift = 10;
+                    } else {
+                        if (item_in_the_hands_ref.current === 'atomic') {
+                            shift = 15;
+                        }
+                    }
                 }
             }
             let time;
@@ -287,6 +313,16 @@ function Field() {
                     <img src={kim8} hidden={kim_control !== 8} alt={""}/>
                     <img src={kim9} hidden={kim_control !== 9} alt={""}/>
                     <img src={kim10} hidden={kim_control !== 10} alt={""}/>
+                    <img src={kim11} hidden={kim_control !== 11} alt={""}/>
+                    <img src={kim12} hidden={kim_control !== 12} alt={""}/>
+                    <img src={kim13} hidden={kim_control !== 13} alt={""}/>
+                    <img src={kim14} hidden={kim_control !== 14} alt={""}/>
+                    <img src={kim15} hidden={kim_control !== 15} alt={""}/>
+                    <img src={kim16} hidden={kim_control !== 16} alt={""}/>
+                    <img src={kim17} hidden={kim_control !== 17} alt={""}/>
+                    <img src={kim18} hidden={kim_control !== 18} alt={""}/>
+                    <img src={kim19} hidden={kim_control !== 19} alt={""}/>
+                    <img src={kim20} hidden={kim_control !== 20} alt={""}/>
                 </div>
             </div>
         </div>

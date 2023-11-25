@@ -151,8 +151,8 @@
     position: absolute;
     display: block;
     height: 400px;
-    width: 400px;
-    transform-origin: 260px 329px;
+    width: 500px;
+    transform-origin: 360px 329px;
 }
 
 .you_control {
@@ -263,6 +263,7 @@
 }
 
 .non {
+    margin-left: 20px;
     grid-area: non;
     background-image: url("./images/ico/ico_none.png");
     background-repeat: no-repeat;
