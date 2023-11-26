@@ -406,7 +406,7 @@ function Field() {
         let y_torso_0 = torso_ref.current.offsetTop;
 
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
-        while (y_forest_0 + delta_y >= min_y_forest) {
+        while (y_forest_0 + delta_y >= min_y_forest && x_forest_0 + delta_x <= 0) {
             t += time_step_ms / 100;
             delta_x = V_0 * Math.cos(alfa * Math.PI / 180) * t;
             delta_y = V_0 * Math.sin(alfa * Math.PI / 180) * t - g * t * t / 2;
