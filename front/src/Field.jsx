@@ -356,25 +356,57 @@ function Field() {
     }
 
     async function moveAll() {
-        let x_forest = position.forest.x;
+        /**
+         * Ускорение св. падения
+         * */
+        const g = 9.8;
+        /**
+         * Угол
+         * */
+        const alfa = angle;
+        /**
+         * Начальная скорость
+         * */
+        const V_0 = power;
+        /**
+         * Время с начала движения
+         * */
+        let t = 0;
+        /**
+         * Шаг времени
+         * */
+        const time_step_ms = 10;
+        /**
+         * Начальное положение
+         * */
+        const x_forest_0 = position.forest.x;
+        const y_forest_0 = position.forest.y;
+        /**
+         * Положение относительно начального
+         * */
+        let delta_x = 0;
+        let delta_y = 0;
+
         let x_legs = legs_ref.current.offsetLeft;
+        let y_legs = legs_ref.current.offsetTop;
         let x_legs_folded_1 = legs_folded_1_ref.current.offsetLeft;
+        let y_legs_folded_1 = legs_folded_1_ref.current.offsetTop;
         let x_torso = torso_ref.current.offsetLeft;
-        const step = 5;
-        const max = x_forest + 2000;
-        while (x_forest < max) {
+        let y_torso = torso_ref.current.offsetTop;
+        const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
+        while (y_forest_0 + delta_y >= min_y_forest) {
+            t += time_step_ms / 100;
+            delta_x = V_0 * Math.cos(alfa * Math.PI / 180) * t;
+            delta_y = V_0 * Math.sin(alfa * Math.PI / 180) * t - g * t * t / 2;
+            forest_ref.current.style.left = (x_forest_0 + delta_x) + 'px';
+            forest_ref.current.style.top = (y_forest_0 + delta_y) + 'px';
+            // legs_ref.current.style.left = x_legs + 'px';
+            // legs_folded_1_ref.current.style.left = x_legs_folded_1 + 'px';
+            // torso_ref.current.style.left = x_torso + 'px';
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    x_forest += step;
-                    x_legs += step;
-                    x_torso += step;
-                    x_legs_folded_1 += step;
-                    forest_ref.current.style.left = x_forest + 'px';
-                    legs_ref.current.style.left = x_legs + 'px';
-                    legs_folded_1_ref.current.style.left = x_legs_folded_1 + 'px';
-                    torso_ref.current.style.left = x_torso + 'px';
                     resolve("готово");
-                }, 10)
+                }, time_step_ms)
             });
             let result = await promise;
         }
