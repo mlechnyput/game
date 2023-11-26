@@ -380,7 +380,7 @@ function Field() {
          * */
         const time_step_ms = 10;
         /**
-         * Начальное положение
+         * Начальное положение фона
          * */
         const x_forest_0 = position.forest.x;
         const y_forest_0 = position.forest.y;
@@ -389,13 +389,16 @@ function Field() {
          * */
         let delta_x = 0;
         let delta_y = 0;
+        /**
+         * Начальные положения элементов персонажа
+         * */
+        let x_legs_0 = legs_ref.current.offsetLeft;
+        let y_legs_0 = legs_ref.current.offsetTop;
+        let x_legs_folded_1_0 = legs_folded_1_ref.current.offsetLeft;
+        let y_legs_folded_1_0 = legs_folded_1_ref.current.offsetTop;
+        let x_torso_0 = torso_ref.current.offsetLeft;
+        let y_torso_0 = torso_ref.current.offsetTop;
 
-        let x_legs = legs_ref.current.offsetLeft;
-        let y_legs = legs_ref.current.offsetTop;
-        let x_legs_folded_1 = legs_folded_1_ref.current.offsetLeft;
-        let y_legs_folded_1 = legs_folded_1_ref.current.offsetTop;
-        let x_torso = torso_ref.current.offsetLeft;
-        let y_torso = torso_ref.current.offsetTop;
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
         while (y_forest_0 + delta_y >= min_y_forest) {
             t += time_step_ms / 100;
@@ -403,9 +406,15 @@ function Field() {
             delta_y = V_0 * Math.sin(alfa * Math.PI / 180) * t - g * t * t / 2;
             forest_ref.current.style.left = (x_forest_0 + delta_x) + 'px';
             forest_ref.current.style.top = (y_forest_0 + delta_y) + 'px';
-            // legs_ref.current.style.left = x_legs + 'px';
-            // legs_folded_1_ref.current.style.left = x_legs_folded_1 + 'px';
-            // torso_ref.current.style.left = x_torso + 'px';
+            legs_ref.current.style.left = (x_legs_0 + delta_x) + 'px';
+            legs_ref.current.style.top = (y_legs_0 + delta_y) + 'px';
+            legs_folded_1_ref.current.style.left = (x_legs_folded_1_0 + delta_x) + 'px';
+            legs_folded_1_ref.current.style.top = (y_legs_folded_1_0 + delta_y) + 'px';
+            torso_ref.current.style.left = (x_torso_0 + delta_x) + 'px';
+            /**
+             * По неизвестным причинам пдчеркивает как дубликат. Чтобы этого не происходило в конце добавил пустую строку
+             * */
+            torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px'+'';
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
