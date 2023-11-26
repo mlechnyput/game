@@ -436,8 +436,19 @@ function Field() {
                 setNotShoot(false);
                 moveAll().then(r => {
                     /**
-                     * Через 2 сек старт игры с исходной позиции
+                     * Через 3 сек старт игры с исходной позиции
                      * */
+                    setTimeout(()=>{
+                        setAngle(0);
+                        setPower(40);
+                        setSomething_in_the_hands('nothing');
+                        setKim_control(1);
+                        torso_ref.current.style='';
+                        forest_ref.current.style='';
+                        setNotShoot(true);
+                        getPosition();
+                        console.log('start new')
+                    },3000);
                 });
             }}>
                 <div className="sky"/>
