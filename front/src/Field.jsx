@@ -57,7 +57,7 @@ import electricity33 from "./images/electricity/electricity0033.png";
 import electricity34 from "./images/electricity/electricity0034.png";
 
 function Field() {
-    const forest_horizon = 3500;
+    const forest_horizon = 5500;
     const forest_vertical = 1000;
     /**
      *Текущий кадр персонажа:
@@ -99,7 +99,7 @@ function Field() {
     /**
      *Сила выстрела. От 0 до 160
      * */
-    const [power, setPower] = useState(10);
+    const [power, setPower] = useState(40);
     /**
      * Из компонента Tools в переменную something_in_the_hands передается - что в руке у персонажа:
      * nothing
@@ -367,7 +367,7 @@ function Field() {
         /**
          * Начальная скорость
          * */
-        const V_0 = power;
+        const V_0 = power * 1.1 + 30;
         /**
          * Время с начала движения
          * */
