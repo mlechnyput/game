@@ -122,27 +122,29 @@ function Field() {
      * начальный кадр для выполнения rerender.
      * */
     useEffect(() => {
-        item_in_the_hands_ref.current = something_in_the_hands;
-        if (something_in_the_hands === 'nothing') {
-            electricity_stopped_ref.current = true;
-            setKim_control(1);
-        } else {
-            if (something_in_the_hands === 'arrow') {
+        if (notShoot) {
+            item_in_the_hands_ref.current = something_in_the_hands;
+            if (something_in_the_hands === 'nothing') {
                 electricity_stopped_ref.current = true;
-                setKim_control(6);
+                setKim_control(1);
             } else {
-                if (something_in_the_hands === 'grenade') {
+                if (something_in_the_hands === 'arrow') {
                     electricity_stopped_ref.current = true;
-                    setKim_control(11);
+                    setKim_control(6);
                 } else {
-                    if (something_in_the_hands === 'atomic') {
-                        electricity_stopped_ref.current = false;
-                        runElectricity().then(r => {
-                            /**
-                             * По завершению работы функции снимаем блокировку поворота головы
-                             * */
-                            setKimTurnsBlocked(false);
-                        });
+                    if (something_in_the_hands === 'grenade') {
+                        electricity_stopped_ref.current = true;
+                        setKim_control(11);
+                    } else {
+                        if (something_in_the_hands === 'atomic') {
+                            electricity_stopped_ref.current = false;
+                            runElectricity().then(r => {
+                                /**
+                                 * По завершению работы функции снимаем блокировку поворота головы
+                                 * */
+                                setKimTurnsBlocked(false);
+                            });
+                        }
                     }
                 }
             }
@@ -172,7 +174,7 @@ function Field() {
          * от верхнего левого угла "you" до середины торса
          * */
         if (mouse.mouse_y < torso_center_y &&
-            mouse.mouse_x < torso_center_x - limit) {
+            mouse.mouse_x < torso_center_x - limit && notShoot) {
             const pril_katet = torso_center_x - mouse.mouse_x;
             const protivol_katet = torso_center_y - mouse.mouse_y;
             const tg = protivol_katet / pril_katet;
@@ -218,26 +220,27 @@ function Field() {
             marker_right_bottom: {x: marker_right_bottom_x, y: marker_right_bottom_y},
             forest: {x: forest_x, y: forest_y}
         }
-
-        /**
-         * В координатной сетке окошка "you" ставим ноги на землю.
-         * X: треть от правого края, У: 280рх от нижнего края
-         * (стопы ног на 120рх выше нижнего края).
-         * */
-        legs_ref.current.style.left = marker_right_bottom_x * 0.66 + 'px';
-        legs_ref.current.style.top = (marker_right_bottom_y - 280) + 'px';
-
-        legs_folded_1_ref.current.style.left = marker_right_bottom_x * 0.66 - 20 + 'px';
-        legs_folded_1_ref.current.style.top = (marker_right_bottom_y - 265) + 'px';
-
-        /**
-         * В координатной сетке окошка "you" ставим торс.
-         * X: на 310 левее ноги, У: 565рх от нижнего края
-         * */
-        torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 310) + 'px';
-        torso_ref.current.style.top = (marker_right_bottom_y - 565) + 'px';
-
         setPosition(pos);
+
+        if (notShoot) {
+            /**
+             * В координатной сетке окошка "you" ставим ноги на землю.
+             * X: треть от правого края, У: 280рх от нижнего края
+             * (стопы ног на 120рх выше нижнего края).
+             * */
+            legs_ref.current.style.left = marker_right_bottom_x * 0.66 + 'px';
+            legs_ref.current.style.top = (marker_right_bottom_y - 280) + 'px';
+
+            legs_folded_1_ref.current.style.left = marker_right_bottom_x * 0.66 - 20 + 'px';
+            legs_folded_1_ref.current.style.top = (marker_right_bottom_y - 265) + 'px';
+
+            /**
+             * В координатной сетке окошка "you" ставим торс.
+             * X: на 310 левее ноги, У: 565рх от нижнего края
+             * */
+            torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 310) + 'px';
+            torso_ref.current.style.top = (marker_right_bottom_y - 565) + 'px';
+        }
     }
 
     const getCursor = (ev) => {
@@ -414,7 +417,7 @@ function Field() {
             /**
              * По неизвестным причинам пдчеркивает как дубликат. Чтобы этого не происходило в конце добавил пустую строку
              * */
-            torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px'+'';
+            torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px' + '';
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
