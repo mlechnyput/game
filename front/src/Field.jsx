@@ -204,9 +204,13 @@ function Field() {
     const velocity_bar_ref = useRef();
     const item_in_the_hands_ref = useRef();
     /**
-     * Для остановки отрисовки электричества
+     * Для досрочной остановки электричества
      * */
     const electricity_stopped_ref = useRef(false);
+    /**
+     * Для блокировки двойного выстрела
+     * */
+    const click_is_on_ref = useRef(true);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -257,7 +261,6 @@ function Field() {
     }
 
     const getPower = (ev) => {
-        ev.preventDefault();
         let delta = ev.deltaY * 0.1;
         let res = power + delta;
         if (res >= 0 && res <= 160) {
@@ -433,15 +436,21 @@ function Field() {
 
             </div>
             <div className="you" onWheel={getPower} onClick={() => {
-                if (something_in_the_hands === 'nothing') {
+                /**
+                 * Блокируем выстрел если лук не заряжен и блокируем второй выстрел если
+                 * предыдущий еще не завершился
+                 * */
+                if (something_in_the_hands === 'nothing' || click_is_on_ref.current === false) {
                     return;
                 }
+                click_is_on_ref.current = false;
                 setNotShoot(false);
                 moveAll().then(r => {
                     /**
                      * Через 3 сек старт игры с исходной позиции
                      * */
                     setTimeout(() => {
+                        click_is_on_ref.current = true;
                         setAngle(0);
                         setPower(40);
                         setSomething_in_the_hands('nothing');
