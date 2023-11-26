@@ -433,22 +433,26 @@ function Field() {
 
             </div>
             <div className="you" onWheel={getPower} onClick={() => {
+                if (something_in_the_hands === 'nothing') {
+                    return;
+                }
                 setNotShoot(false);
                 moveAll().then(r => {
                     /**
                      * Через 3 сек старт игры с исходной позиции
                      * */
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         setAngle(0);
                         setPower(40);
                         setSomething_in_the_hands('nothing');
                         setKim_control(1);
-                        torso_ref.current.style='';
-                        forest_ref.current.style='';
+                        setStanding_squatting(true);
+                        torso_ref.current.style = '';
+                        forest_ref.current.style = '';
                         setNotShoot(true);
                         getPosition();
                         console.log('start new')
-                    },3000);
+                    }, 3000);
                 });
             }}>
                 <div className="sky"/>
