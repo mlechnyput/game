@@ -112,7 +112,11 @@ function Field() {
      * Блокировка поворота головы
      * */
     const [kimTurnsBlocked, setKimTurnsBlocked] = useState(false);
-
+    /**
+     * true - выстрел еще не произведен
+     * false - выстрыл произведен
+     * */
+    const [notShoot, setNotShoot] = useState(true);
     /**
      * Из something_in_the_hands перекладываем значение в Ref и устанавливаем персонажа в
      * начальный кадр для выполнения rerender.
@@ -132,7 +136,6 @@ function Field() {
                     setKim_control(11);
                 } else {
                     if (something_in_the_hands === 'atomic') {
-                        // setKim_control(16);
                         electricity_stopped_ref.current = false;
                         runElectricity().then(r => {
                             /**
@@ -415,26 +418,27 @@ function Field() {
     return (
         <div className="field">
             <div className="target">
-                <button onClick={moveAll}>GO</button>
-                <div>
-                    <p>Mouse X:{mouse.mouse_x}, Y:{mouse.mouse_y}</p>
-                </div>
-                <div>
-                    <p>Power:{power}</p>
-                </div>
+
             </div>
-            <div className="you" onWheel={getPower}>
+            <div className="you" onWheel={getPower} onClick={() => {
+                setNotShoot(false);
+                moveAll().then(r => {
+                    /**
+                     * Через 2 сек старт игры с исходной позиции
+                     * */
+                });
+            }}>
                 <div className="sky"/>
                 <div className="forest" ref={forest_ref}/>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
                     X:{position.marker_right_bottom.x}, Y:{position.marker_right_bottom.y}
                 </div>
-                <div className="you_control">
+                {notShoot ? <div className="you_control">
                     <div className="angle">{angle}</div>
                     <div className="velocity">
                         <div className="velocity_bar" ref={velocity_bar_ref}/>
                     </div>
-                </div>
+                </div> : <div/>}
                 <div className="legs" ref={legs_ref} hidden={!standing_squatting}/>
                 <div className="legs_folded_1" ref={legs_folded_1_ref} hidden={standing_squatting}/>
                 <div className="torso" ref={torso_ref}>
