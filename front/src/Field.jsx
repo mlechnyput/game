@@ -55,6 +55,7 @@ import electricity31 from "./images/electricity/electricity0031.png";
 import electricity32 from "./images/electricity/electricity0032.png";
 import electricity33 from "./images/electricity/electricity0033.png";
 import electricity34 from "./images/electricity/electricity0034.png";
+import kim_release from "./images/kim_release/kim2.png";
 
 function Field() {
     const forest_horizon = 5500;
@@ -65,7 +66,8 @@ function Field() {
      * 6-10 со стрелой
      * 11-15 с гранатой
      * 16-20 с бомбой
-     * 21-53 с электричеством
+     * 21-54 с электричеством
+     * 55 отпустил стрелу
      * */
     const [kim_control, setKim_control] = useState(1);
     /**
@@ -109,10 +111,6 @@ function Field() {
      * */
     const [something_in_the_hands, setSomething_in_the_hands] = useContext(GameContext);
     /**
-     * Блокировка поворота головы
-     * */
-    const [kimTurnsBlocked, setKimTurnsBlocked] = useState(false);
-    /**
      * true - выстрел еще не произведен
      * false - выстрыл произведен
      * */
@@ -142,7 +140,7 @@ function Field() {
                                 /**
                                  * По завершению работы функции снимаем блокировку поворота головы
                                  * */
-                                setKimTurnsBlocked(false);
+                                kim_turns_blocked_ref.current = false;
                             });
                         }
                     }
@@ -211,6 +209,10 @@ function Field() {
      * Для блокировки двойного выстрела
      * */
     const click_is_on_ref = useRef(true);
+    /**
+     * Блокировка поворота головы
+     * */
+    const kim_turns_blocked_ref = useRef(false);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -273,7 +275,7 @@ function Field() {
         /**
          *На время работы функции ставим блокировку поворота головы
          * */
-        setKimTurnsBlocked(true);
+        kim_turns_blocked_ref.current = true;
         let i_kim = 21;
         let time;
         while (i_kim <= 54) {
@@ -349,7 +351,7 @@ function Field() {
                     time = 0;
                     break;
             }
-            if (!kimTurnsBlocked) {
+            if (!kim_turns_blocked_ref.current) {
                 /**
                  * Поворот головы
                  * */
@@ -444,12 +446,15 @@ function Field() {
                     return;
                 }
                 click_is_on_ref.current = false;
+                kim_turns_blocked_ref.current = true;
+                setKim_control(55);
                 setNotShoot(false);
                 moveAll().then(r => {
                     /**
-                     * Через 3 сек старт игры с исходной позиции
+                     * Через 9 сек старт игры с исходной позиции
                      * */
                     setTimeout(() => {
+                        kim_turns_blocked_ref.current = false;
                         click_is_on_ref.current = true;
                         setAngle(0);
                         setPower(40);
@@ -461,7 +466,7 @@ function Field() {
                         setNotShoot(true);
                         getPosition();
                         console.log('start new')
-                    }, 3000);
+                    }, 9000);
                 });
             }}>
                 <div className="sky"/>
@@ -532,6 +537,7 @@ function Field() {
                     <img src={electricity32} hidden={kim_control !== 52} alt={""}/>
                     <img src={electricity33} hidden={kim_control !== 53} alt={""}/>
                     <img src={electricity34} hidden={kim_control !== 54} alt={""}/>
+                    <img src={kim_release} hidden={kim_control !== 55} alt={""}/>
                 </div>
             </div>
         </div>
