@@ -417,6 +417,12 @@ function Field() {
         let y_legs_folded_1_0 = legs_folded_1_ref.current.offsetTop;
         let x_torso_0 = torso_ref.current.offsetLeft;
         let y_torso_0 = torso_ref.current.offsetTop;
+        /**
+         * Устанавливаем стрелу в начальное положение, которое соответствует положению и наклону торса
+         * */
+        arrows_fly_ref.current.style.left = x_torso_0 + 'px';
+        arrows_fly_ref.current.style.top = y_torso_0 + 'px';
+        arrows_fly_ref.current.style.transform = 'rotate(' + alfa + 'deg)';
 
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
         while (y_forest_0 + delta_y >= min_y_forest && x_forest_0 + delta_x <= 0) {
