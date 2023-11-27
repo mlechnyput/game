@@ -436,6 +436,10 @@ function Field() {
         }
     }
 
+    const red = <img src={arrow_red} alt={""}/>;
+    const green = <img src={arrow_green} alt={""}/>;
+    const white = <img src={arrow_white} alt={""}/>;
+
     return (
         <div className="field">
             <div className="target">
@@ -543,13 +547,13 @@ function Field() {
                     <img src={electricity34} hidden={kim_control !== 54} alt={""}/>
                     <img src={kim_release} hidden={kim_control !== 55} alt={""}/>
                 </div>
-                {notShoot ? <div/> :
-                    <div className="arrows_fly" ref={arrows_fly_ref}>
-                        <img src={arrow_red} alt={""} hidden={something_in_the_hands !== 'arrow'}/>
-                        <img src={arrow_green} alt={""} hidden={something_in_the_hands !== 'grenade'}/>
-                        <img src={arrow_white} alt={""} hidden={something_in_the_hands !== 'atomic'}/>
-                    </div>
-                }
+                <div className="arrows_fly" ref={arrows_fly_ref}>
+                    {notShoot ? null :
+                        something_in_the_hands === 'arrow' ? red :
+                            something_in_the_hands === 'grenade' ? green :
+                                something_in_the_hands === 'atomic' ? white :
+                                    null}
+                </div>
             </div>
         </div>
     );
