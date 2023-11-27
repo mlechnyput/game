@@ -155,6 +155,15 @@
     transform-origin: 360px 329px;
 }
 
+.arrows_fly{
+    pointer-events: none;
+    position: absolute;
+    display: block;
+    height: 400px;
+    width: 500px;
+    transform-origin: 360px 329px;
+}
+
 .you_control {
     position: absolute;
     top: 0;

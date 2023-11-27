@@ -56,6 +56,9 @@ import electricity32 from "./images/electricity/electricity0032.png";
 import electricity33 from "./images/electricity/electricity0033.png";
 import electricity34 from "./images/electricity/electricity0034.png";
 import kim_release from "./images/kim_release/kim2.png";
+import arrow_red from "./images/arrows/arrows0001.png";
+import arrow_green from "./images/arrows/arrows0002.png";
+import arrow_white from "./images/arrows/arrows0003.png";
 
 function Field() {
     const forest_horizon = 5500;
@@ -213,6 +216,7 @@ function Field() {
      * Блокировка поворота головы
      * */
     const kim_turns_blocked_ref = useRef(false);
+    const arrows_fly_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -539,6 +543,13 @@ function Field() {
                     <img src={electricity34} hidden={kim_control !== 54} alt={""}/>
                     <img src={kim_release} hidden={kim_control !== 55} alt={""}/>
                 </div>
+                {notShoot ? <div/> :
+                    <div className="arrows_fly" ref={arrows_fly_ref}>
+                        <img src={arrow_red} alt={""} hidden={something_in_the_hands !== 'arrow'}/>
+                        <img src={arrow_green} alt={""} hidden={something_in_the_hands !== 'grenade'}/>
+                        <img src={arrow_white} alt={""} hidden={something_in_the_hands !== 'atomic'}/>
+                    </div>
+                }
             </div>
         </div>
     );
