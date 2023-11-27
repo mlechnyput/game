@@ -119,6 +119,10 @@ function Field() {
      * */
     const [notShoot, setNotShoot] = useState(true);
     /**
+     * Тип стрелы, с которой был произведен выстрел
+     * */
+    const [arrowShootWith, setArrowShootWith] = useState('');
+    /**
      * Из something_in_the_hands перекладываем значение в Ref и устанавливаем персонажа в
      * начальный кадр для выполнения rerender.
      * */
@@ -216,6 +220,9 @@ function Field() {
      * Блокировка поворота головы
      * */
     const kim_turns_blocked_ref = useRef(false);
+    /**
+     * Ссылка на отдельно летящую стрелу
+     * */
     const arrows_fly_ref = useRef();
 
     const getPosition = () => {
@@ -453,6 +460,10 @@ function Field() {
                 if (something_in_the_hands === 'nothing' || click_is_on_ref.current === false) {
                     return;
                 }
+                /**
+                 * Фиксируем чем произвели выстрел
+                 * */
+                setArrowShootWith(something_in_the_hands);
                 click_is_on_ref.current = false;
                 kim_turns_blocked_ref.current = true;
                 setKim_control(55);
@@ -549,9 +560,9 @@ function Field() {
                 </div>
                 <div className="arrows_fly" ref={arrows_fly_ref}>
                     {notShoot ? null :
-                        something_in_the_hands === 'arrow' ? red :
-                            something_in_the_hands === 'grenade' ? green :
-                                something_in_the_hands === 'atomic' ? white :
+                        arrowShootWith === 'arrow' ? red :
+                            arrowShootWith === 'grenade' ? green :
+                                arrowShootWith === 'atomic' ? white :
                                     null}
                 </div>
             </div>
