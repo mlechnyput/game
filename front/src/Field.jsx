@@ -389,7 +389,9 @@ function Field() {
         /**
          * Начальная скорость
          * */
-        const V_0 = power * 1.1 + 30;
+        const V_0 = power * 1.1 + 33;
+        const V_0_x = V_0 * Math.cos(alfa * Math.PI / 180);
+        const V_0_y = V_0 * Math.sin(alfa * Math.PI / 180);
         /**
          * Время с начала движения
          * */
@@ -422,13 +424,22 @@ function Field() {
          * */
         arrows_fly_ref.current.style.left = x_torso_0 + 'px';
         arrows_fly_ref.current.style.top = y_torso_0 + 'px';
-        arrows_fly_ref.current.style.transform = 'rotate(' + alfa + 'deg)';
+        // arrows_fly_ref.current.style.transform = 'rotate(' + alfa + 'deg)';
+        // arrows_fly_ref.current.style.transformOrigin = 260 +'px ' + 230 + 'px';
 
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
         while (y_forest_0 + delta_y >= min_y_forest && x_forest_0 + delta_x <= 0) {
             t += time_step_ms / 100;
-            delta_x = V_0 * Math.cos(alfa * Math.PI / 180) * t;
-            delta_y = V_0 * Math.sin(alfa * Math.PI / 180) * t - g * t * t / 2;
+            delta_x = V_0_x * t;
+            delta_y = V_0_y * t - g * t * t / 2;
+            /**
+             * Меняем угол наклона стрелы
+             * */
+            let beta = (180 / Math.PI) * Math.atan((V_0_y - g * t) / V_0_x);
+            arrows_fly_ref.current.style.transform = 'rotate(' + beta + 'deg)';
+            /**
+             * Меняем координаты фонов и персонажа
+             * */
             forest_ref.current.style.left = (x_forest_0 + delta_x) + 'px';
             forest_ref.current.style.top = (y_forest_0 + delta_y) + 'px';
             legs_ref.current.style.left = (x_legs_0 + delta_x) + 'px';
