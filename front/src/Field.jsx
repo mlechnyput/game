@@ -187,9 +187,10 @@ function Field() {
             const angle_degree = 180 / Math.PI * angle_radian;
             setAngle(Math.round(angle_degree));
             /**
-             * Наклоняем торс
+             * Наклоняем торс и летящую стрелу
              * */
             torso_ref.current.style.transform = 'rotate(' + angle_degree + 'deg)';
+            arrows_fly_ref.current.style.transform = 'rotate(' + angle_degree + 'deg)';
             if (angle_degree > 40) {
                 /**
                  * Если угол > 40, то усаживаем на корточки
@@ -257,6 +258,12 @@ function Field() {
              * */
             torso_ref.current.style.left = (marker_right_bottom_x * 0.66 - 310) + 'px';
             torso_ref.current.style.top = (marker_right_bottom_y - 565) + 'px';
+
+            /**
+             * Ставим летящую стрелу
+             * */
+            arrows_fly_ref.current.style.left = (marker_right_bottom_x * 0.66 - 260) + 'px';
+            arrows_fly_ref.current.style.top = (marker_right_bottom_y - 375) + 'px';
         }
     }
 
@@ -420,14 +427,14 @@ function Field() {
         let x_torso_0 = torso_ref.current.offsetLeft;
         let y_torso_0 = torso_ref.current.offsetTop;
         /**
-         * Устанавливаем стрелу в начальное положение, исходя из положения торса
+         * У летящей стрелы изменяем центр вращения
          * */
-            // arrows_fly_ref.current.style.transformOrigin = 260 + 'px ' + 230 + 'px';
+        arrows_fly_ref.current.style.transformOrigin = 173 + 'px ' + 42 + 'px';
 
-        const arrow_x = 300;
-        const arrow_y = 300;
-        arrows_fly_ref.current.style.left = arrow_x + 'px';
-        arrows_fly_ref.current.style.top = arrow_y + 'px';
+        // const arrow_x = 300;
+        // const arrow_y = 300;
+        // arrows_fly_ref.current.style.left = arrow_x + 'px';
+        // arrows_fly_ref.current.style.top = arrow_y + 'px';
         // arrows_fly_ref.current.style.transform = 'rotate(' + alfa + 'deg)';
 
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
@@ -502,6 +509,7 @@ function Field() {
                         setStanding_squatting(true);
                         torso_ref.current.style = '';
                         forest_ref.current.style = '';
+                        arrows_fly_ref.current.style = '';
                         setNotShoot(true);
                         getPosition();
                         console.log('start new')

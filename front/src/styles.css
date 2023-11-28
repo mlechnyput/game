@@ -156,12 +156,13 @@
 }
 
 .arrows_fly{
+    border: solid #2d2d2d;
     pointer-events: none;
     position: absolute;
     display: block;
     height: 83px;
     width: 346px;
-    transform-origin: 173px 42px;
+    transform-origin: 310px 140px;
 }
 
 .you_control {
