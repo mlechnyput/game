@@ -262,7 +262,7 @@ function Field() {
             /**
              * Ставим летящую стрелу
              * */
-            arrows_fly_ref.current.style.left = (marker_right_bottom_x * 0.66 - 260) + 'px';
+            arrows_fly_ref.current.style.left = (marker_right_bottom_x * 0.66 - 460) + 'px';
             arrows_fly_ref.current.style.top = (marker_right_bottom_y - 375) + 'px';
         }
     }
@@ -428,13 +428,16 @@ function Field() {
         let y_torso_0 = torso_ref.current.offsetTop;
         /**
          * У летящей стрелы изменяем центр вращения, чтобы во время полета она накренялась относительно
-         * собственного центра тяжести. В результате этого изменения - почему то возникло смещение по Х,
+         * собственного центра тяжести. В результате этого изменения - почему то возникло смещение,
          * которое прямо пропорционально углу наклона. Компенсируем возникшее смещение.
          * */
         let x_arrows_fly_0 = arrows_fly_ref.current.offsetLeft;
-        const compensation = 230 / 90 * alfa;
+        let y_arrows_fly_0 = arrows_fly_ref.current.offsetTop;
+        const compensation_x = 430 / 90 * alfa;
+        const compensation_y = 200 / 90 * alfa;
         arrows_fly_ref.current.style.transformOrigin = 173 + 'px ' + 42 + 'px';
-        arrows_fly_ref.current.style.left = x_arrows_fly_0 + compensation + 'px';
+        arrows_fly_ref.current.style.left = x_arrows_fly_0 + compensation_x + 'px';
+        arrows_fly_ref.current.style.top = y_arrows_fly_0 - compensation_y + 'px';
 
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
         while (y_forest_0 + delta_y >= min_y_forest && x_forest_0 + delta_x <= 0) {
