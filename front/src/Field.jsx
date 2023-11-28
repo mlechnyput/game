@@ -427,15 +427,14 @@ function Field() {
         let x_torso_0 = torso_ref.current.offsetLeft;
         let y_torso_0 = torso_ref.current.offsetTop;
         /**
-         * У летящей стрелы изменяем центр вращения
+         * У летящей стрелы изменяем центр вращения, чтобы во время полета она накренялась относительно
+         * собственного центра тяжести. В результате этого изменения - почему то возникло смещение по Х,
+         * которое прямо пропорционально углу наклона. Компенсируем возникшее смещение.
          * */
+        let x_arrows_fly_0 = arrows_fly_ref.current.offsetLeft;
+        const compensation = 230 / 90 * alfa;
         arrows_fly_ref.current.style.transformOrigin = 173 + 'px ' + 42 + 'px';
-
-        // const arrow_x = 300;
-        // const arrow_y = 300;
-        // arrows_fly_ref.current.style.left = arrow_x + 'px';
-        // arrows_fly_ref.current.style.top = arrow_y + 'px';
-        // arrows_fly_ref.current.style.transform = 'rotate(' + alfa + 'deg)';
+        arrows_fly_ref.current.style.left = x_arrows_fly_0 + compensation + 'px';
 
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
         while (y_forest_0 + delta_y >= min_y_forest && x_forest_0 + delta_x <= 0) {
