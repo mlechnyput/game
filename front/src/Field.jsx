@@ -420,12 +420,15 @@ function Field() {
         let x_torso_0 = torso_ref.current.offsetLeft;
         let y_torso_0 = torso_ref.current.offsetTop;
         /**
-         * Устанавливаем стрелу в начальное положение, которое соответствует положению и наклону торса
+         * Устанавливаем стрелу в начальное положение, исходя из положения торса
          * */
-        arrows_fly_ref.current.style.left = x_torso_0 + 'px';
-        arrows_fly_ref.current.style.top = y_torso_0 + 'px';
+            // arrows_fly_ref.current.style.transformOrigin = 260 + 'px ' + 230 + 'px';
+
+        const arrow_x = 300;
+        const arrow_y = 300;
+        arrows_fly_ref.current.style.left = arrow_x + 'px';
+        arrows_fly_ref.current.style.top = arrow_y + 'px';
         // arrows_fly_ref.current.style.transform = 'rotate(' + alfa + 'deg)';
-        // arrows_fly_ref.current.style.transformOrigin = 260 +'px ' + 230 + 'px';
 
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
         while (y_forest_0 + delta_y >= min_y_forest && x_forest_0 + delta_x <= 0) {
