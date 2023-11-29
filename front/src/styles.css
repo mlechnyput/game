@@ -165,6 +165,14 @@
     transform-origin: 360px 140px;
 }
 
+.arrow_stick {
+    position: absolute;
+    display: block;
+    width: 83px;
+    height: 280px;
+}
+
+
 .you_control {
     position: absolute;
     top: 0;

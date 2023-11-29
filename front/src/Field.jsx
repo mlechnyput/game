@@ -59,6 +59,7 @@ import kim_release from "./images/kim_release/kim2.png";
 import arrow_red from "./images/arrows/arrows0001.png";
 import arrow_green from "./images/arrows/arrows0002.png";
 import arrow_white from "./images/arrows/arrows0003.png";
+import arrow_stick from "./images/arrows/arrow_stick.png";
 
 function Field() {
     const forest_horizon = 5500;
@@ -122,6 +123,14 @@ function Field() {
      * Тип стрелы, с которой был произведен выстрел
      * */
     const [arrowShootWith, setArrowShootWith] = useState('');
+    /**
+     * Включает перпендикулярно прилипшую присоску
+     * */
+    const [stickIsOn, setStickIsOn] = useState(false);
+    /**
+     * Включает летящую стрелу
+     * */
+    const [fly, setFly] = useState(false);
     /**
      * Из something_in_the_hands перекладываем значение в Ref и устанавливаем персонажа в
      * начальный кадр для выполнения rerender.
@@ -225,6 +234,10 @@ function Field() {
      * Ссылка на отдельно летящую стрелу
      * */
     const arrows_fly_ref = useRef();
+    /**
+     * Ссылка на перпендикулярно прилипшую присоску
+     * */
+    const arrow_stick_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -438,6 +451,7 @@ function Field() {
         arrows_fly_ref.current.style.transformOrigin = 173 + 'px ' + 42 + 'px';
         arrows_fly_ref.current.style.left = x_arrows_fly_0 + compensation_x + 'px';
         arrows_fly_ref.current.style.top = y_arrows_fly_0 - compensation_y + 'px';
+        let beta;
         /**
          * Т.к. в CSS фон уходит на 140 под нижнюю границу, то
          * в калькуляции min_y_forest учитываем 140. И соответственно в проверке
@@ -451,7 +465,7 @@ function Field() {
             /**
              * Меняем угол наклона стрелы
              * */
-            let beta = (180 / Math.PI) * Math.atan((V_0_y - g * t) / V_0_x);
+            beta = (180 / Math.PI) * Math.atan((V_0_y - g * t) / V_0_x);
             arrows_fly_ref.current.style.transform = 'rotate(' + beta + 'deg)';
             /**
              * Меняем координаты фонов и персонажа
@@ -474,6 +488,11 @@ function Field() {
             });
             let result = await promise;
         }
+        return {
+            coord_x: arrows_fly_ref.current.offsetLeft,
+            coord_y: arrows_fly_ref.current.offsetTop,
+            angle_degree: beta
+        };
     }
 
     const red = <img src={arrow_red} alt={""}/>;
@@ -501,7 +520,42 @@ function Field() {
                 kim_turns_blocked_ref.current = true;
                 setKim_control(55);
                 setNotShoot(false);
+                setFly(true);
                 moveAll().then(r => {
+                    /**
+                     * Устанавливаем перпендикулярную присоску. Компенсируем сдвиг
+                     * */
+                    let compensation_x;
+                    let compensation_y;
+                    if (r.angle_degree <= -80) {
+                        compensation_x = 120;
+                        compensation_y = -50;
+                    } else if (r.angle_degree <= -70) {
+                        compensation_x = 90;
+                        compensation_y = -58;
+                    } else if (r.angle_degree <= -60) {
+                        compensation_x = 60;
+                        compensation_y = -65;
+                    } else if (r.angle_degree <= -50) {
+                        compensation_x = 35;
+                        compensation_y = -80;
+                    } else if (r.angle_degree <= -40) {
+                        compensation_x = 18;
+                        compensation_y = -95;
+                    } else if (r.angle_degree <= -30) {
+                        compensation_x = -5;
+                        compensation_y = -110;
+                    } else if (r.angle_degree <= -20) {
+                        compensation_x = -25;
+                        compensation_y = -140;
+                    } else if (r.angle_degree <= -10) {
+                        compensation_x = -40;
+                        compensation_y = -165;
+                    }
+                    arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
+                    arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
+                    setFly(false);
+                    setStickIsOn(true);
                     /**
                      * Через 9 сек старт игры с исходной позиции
                      * */
@@ -511,8 +565,10 @@ function Field() {
                         setAngle(0);
                         setPower(40);
                         setSomething_in_the_hands('nothing');
+                        setStickIsOn(false);
                         setKim_control(1);
                         setStanding_squatting(true);
+                        arrow_stick_ref.current.style = '';
                         torso_ref.current.style = '';
                         forest_ref.current.style = '';
                         arrows_fly_ref.current.style = '';
@@ -593,11 +649,14 @@ function Field() {
                     <img src={kim_release} hidden={kim_control !== 55} alt={""}/>
                 </div>
                 <div className="arrows_fly" ref={arrows_fly_ref}>
-                    {notShoot ? null :
+                    {!fly ? null :
                         arrowShootWith === 'arrow' ? red :
                             arrowShootWith === 'grenade' ? green :
                                 arrowShootWith === 'atomic' ? white :
                                     null}
+                </div>
+                <div className="arrow_stick" ref={arrow_stick_ref}>
+                    {stickIsOn ? <img src={arrow_stick} alt={""}/> : null}
                 </div>
             </div>
         </div>
