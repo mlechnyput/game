@@ -497,7 +497,13 @@ function Field() {
             arrows_fly_ref.current.style.transform = 'rotate(' + beta + 'deg)';
             arrows_fly_ref.current.style.left = (arrows_fly_ref.current.offsetLeft - (x_curr - x_prev)) + 'px';
             arrows_fly_ref.current.style.top = (arrows_fly_ref.current.offsetTop - (y_curr - y_prev)) + 'px';
-
+            /**
+             * Наконечник стрелы не должен опуститься ниже линии, на которой стоят ноги. Не забываем поменять
+             * знак угла бета.
+             * */
+            if (arrows_fly_ref.current.offsetTop > position.marker_right_bottom.y - (173 * Math.sin(Math.PI / 180 * -beta) + 140)) {
+                return 'движение закончилось';
+            }
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
