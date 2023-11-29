@@ -97,7 +97,7 @@
 
 .forest {
     position: absolute;
-    bottom: 0;
+    bottom: -140px;
     right: 0;
     height: 1000px;
     width: 5500px;
@@ -155,14 +155,14 @@
     transform-origin: 360px 330px;
 }
 
-.arrows_fly{
+.arrows_fly {
     /*border: solid #2d2d2d;*/
     pointer-events: none;
     position: absolute;
     display: block;
     height: 83px;
-    width: 346px;
-    transform-origin: 510px 140px;
+    width: 280px;
+    transform-origin: 360px 140px;
 }
 
 .you_control {
