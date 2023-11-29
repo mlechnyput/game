@@ -441,10 +441,10 @@ function Field() {
         /**
          * Т.к. в CSS фон уходит на 140 под нижнюю границу, то
          * в калькуляции min_y_forest учитываем 140. И соответственно в проверке
-         * цикла заходим вниз не более чем на 130, иначе вылезет белое пятно.
+         * цикла заходим вниз не более чем на 120, иначе вылезет белое пятно.
          * */
         const min_y_forest = (-1) * ((forest_vertical - 140) - position.marker_right_bottom.y);
-        while (y_forest_0 + delta_y >= min_y_forest - 130) {
+        while (y_forest_0 + delta_y >= min_y_forest - 120) {
             t += time_step_ms / 100;
             delta_x = V_0_x * t;
             delta_y = V_0_y * t - g * t * t / 2;
