@@ -524,7 +524,7 @@ function Field() {
                 moveAll().then(r => {
                     /**
                      * Устанавливаем перпендикулярную присоску. Компенсируем сдвиг
-                     * */
+                     * */console.log(r.angle_degree)
                     let compensation_x;
                     let compensation_y;
                     if (r.angle_degree <= -80) {
@@ -543,8 +543,8 @@ function Field() {
                         compensation_x = 18;
                         compensation_y = -95;
                     } else if (r.angle_degree <= -30) {
-                        compensation_x = -5;
-                        compensation_y = -110;
+                        compensation_x = 10;
+                        compensation_y = -125;
                     } else if (r.angle_degree <= -20) {
                         compensation_x = -25;
                         compensation_y = -140;
