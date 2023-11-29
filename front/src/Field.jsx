@@ -440,36 +440,64 @@ function Field() {
         arrows_fly_ref.current.style.top = y_arrows_fly_0 - compensation_y + 'px';
 
         const min_y_forest = (-1) * (forest_vertical - position.marker_right_bottom.y);
+        /**
+         * Полет стрелы разбивается на два цикла. В первом цикле стрела стоит на месте,
+         * меняя только угол наклона, двигается только фон. После того, как фон упрется
+         * в одну из своих границ - первый цикл заканчивается. Во втором цикле фон стоит
+         * на месте, а движется уже - стрела, которая завершает свой полет.
+         * */
         while (y_forest_0 + delta_y >= min_y_forest && x_forest_0 + delta_x <= 0) {
             t += time_step_ms / 100;
             delta_x = V_0_x * t;
             delta_y = V_0_y * t - g * t * t / 2;
             /**
              * В последней итерации цикла - движение вниз заходит под нижнюю границу. Чтобы избежать этого
-             * ставим дополнительное условие и выходим из цикла.
+             * ставим дополнительное условие в теле цикла.
              * */
-            if (y_forest_0 + delta_y < min_y_forest) {
-                return;
+            if (y_forest_0 + delta_y >= min_y_forest) {
+                /**
+                 * Меняем угол наклона стрелы
+                 * */
+                let beta = (180 / Math.PI) * Math.atan((V_0_y - g * t) / V_0_x);
+                arrows_fly_ref.current.style.transform = 'rotate(' + beta + 'deg)';
+                /**
+                 * Меняем координаты фонов и персонажа
+                 * */
+                forest_ref.current.style.left = (x_forest_0 + delta_x) + 'px';
+                forest_ref.current.style.top = (y_forest_0 + delta_y) + 'px';
+                legs_ref.current.style.left = (x_legs_0 + delta_x) + 'px';
+                legs_ref.current.style.top = (y_legs_0 + delta_y) + 'px';
+                legs_folded_1_ref.current.style.left = (x_legs_folded_1_0 + delta_x) + 'px';
+                legs_folded_1_ref.current.style.top = (y_legs_folded_1_0 + delta_y) + 'px';
+                torso_ref.current.style.left = (x_torso_0 + delta_x) + 'px';
+                /**
+                 * По неизвестным причинам пдчеркивает как дубликат. Чтобы этого не происходило в конце добавил пустую строку
+                 * */
+                torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px' + '';
+                let promise = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve("готово");
+                    }, time_step_ms)
+                });
+                let result = await promise;
             }
-            /**
-             * Меняем угол наклона стрелы
-             * */
+        }
+        let x_curr;
+        let x_prev;
+        let y_curr;
+        let y_prev;
+        while (arrows_fly_ref.current.offsetTop < position.marker_right_bottom.y) {
+            x_prev = V_0_x * t;
+            y_prev = V_0_y * t - g * t * t / 2;
+            t += time_step_ms / 100;
+            x_curr = V_0_x * t;
+            y_curr = V_0_y * t - g * t * t / 2;
+
             let beta = (180 / Math.PI) * Math.atan((V_0_y - g * t) / V_0_x);
             arrows_fly_ref.current.style.transform = 'rotate(' + beta + 'deg)';
-            /**
-             * Меняем координаты фонов и персонажа
-             * */
-            forest_ref.current.style.left = (x_forest_0 + delta_x) + 'px';
-            forest_ref.current.style.top = (y_forest_0 + delta_y) + 'px';
-            legs_ref.current.style.left = (x_legs_0 + delta_x) + 'px';
-            legs_ref.current.style.top = (y_legs_0 + delta_y) + 'px';
-            legs_folded_1_ref.current.style.left = (x_legs_folded_1_0 + delta_x) + 'px';
-            legs_folded_1_ref.current.style.top = (y_legs_folded_1_0 + delta_y) + 'px';
-            torso_ref.current.style.left = (x_torso_0 + delta_x) + 'px';
-            /**
-             * По неизвестным причинам пдчеркивает как дубликат. Чтобы этого не происходило в конце добавил пустую строку
-             * */
-            torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px' + '';
+            arrows_fly_ref.current.style.left = (arrows_fly_ref.current.offsetLeft - (x_curr - x_prev)) + 'px';
+            arrows_fly_ref.current.style.top = (arrows_fly_ref.current.offsetTop - (y_curr - y_prev)) + 'px';
+
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
