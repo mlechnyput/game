@@ -67,6 +67,8 @@ import arrow_vibro_5 from "./images/vibro/vibro0005.png";
 import arrow_vibro_6 from "./images/vibro/vibro0006.png";
 import arrow_vibro_7 from "./images/vibro/vibro0007.png";
 import arrow_vibro_8 from "./images/vibro/vibro0008.png";
+import bush_1 from "./images/fon/bush-1.png"
+import bush_2 from "./images/fon/bush-2.png"
 
 function Field() {
     const forest_horizon = 5500;
@@ -613,8 +615,16 @@ function Field() {
                 <div className="sky"/>
                 <div className="forest" ref={forest_ref}>
                     <div className="grass"/>
-                    <div className="bush_2"/>
-                    <div className="bush_1"/>
+                    <div className="bushes">
+                        <img src={bush_1} alt={""}/>
+                        <img src={bush_2} alt={""}/>
+                        <img src={bush_1} alt={""}/>
+                        <img src={bush_1} alt={""}/>
+                        <img src={bush_2} alt={""}/>
+                        <img src={bush_1} alt={""}/>
+                        <img src={bush_1} alt={""}/>
+                        <img src={bush_2} alt={""}/>
+                    </div>
                 </div>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
                     X:{position.marker_right_bottom.x}, Y:{position.marker_right_bottom.y}
