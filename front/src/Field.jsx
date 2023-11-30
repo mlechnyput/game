@@ -530,6 +530,14 @@ function Field() {
     const green = <img src={arrow_green} alt={""}/>;
     const white = <img src={arrow_white} alt={""}/>;
 
+    const b_1 = <img src={bush_1} alt={""}/>;
+    const b_2 = <img src={bush_2} alt={""}/>;
+
+    const generate_fon = () => {
+        let arr = [b_1, b_2, b_1, b_1, b_2];
+        return arr;
+    }
+
     return (
         <div className="field">
             <div className="target">
@@ -615,16 +623,9 @@ function Field() {
                 <div className="sky"/>
                 <div className="forest" ref={forest_ref}>
                     <div className="grass"/>
-                    <div className="bushes">
-                        <img src={bush_1} alt={""}/>
-                        <img src={bush_2} alt={""}/>
-                        <img src={bush_1} alt={""}/>
-                        <img src={bush_1} alt={""}/>
-                        <img src={bush_2} alt={""}/>
-                        <img src={bush_1} alt={""}/>
-                        <img src={bush_1} alt={""}/>
-                        <img src={bush_2} alt={""}/>
-                    </div>
+                    <div className="bushes">{generate_fon().map(c => {
+                        return c;
+                    })}</div>
                 </div>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
                     X:{position.marker_right_bottom.x}, Y:{position.marker_right_bottom.y}
