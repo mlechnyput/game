@@ -59,7 +59,14 @@ import kim_release from "./images/kim_release/kim2.png";
 import arrow_red from "./images/arrows/arrows0001.png";
 import arrow_green from "./images/arrows/arrows0002.png";
 import arrow_white from "./images/arrows/arrows0003.png";
-import arrow_stick from "./images/arrows/arrow_stick.png";
+import arrow_vibro_1 from "./images/vibro/vibro0001.png";
+import arrow_vibro_2 from "./images/vibro/vibro0002.png";
+import arrow_vibro_3 from "./images/vibro/vibro0003.png";
+import arrow_vibro_4 from "./images/vibro/vibro0004.png";
+import arrow_vibro_5 from "./images/vibro/vibro0005.png";
+import arrow_vibro_6 from "./images/vibro/vibro0006.png";
+import arrow_vibro_7 from "./images/vibro/vibro0007.png";
+import arrow_vibro_8 from "./images/vibro/vibro0008.png";
 
 function Field() {
     const forest_horizon = 5500;
@@ -126,7 +133,7 @@ function Field() {
     /**
      * Включает перпендикулярно прилипшую присоску
      * */
-    const [stickIsOn, setStickIsOn] = useState(false);
+    const [stickIsOn, setStickIsOn] = useState(0);
     /**
      * Включает летящую стрелу
      * */
@@ -495,6 +502,26 @@ function Field() {
         };
     }
 
+    async function vibrato() {
+        let i = 1;
+        let time;
+        while (i <= 8) {
+            if (i === 1) {
+                time = 80;
+            } else {
+                time = 55;
+            }
+            setStickIsOn(i);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+    }
+
     const red = <img src={arrow_red} alt={""}/>;
     const green = <img src={arrow_green} alt={""}/>;
     const white = <img src={arrow_white} alt={""}/>;
@@ -555,7 +582,7 @@ function Field() {
                     arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
                     arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
                     setFly(false);
-                    setStickIsOn(true);
+                    vibrato().then(r => console.log('stick is on'));
                     /**
                      * Через 9 сек старт игры с исходной позиции
                      * */
@@ -565,7 +592,7 @@ function Field() {
                         setAngle(0);
                         setPower(40);
                         setSomething_in_the_hands('nothing');
-                        setStickIsOn(false);
+                        setStickIsOn(0);
                         setKim_control(1);
                         setStanding_squatting(true);
                         arrow_stick_ref.current.style = '';
@@ -656,7 +683,14 @@ function Field() {
                                     null}
                 </div>
                 <div className="arrow_stick" ref={arrow_stick_ref}>
-                    {stickIsOn ? <img src={arrow_stick} alt={""}/> : null}
+                    <img src={arrow_vibro_1} alt={""} hidden={stickIsOn !== 1}/>
+                    <img src={arrow_vibro_2} alt={""} hidden={stickIsOn !== 2}/>
+                    <img src={arrow_vibro_3} alt={""} hidden={stickIsOn !== 3}/>
+                    <img src={arrow_vibro_4} alt={""} hidden={stickIsOn !== 4}/>
+                    <img src={arrow_vibro_5} alt={""} hidden={stickIsOn !== 5}/>
+                    <img src={arrow_vibro_6} alt={""} hidden={stickIsOn !== 6}/>
+                    <img src={arrow_vibro_7} alt={""} hidden={stickIsOn !== 7}/>
+                    <img src={arrow_vibro_8} alt={""} hidden={stickIsOn !== 8}/>
                 </div>
             </div>
         </div>
