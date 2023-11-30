@@ -611,7 +611,11 @@ function Field() {
                 });
             }}>
                 <div className="sky"/>
-                <div className="forest" ref={forest_ref}/>
+                <div className="forest" ref={forest_ref}>
+                    <div className="grass"/>
+                    <div className="bush_2"/>
+                    <div className="bush_1"/>
+                </div>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
                     X:{position.marker_right_bottom.x}, Y:{position.marker_right_bottom.y}
                 </div>
