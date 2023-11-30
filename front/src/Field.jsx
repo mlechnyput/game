@@ -301,11 +301,13 @@ function Field() {
     }
 
     const getPower = (ev) => {
-        let delta = ev.deltaY * 0.1;
-        let res = power + delta;
-        if (res >= 0 && res <= 160) {
-            velocity_bar_ref.current.style.height = res + 'px';
-            setPower(res);
+        if (notShoot) {
+            let delta = ev.deltaY * 0.1;
+            let res = power + delta;
+            if (res >= 0 && res <= 160) {
+                velocity_bar_ref.current.style.height = res + 'px';
+                setPower(res);
+            }
         }
     }
 
@@ -453,9 +455,9 @@ function Field() {
          * */
         let x_arrows_fly_0 = arrows_fly_ref.current.offsetLeft;
         let y_arrows_fly_0 = arrows_fly_ref.current.offsetTop;
-        const compensation_x = 280 / 90 * alfa;
+        const compensation_x = 315 / 90 * alfa;
         const compensation_y = 110 / 90 * alfa;
-        arrows_fly_ref.current.style.transformOrigin = 173 + 'px ' + 42 + 'px';
+        arrows_fly_ref.current.style.transformOrigin = 140 + 'px ' + 42 + 'px';
         arrows_fly_ref.current.style.left = x_arrows_fly_0 + compensation_x + 'px';
         arrows_fly_ref.current.style.top = y_arrows_fly_0 - compensation_y + 'px';
         let beta;
@@ -554,23 +556,26 @@ function Field() {
                      * */console.log(r.angle_degree)
                     let compensation_x;
                     let compensation_y;
-                    if (r.angle_degree <= -80) {
-                        compensation_x = 120;
+                    if (r.angle_degree === -90) {
+                        compensation_x = 100;
+                        compensation_y = -50;
+                    } else if (r.angle_degree <= -80) {
+                        compensation_x = 80;
                         compensation_y = -50;
                     } else if (r.angle_degree <= -70) {
-                        compensation_x = 90;
+                        compensation_x = 60;
                         compensation_y = -58;
                     } else if (r.angle_degree <= -60) {
-                        compensation_x = 60;
+                        compensation_x = 40;
                         compensation_y = -65;
                     } else if (r.angle_degree <= -50) {
-                        compensation_x = 35;
+                        compensation_x = 20;
                         compensation_y = -80;
                     } else if (r.angle_degree <= -40) {
-                        compensation_x = 18;
+                        compensation_x = 5;
                         compensation_y = -95;
                     } else if (r.angle_degree <= -30) {
-                        compensation_x = 10;
+                        compensation_x = -5;
                         compensation_y = -125;
                     } else if (r.angle_degree <= -20) {
                         compensation_x = -25;
