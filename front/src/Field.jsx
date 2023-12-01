@@ -69,6 +69,7 @@ import arrow_vibro_7 from "./images/vibro/vibro0007.png";
 import arrow_vibro_8 from "./images/vibro/vibro0008.png";
 import bush_1 from "./images/fon/bush-1.png"
 import bush_2 from "./images/fon/bush-2.png"
+import tree_1 from "./images/fon/tree-1.png"
 
 function Field() {
     const forest_horizon = 5500;
@@ -532,9 +533,10 @@ function Field() {
 
     const b_1 = <img src={bush_1} alt={""}/>;
     const b_2 = <img src={bush_2} alt={""}/>;
+    const t_1 = <img src={tree_1} alt={""}/>;
 
     const generate_fon = () => {
-        let arr = [b_1, b_2, b_1, b_1, b_2];
+        let arr = [b_1, t_1, b_2, b_1, t_1, b_2];
         return arr;
     }
 
