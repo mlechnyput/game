@@ -73,6 +73,7 @@ import bush_3 from "./images/fon/bush-3.png"
 import tree_1 from "./images/fon/tree-1.png"
 import tree_2 from "./images/fon/tree-2.png"
 import stone_1 from "./images/fon/stone-1.png"
+import log_1 from "./images/fon/log-1.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -540,9 +541,10 @@ function Field() {
     const t_1 = <img src={tree_1} alt={""}/>;
     const t_2 = <img src={tree_2} alt={""}/>;
     const s_1 = <img src={stone_1} alt={""}/>;
+    const l_1 = <img src={log_1} alt={""}/>;
 
     const generate_fon = () => {
-        let arr = [b_1, b_2, t_1, s_1, t_2, b_3, b_2];
+        let arr = [b_1, t_1, s_1, t_2, b_3, l_1, b_2];
         return arr;
     }
 
