@@ -146,6 +146,10 @@ function Field() {
      * */
     const [fly, setFly] = useState(false);
     /**
+     * Масссив с фоновыми элеиентами
+     * */
+    const [fon_elements, setFon_elements] = useState([]);
+    /**
      * Из something_in_the_hands перекладываем значение в Ref и устанавливаем персонажа в
      * начальный кадр для выполнения rerender.
      * */
@@ -185,6 +189,7 @@ function Field() {
         window.addEventListener('mousemove', (e) => getCursor(e));
         item_in_the_hands_ref.current = something_in_the_hands;
         setInterval(kimTurns, 15000);
+        generate_fon();
     }, []);
 
     useEffect(() => {
@@ -542,10 +547,24 @@ function Field() {
     const t_2 = <img src={tree_2} alt={""}/>;
     const s_1 = <img src={stone_1} alt={""}/>;
     const l_1 = <img src={log_1} alt={""}/>;
+    /**
+     * Массив для перетасовки
+     * */
+    let background_images = [t_1, s_1, t_2, b_3, l_1];
 
     const generate_fon = () => {
-        let arr = [b_1, t_1, s_1, t_2, b_3, l_1, b_2];
-        return arr;
+        /**
+         * Перетасовываем элементы массива в случайном порядке
+         * */
+        background_images.sort(() => Math.random() - 0.5);
+        /**
+         * Копируем перетасованный масив. В начало вставляем маленький куст,
+         * в конец - большой.
+         * */
+        let arr = background_images.slice();
+        arr.unshift(b_1);
+        arr.push(b_2);
+        setFon_elements(arr);
     }
 
     return (
@@ -612,6 +631,7 @@ function Field() {
                      * Через 9 сек старт игры с исходной позиции
                      * */
                     setTimeout(() => {
+                        generate_fon();
                         kim_turns_blocked_ref.current = false;
                         click_is_on_ref.current = true;
                         setAngle(0);
@@ -633,7 +653,7 @@ function Field() {
                 <div className="sky"/>
                 <div className="forest" ref={forest_ref}>
                     <div className="grass"/>
-                    <div className="bushes">{generate_fon().map(c => {
+                    <div className="bushes">{fon_elements.map(c => {
                         return c;
                     })}</div>
                 </div>
