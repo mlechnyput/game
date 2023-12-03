@@ -111,7 +111,7 @@
     width: 5800px;
 }
 .buildings{
-    opacity: 60%;
+    opacity: 100%;
     pointer-events: none;
     position: absolute;
     height: 500px;

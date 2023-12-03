@@ -77,6 +77,7 @@ import stone_2 from "./images/fon/stone-2.png"
 import log_1 from "./images/fon/log-1.png"
 import city_1 from "./images/fon/city-1.png"
 import city_2 from "./images/fon/city-2.png"
+import city_3 from "./images/fon/city-3.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -571,10 +572,12 @@ function Field() {
 
     const c_1 = <img src={city_1} alt={""}/>;
     const c_2 = <img src={city_2} alt={""}/>;
+    const c_3 = <img src={city_3} alt={""}/>;
     /**
      * Массив зданий
      * */
-    const buildings_elements = [c_2, c_1, c_2, c_1, c_2, c_1];
+        // const buildings_elements = [c_2, c_1, c_2, c_1, c_2, c_1];
+    const buildings_elements = [c_3, c_3, c_3, c_3, c_3, c_3, c_3, c_3];
 
     const generate_fon = () => {
         /**
