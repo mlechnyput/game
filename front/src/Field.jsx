@@ -75,6 +75,7 @@ import tree_2 from "./images/fon/tree-2.png"
 import stone_1 from "./images/fon/stone-1.png"
 import stone_2 from "./images/fon/stone-2.png"
 import log_1 from "./images/fon/log-1.png"
+import city_1 from "./images/fon/city.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -147,7 +148,7 @@ function Field() {
      * */
     const [fly, setFly] = useState(false);
     /**
-     * Масссив с фоновыми элеиентами
+     * Масссив с фоновыми элеиентами (для ближнего фона)
      * */
     const [fon_elements, setFon_elements] = useState([]);
     /**
@@ -258,6 +259,10 @@ function Field() {
      * Ссылка на перпендикулярно прилипшую присоску
      * */
     const arrow_stick_ref = useRef();
+    /**
+     * Ссылка на город
+     * */
+    const city_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -462,6 +467,15 @@ function Field() {
         let x_torso_0 = torso_ref.current.offsetLeft;
         let y_torso_0 = torso_ref.current.offsetTop;
         /**
+         * Начальное положение города
+         * */
+        let x_city_0 = city_ref.current.offsetLeft;
+        let y_city_0 = city_ref.current.offsetTop;
+        /**
+         * Коэффициент отставания сдвига города
+         * */
+        const coefficient_city = 0.7;
+        /**
          * У летящей стрелы изменяем центр вращения, чтобы во время полета она накренялась относительно
          * собственного центра тяжести. В результате этого изменения - почему то возникло смещение,
          * которое прямо пропорционально углу наклона. Компенсируем возникшее смещение.
@@ -494,15 +508,15 @@ function Field() {
              * */
             forest_ref.current.style.left = (x_forest_0 + delta_x) + 'px';
             forest_ref.current.style.top = (y_forest_0 + delta_y) + 'px';
+            city_ref.current.style.left = (x_city_0 + coefficient_city * delta_x) + 'px';
+            city_ref.current.style.top = (y_city_0 + coefficient_city * delta_y) + 'px';
             legs_ref.current.style.left = (x_legs_0 + delta_x) + 'px';
             legs_ref.current.style.top = (y_legs_0 + delta_y) + 'px';
             legs_folded_1_ref.current.style.left = (x_legs_folded_1_0 + delta_x) + 'px';
             legs_folded_1_ref.current.style.top = (y_legs_folded_1_0 + delta_y) + 'px';
             torso_ref.current.style.left = (x_torso_0 + delta_x) + 'px';
-            /**
-             * По неизвестным причинам пдчеркивает как дубликат. Чтобы этого не происходило в конце добавил пустую строку
-             * */
-            torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px' + '';
+            torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px';
+
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
@@ -550,9 +564,15 @@ function Field() {
     const s_2 = <img src={stone_2} alt={""}/>;
     const l_1 = <img src={log_1} alt={""}/>;
     /**
-     * Массив для перетасовки
+     * Массив для перетасовки элементов ближнего фона
      * */
     let background_images = [s_1, s_2, t_1, t_2, b_3, l_1];
+
+    const c_1 = <img src={city_1} alt={""}/>;
+    /**
+     * Массив зданий
+     * */
+    const buildings_elements = [c_1, c_1, c_1, c_1, c_1, c_1];
 
     const generate_fon = () => {
         /**
@@ -646,6 +666,7 @@ function Field() {
                         torso_ref.current.style = '';
                         forest_ref.current.style = '';
                         arrows_fly_ref.current.style = '';
+                        city_ref.current.style = '';
                         setNotShoot(true);
                         getPosition();
                         console.log('start new')
@@ -653,6 +674,11 @@ function Field() {
                 });
             }}>
                 <div className="sky"/>
+                <div className="city" ref={city_ref}>
+                    <div className="buildings">{buildings_elements.map(c => {
+                        return c;
+                    })}</div>
+                </div>
                 <div className="forest" ref={forest_ref}>
                     <div className="grass"/>
                     <div className="bushes">{fon_elements.map(c => {
