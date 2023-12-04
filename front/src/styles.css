@@ -195,6 +195,12 @@
     transform-origin: 360px 330px;
 }
 
+.joe{
+    position: absolute;
+    width: 250px;
+    height: 500px;
+}
+
 .arrows_fly {
     /*border: solid #2d2d2d;*/
     pointer-events: none;

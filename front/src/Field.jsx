@@ -77,6 +77,7 @@ import stone_2 from "./images/fon/stone-2.png"
 import log_1 from "./images/fon/log-1.png"
 import city_3 from "./images/fon/city-3.png"
 import city_4 from "./images/fon/city-4.png"
+import joe_1 from "./images/joe/joe.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -264,6 +265,10 @@ function Field() {
      * Ссылка на город
      * */
     const city_ref = useRef();
+    /**
+     * Joe Biden
+     * */
+    const joe_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -303,6 +308,11 @@ function Field() {
              * */
             arrows_fly_ref.current.style.left = (marker_right_bottom_x * 0.66 - 310) + 'px';
             arrows_fly_ref.current.style.top = (marker_right_bottom_y - 375) + 'px';
+            /**
+             * Ставим Байдена
+             * */
+            joe_ref.current.style.left = (marker_right_bottom_x - 1053) + 'px';
+            joe_ref.current.style.top = (marker_right_bottom_y - 615) + 'px';
         }
     }
 
@@ -754,6 +764,9 @@ function Field() {
                     <img src={electricity33} hidden={kim_control !== 53} alt={""}/>
                     <img src={electricity34} hidden={kim_control !== 54} alt={""}/>
                     <img src={kim_release} hidden={kim_control !== 55} alt={""}/>
+                </div>
+                <div className="joe" ref={joe_ref}>
+                    <img src={joe_1} alt={""}/>
                 </div>
                 <div className="arrows_fly" ref={arrows_fly_ref}>
                     {!fly ? null :
