@@ -311,7 +311,7 @@ function Field() {
             /**
              * Ставим Байдена
              * */
-            joe_ref.current.style.left = (marker_right_bottom_x - 1053) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - 4000) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 615) + 'px';
         }
     }
@@ -534,7 +534,31 @@ function Field() {
             torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px';
             joe_ref.current.style.left = (x_joe_0 + delta_x) + 'px';
             joe_ref.current.style.top = (y_joe_0 + delta_y) + 'px' + '';
+            /**
+             * Стрела попала в Байдена (прямоугольник, очерченный задней стороной, передней стороной и верхней стороной)
+             * */
 
+            /**
+             * Задняя граница
+             * */
+            if (arrows_fly_ref.current.offsetLeft > joe_ref.current.offsetLeft + 50) {
+                /**
+                 * Передняя граница
+                 * */
+                if (arrows_fly_ref.current.offsetLeft <= joe_ref.current.offsetLeft + 130) {
+                    /**
+                     * Верхняя граница
+                     * */
+                    if (arrows_fly_ref.current.offsetTop >= joe_ref.current.offsetTop + 35) {
+                        return {
+                            coord_x: arrows_fly_ref.current.offsetLeft,
+                            coord_y: arrows_fly_ref.current.offsetTop,
+                            angle_degree: beta,
+                            hit_area: 'body'
+                        };
+                    }
+                }
+            }
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
@@ -542,10 +566,14 @@ function Field() {
             });
             let result = await promise;
         }
+        /**
+         * Стрела попала в землю
+         * */
         return {
             coord_x: arrows_fly_ref.current.offsetLeft,
             coord_y: arrows_fly_ref.current.offsetTop,
-            angle_degree: beta
+            angle_degree: beta,
+            hit_area: 'ground'
         };
     }
 
@@ -631,47 +659,51 @@ function Field() {
                 setNotShoot(false);
                 setFly(true);
                 moveAll().then(r => {
-                    /**
-                     * Устанавливаем перпендикулярную присоску. Компенсируем сдвиг
-                     * */console.log(r.angle_degree)
-                    let compensation_x;
-                    let compensation_y;
-                    if (r.angle_degree === -90) {
-                        compensation_x = 100;
-                        compensation_y = -50;
-                    } else if (r.angle_degree <= -80) {
-                        compensation_x = 80;
-                        compensation_y = -50;
-                    } else if (r.angle_degree <= -70) {
-                        compensation_x = 60;
-                        compensation_y = -58;
-                    } else if (r.angle_degree <= -60) {
-                        compensation_x = 40;
-                        compensation_y = -65;
-                    } else if (r.angle_degree <= -50) {
-                        compensation_x = 20;
-                        compensation_y = -80;
-                    } else if (r.angle_degree <= -40) {
-                        compensation_x = 5;
-                        compensation_y = -95;
-                    } else if (r.angle_degree <= -30) {
-                        compensation_x = -5;
-                        compensation_y = -125;
-                    } else if (r.angle_degree <= -20) {
-                        compensation_x = -25;
-                        compensation_y = -140;
-                    } else if (r.angle_degree <= -10) {
-                        compensation_x = -40;
-                        compensation_y = -165;
+                    console.log('Угол: ' + r.angle_degree);
+                    if (r.hit_area === 'ground') {
+                        /**
+                         * Устанавливаем перпендикулярную присоску. Компенсируем сдвиг
+                         * */
+                        let compensation_x;
+                        let compensation_y;
+                        if (r.angle_degree === -90) {
+                            compensation_x = 100;
+                            compensation_y = -50;
+                        } else if (r.angle_degree <= -80) {
+                            compensation_x = 80;
+                            compensation_y = -50;
+                        } else if (r.angle_degree <= -70) {
+                            compensation_x = 60;
+                            compensation_y = -58;
+                        } else if (r.angle_degree <= -60) {
+                            compensation_x = 40;
+                            compensation_y = -65;
+                        } else if (r.angle_degree <= -50) {
+                            compensation_x = 20;
+                            compensation_y = -80;
+                        } else if (r.angle_degree <= -40) {
+                            compensation_x = 5;
+                            compensation_y = -95;
+                        } else if (r.angle_degree <= -30) {
+                            compensation_x = -5;
+                            compensation_y = -125;
+                        } else if (r.angle_degree <= -20) {
+                            compensation_x = -25;
+                            compensation_y = -140;
+                        } else if (r.angle_degree <= -10) {
+                            compensation_x = -40;
+                            compensation_y = -165;
+                        }
+                        arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
+                        arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
+                        setFly(false);
+                        vibrato().then(r => console.log('stick is on'));
                     }
-                    arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
-                    arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
-                    setFly(false);
-                    vibrato().then(r => console.log('stick is on'));
                     /**
                      * Через 9 сек старт игры с исходной позиции
                      * */
                     setTimeout(() => {
+                        setFly(false);
                         generate_fon();
                         kim_turns_blocked_ref.current = false;
                         click_is_on_ref.current = true;
