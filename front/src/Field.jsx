@@ -478,6 +478,11 @@ function Field() {
         let x_torso_0 = torso_ref.current.offsetLeft;
         let y_torso_0 = torso_ref.current.offsetTop;
         /**
+         * Начальное положение Байдена
+         * */
+        let x_joe_0 = joe_ref.current.offsetLeft;
+        let y_joe_0 = joe_ref.current.offsetTop;
+        /**
          * Начальное положение города
          * */
         let x_city_0 = city_ref.current.offsetLeft;
@@ -527,6 +532,8 @@ function Field() {
             legs_folded_1_ref.current.style.top = (y_legs_folded_1_0 + delta_y) + 'px';
             torso_ref.current.style.left = (x_torso_0 + delta_x) + 'px';
             torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px';
+            joe_ref.current.style.left = (x_joe_0 + delta_x) + 'px';
+            joe_ref.current.style.top = (y_joe_0 + delta_y) + 'px' + '';
 
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
