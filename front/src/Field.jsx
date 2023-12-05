@@ -277,6 +277,9 @@ function Field() {
      * Квадрат 15х15 в середине наконечника стрелы для collision detect
      * */
     const arrows_core_ref = useRef();
+    const joe_box_1_ref = useRef();
+    const joe_box_2_ref = useRef();
+    const joe_box_3_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -556,7 +559,9 @@ function Field() {
             /**
              * Проверяем попала ли стрела в Байдена
              * */
-            if (intersectRect(arrows_core_ref.current, joe_ref.current)) {
+            if (intersectRect(arrows_core_ref.current, joe_box_1_ref.current) ||
+                intersectRect(arrows_core_ref.current, joe_box_2_ref.current) ||
+                intersectRect(arrows_core_ref.current, joe_box_3_ref.current)) {
                 return {
                     coord_x: arrows_fly_ref.current.offsetLeft,
                     coord_y: arrows_fly_ref.current.offsetTop,
@@ -815,6 +820,9 @@ function Field() {
                 </div>
                 <div className="joe" ref={joe_ref}>
                     <img src={joe_1} alt={""}/>
+                    <div className="joe_box_1" ref={joe_box_1_ref}/>
+                    <div className="joe_box_2" ref={joe_box_2_ref}/>
+                    <div className="joe_box_3" ref={joe_box_3_ref}/>
                 </div>
                 <div className="arrows_fly" ref={arrows_fly_ref}>
                     {!fly ? null :
