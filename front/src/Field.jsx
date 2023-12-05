@@ -273,6 +273,10 @@ function Field() {
      * Joe Biden
      * */
     const joe_ref = useRef();
+    /**
+     * Квадрат 15х15 в середине наконечника стрелы для collision detect
+     * */
+    const arrows_core_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -550,9 +554,9 @@ function Field() {
             joe_ref.current.style.left = (x_joe_0 + delta_x) + 'px';
             joe_ref.current.style.top = (y_joe_0 + delta_y) + 'px' + '';
             /**
-             * Стрела попала в Байдена
+             * Проверяем попала ли стрела в Байдена
              * */
-            if (intersectRect(arrows_fly_ref.current, joe_ref.current)) {
+            if (intersectRect(arrows_core_ref.current, joe_ref.current)) {
                 return {
                     coord_x: arrows_fly_ref.current.offsetLeft,
                     coord_y: arrows_fly_ref.current.offsetTop,
@@ -818,6 +822,7 @@ function Field() {
                             arrowShootWith === 'grenade' ? green :
                                 arrowShootWith === 'atomic' ? white :
                                     null}
+                    <div className="arrows_core" ref={arrows_core_ref}/>
                 </div>
                 <div className="arrow_stick" ref={arrow_stick_ref}>
                     <img src={arrow_vibro_1} alt={""} hidden={stickIsOn !== 1}/>

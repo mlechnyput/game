@@ -212,6 +212,14 @@
     transform-origin: 360px 140px;
 }
 
+.arrows_core{
+    background-color: burlywood;
+    height: 15px;
+    width: 15px;
+    top: 35px;
+    position: absolute;
+}
+
 .arrow_stick {
     pointer-events: none;
     position: absolute;
