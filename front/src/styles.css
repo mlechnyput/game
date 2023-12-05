@@ -198,8 +198,8 @@
 .joe{
     pointer-events: none;
     position: absolute;
-    width: 250px;
-    height: 500px;
+    width: 100px;
+    height: 435px;
 }
 
 .arrows_fly {

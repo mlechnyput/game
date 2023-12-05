@@ -316,7 +316,7 @@ function Field() {
              * Ставим Байдена
              * */
             joe_ref.current.style.left = (marker_right_bottom_x - 4000) + 'px';
-            joe_ref.current.style.top = (marker_right_bottom_y - 615) + 'px';
+            joe_ref.current.style.top = (marker_right_bottom_y - 550) + 'px';
         }
     }
 
@@ -439,6 +439,17 @@ function Field() {
         }
     }
 
+    function intersectRect(first, second) {
+        var r1 = first.getBoundingClientRect();    //BOUNDING BOX OF THE FIRST OBJECT
+        var r2 = second.getBoundingClientRect();    //BOUNDING BOX OF THE SECOND OBJECT
+
+        //CHECK IF THE TWO BOUNDING BOXES OVERLAP
+        return !(r2.left > r1.right ||
+            r2.right < r1.left ||
+            r2.top > r1.bottom ||
+            r2.bottom < r1.top);
+    }
+
     async function moveAll() {
         /**
          * Ускорение св. падения
@@ -539,30 +550,17 @@ function Field() {
             joe_ref.current.style.left = (x_joe_0 + delta_x) + 'px';
             joe_ref.current.style.top = (y_joe_0 + delta_y) + 'px' + '';
             /**
-             * Стрела попала в Байдена (прямоугольник, очерченный задней стороной, передней стороной и верхней стороной)
+             * Стрела попала в Байдена
              * */
-
-            /**
-             * Задняя граница
-             * */
-            if (arrows_fly_ref.current.offsetLeft > joe_ref.current.offsetLeft + 160) {
-                /**
-                 * Передняя граница
-                 * */
-                if (arrows_fly_ref.current.offsetLeft <= joe_ref.current.offsetLeft + 170) {
-                    /**
-                     * Верхняя граница
-                     * */
-                    if (arrows_fly_ref.current.offsetTop >= joe_ref.current.offsetTop + -115) {
-                        return {
-                            coord_x: arrows_fly_ref.current.offsetLeft,
-                            coord_y: arrows_fly_ref.current.offsetTop,
-                            angle_degree: beta,
-                            hit_area: 'body'
-                        };
-                    }
-                }
+            if (intersectRect(arrows_fly_ref.current, joe_ref.current)) {
+                return {
+                    coord_x: arrows_fly_ref.current.offsetLeft,
+                    coord_y: arrows_fly_ref.current.offsetTop,
+                    angle_degree: beta,
+                    hit_area: 'body'
+                };
             }
+
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
