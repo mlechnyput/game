@@ -311,7 +311,7 @@ function Field() {
             /**
              * Ставим Байдена
              * */
-            joe_ref.current.style.left = (marker_right_bottom_x - 4000) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - 3000) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 615) + 'px';
         }
     }
@@ -505,12 +505,12 @@ function Field() {
         arrows_fly_ref.current.style.top = y_arrows_fly_0 - compensation_y + 'px';
         let beta;
         /**
-         * Т.к. в CSS фон уходит на 140 под нижнюю границу, то
-         * в калькуляции min_y_forest учитываем 140. И соответственно в проверке
-         * цикла заходим вниз не более чем на 120, иначе вылезет белое пятно.
+         * Т.к. в CSS фон уходит на 160 под нижнюю границу, то
+         * в калькуляции min_y_forest учитываем 160. И соответственно в проверке
+         * цикла заходим вниз не более чем на 140, иначе вылезет белое пятно.
          * */
-        const min_y_forest = (-1) * ((forest_vertical - 140) - position.marker_right_bottom.y);
-        while (y_forest_0 + delta_y >= min_y_forest - 120) {
+        const min_y_forest = (-1) * ((forest_vertical - 160) - position.marker_right_bottom.y);
+        while (y_forest_0 + delta_y >= min_y_forest - 140) {
             t += time_step_ms / 100;
             delta_x = V_0_x * t;
             delta_y = V_0_y * t - g * t * t / 2;
@@ -545,11 +545,11 @@ function Field() {
                 /**
                  * Передняя граница
                  * */
-                if (arrows_fly_ref.current.offsetLeft <= joe_ref.current.offsetLeft + 130) {
+                if (arrows_fly_ref.current.offsetLeft <= joe_ref.current.offsetLeft + 170) {
                     /**
                      * Верхняя граница
                      * */
-                    if (arrows_fly_ref.current.offsetTop >= joe_ref.current.offsetTop + 35) {
+                    if (arrows_fly_ref.current.offsetTop >= joe_ref.current.offsetTop + -15) {
                         return {
                             coord_x: arrows_fly_ref.current.offsetLeft,
                             coord_y: arrows_fly_ref.current.offsetTop,
