@@ -315,7 +315,7 @@ function Field() {
             /**
              * Ставим Байдена
              * */
-            joe_ref.current.style.left = (marker_right_bottom_x - 3000) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - 4000) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 615) + 'px';
         }
     }
@@ -545,7 +545,7 @@ function Field() {
             /**
              * Задняя граница
              * */
-            if (arrows_fly_ref.current.offsetLeft > joe_ref.current.offsetLeft + 50) {
+            if (arrows_fly_ref.current.offsetLeft > joe_ref.current.offsetLeft + 160) {
                 /**
                  * Передняя граница
                  * */
@@ -553,7 +553,7 @@ function Field() {
                     /**
                      * Верхняя граница
                      * */
-                    if (arrows_fly_ref.current.offsetTop >= joe_ref.current.offsetTop + -15) {
+                    if (arrows_fly_ref.current.offsetTop >= joe_ref.current.offsetTop + -115) {
                         return {
                             coord_x: arrows_fly_ref.current.offsetLeft,
                             coord_y: arrows_fly_ref.current.offsetTop,
@@ -719,9 +719,12 @@ function Field() {
                         setStanding_squatting(true);
                         arrow_stick_ref.current.style = '';
                         torso_ref.current.style = '';
+                        legs_ref.current.style = '';
+                        legs_folded_1_ref.current.style = '';
                         forest_ref.current.style = '';
                         arrows_fly_ref.current.style = '';
                         city_ref.current.style = '';
+                        joe_ref.current.style = '';
                         setNotShoot(true);
                         getPosition();
                         console.log('start new')
