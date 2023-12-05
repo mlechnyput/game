@@ -217,7 +217,11 @@ function Field() {
             const tg = protivol_katet / pril_katet;
             const angle_radian = Math.atan(tg);
             const angle_degree = 180 / Math.PI * angle_radian;
-            setAngle(Math.round(angle_degree));
+            /**
+             * Округляем угол до 1-го знака после запятой (возвращает строку)
+             * */
+            const angle_degree_str = angle_degree.toFixed(1);
+            setAngle(Number(angle_degree_str));
             /**
              * Наклоняем торс и летящую стрелу
              * */
