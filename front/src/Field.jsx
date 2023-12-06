@@ -569,8 +569,7 @@ function Field() {
              * Проверяем попала ли стрела в Байдена
              * */
             if (intersectRect(arrows_core_ref.current, joe_box_1_ref.current) ||
-                intersectRect(arrows_core_ref.current, joe_box_2_ref.current) ||
-                intersectRect(arrows_core_ref.current, joe_box_3_ref.current)) {
+                intersectRect(arrows_core_ref.current, joe_box_2_ref.current)) {
                 return {
                     coord_x: arrows_fly_ref.current.offsetLeft,
                     coord_y: arrows_fly_ref.current.offsetTop,
@@ -578,7 +577,17 @@ function Field() {
                     hit_area: 'body'
                 };
             }
-
+            /**
+             * Проверяем попала ли стрела в яблоко
+             * */
+            if (intersectRect(arrows_core_ref.current, joe_box_3_ref.current)) {
+                return {
+                    coord_x: arrows_fly_ref.current.offsetLeft,
+                    coord_y: arrows_fly_ref.current.offsetTop,
+                    angle_degree: beta,
+                    hit_area: 'apple'
+                };
+            }
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
