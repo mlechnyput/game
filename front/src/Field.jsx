@@ -735,21 +735,25 @@ function Field() {
             } else {
                 let compensation_x;
                 let compensation_y;
+                let rotation;
                 if (r.hit_area === 'body') {
                     compensation_x = 87;
                     compensation_y = -30;
+                    rotation = 90;
                 } else {
                     if (r.hit_area === 'legs') {
                         compensation_x = 100;
                         compensation_y = -30;
+                        rotation = 90;
                     } else {
                         if (r.hit_area === 'apple') {
                             compensation_x = 100;
-                            compensation_y = -30;
+                            compensation_y = -90;
+                            rotation = 90 + r.angle_degree;
                         }
                     }
                 }
-                arrow_stick_ref.current.style.transform = 'rotate(90deg)';
+                arrow_stick_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
                 arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
                 arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
                 setFly(false);
