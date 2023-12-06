@@ -208,7 +208,7 @@
     height: 80px;
     left: 35px;
     bottom: 20px;
-    background-color: burlywood;
+    /*background-color: burlywood;*/
 }
 
 .joe_box_2{
@@ -217,7 +217,7 @@
     height: 270px;
     right: 15px;
     bottom: 100px;
-    background-color: burlywood;
+    /*background-color: burlywood;*/
 }
 
 .joe_box_3{
@@ -226,7 +226,7 @@
     height: 45px;
     right: 25px;
     bottom: 370px;
-    background-color: burlywood;
+    /*background-color: burlywood;*/
 }
 
 .arrows_fly {
@@ -240,7 +240,7 @@
 }
 
 .arrows_core{
-    background-color: burlywood;
+    /*background-color: burlywood;*/
     height: 15px;
     width: 15px;
     top: 35px;

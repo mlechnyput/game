@@ -566,10 +566,20 @@ function Field() {
             joe_ref.current.style.left = (x_joe_0 + delta_x) + 'px';
             joe_ref.current.style.top = (y_joe_0 + delta_y) + 'px' + '';
             /**
-             * Проверяем попала ли стрела в Байдена
+             * Проверяем попала ли стрела в ногу Байдена
              * */
-            if (intersectRect(arrows_core_ref.current, joe_box_1_ref.current) ||
-                intersectRect(arrows_core_ref.current, joe_box_2_ref.current)) {
+            if (intersectRect(arrows_core_ref.current, joe_box_1_ref.current)) {
+                return {
+                    coord_x: arrows_fly_ref.current.offsetLeft,
+                    coord_y: arrows_fly_ref.current.offsetTop,
+                    angle_degree: beta,
+                    hit_area: 'legs'
+                };
+            }
+            /**
+             * Проверяем попала ли стрела в тело Байдена
+             * */
+            if (intersectRect(arrows_core_ref.current, joe_box_2_ref.current)) {
                 return {
                     coord_x: arrows_fly_ref.current.offsetLeft,
                     coord_y: arrows_fly_ref.current.offsetTop,
@@ -665,7 +675,7 @@ function Field() {
         setFon_elements(arr);
     }
 
-    const clickAndStart=() => {
+    const clickAndStart = () => {
         /**
          * Блокируем выстрел если лук не заряжен и блокируем второй выстрел если
          * предыдущий еще не завершился
@@ -721,7 +731,29 @@ function Field() {
                 arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
                 arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
                 setFly(false);
-                vibrato().then(r => console.log('stick is on'));
+                vibrato().then(r => console.log('stick is vertical'));
+            } else {
+                let compensation_x;
+                let compensation_y;
+                if (r.hit_area === 'body') {
+                    compensation_x = 87;
+                    compensation_y = -30;
+                } else {
+                    if (r.hit_area === 'legs') {
+                        compensation_x = 100;
+                        compensation_y = -30;
+                    } else {
+                        if (r.hit_area === 'apple') {
+                            compensation_x = 100;
+                            compensation_y = -30;
+                        }
+                    }
+                }
+                arrow_stick_ref.current.style.transform = 'rotate(90deg)';
+                arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
+                arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
+                setFly(false);
+                vibrato().then(r => console.log('stick is horizontal'));
             }
             /**
              * Через 9 сек старт игры с исходной позиции
