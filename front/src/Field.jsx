@@ -277,8 +277,17 @@ function Field() {
      * Квадрат 15х15 в середине наконечника стрелы для collision detect
      * */
     const arrows_core_ref = useRef();
+    /**
+     * Прямоугольник, очерчивающий ноги Байдена для collision detect
+     * */
     const joe_box_1_ref = useRef();
+    /**
+     * Прямоугольник, очерчивающий туловище и голову Байдена для collision detect
+     * */
     const joe_box_2_ref = useRef();
+    /**
+     * Прямоугольник, очерчивающий яблоко на голове Байдена для collision detect
+     * */
     const joe_box_3_ref = useRef();
 
     const getPosition = () => {
