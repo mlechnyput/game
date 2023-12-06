@@ -757,7 +757,7 @@ function Field() {
                 arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
                 arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
                 setFly(false);
-                vibrato().then(r => console.log('stick is horizontal'));
+                vibrato().then(res => console.log('hit to ' + r.hit_area));
             }
             /**
              * Через 9 сек старт игры с исходной позиции
