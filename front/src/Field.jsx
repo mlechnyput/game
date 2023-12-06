@@ -542,7 +542,7 @@ function Field() {
          * */
         const min_y_forest = (-1) * ((forest_vertical - 160) - position.marker_right_bottom.y);
         while (y_forest_0 + delta_y >= min_y_forest - 140) {
-            t += time_step_ms / 100;
+            t += time_step_ms / 140;
             delta_x = V_0_x * t;
             delta_y = V_0_y * t - g * t * t / 2;
             /**
