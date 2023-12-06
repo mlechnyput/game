@@ -665,97 +665,99 @@ function Field() {
         setFon_elements(arr);
     }
 
+    const clickAndStart=() => {
+        /**
+         * Блокируем выстрел если лук не заряжен и блокируем второй выстрел если
+         * предыдущий еще не завершился
+         * */
+        if (something_in_the_hands === 'nothing' || click_is_on_ref.current === false) {
+            return;
+        }
+        /**
+         * Фиксируем чем произвели выстрел
+         * */
+        setArrowShootWith(something_in_the_hands);
+        click_is_on_ref.current = false;
+        kim_turns_blocked_ref.current = true;
+        setKim_control(55);
+        setNotShoot(false);
+        setFly(true);
+        moveAll().then(r => {
+            console.log('Угол: ' + r.angle_degree);
+            if (r.hit_area === 'ground') {
+                /**
+                 * Устанавливаем перпендикулярную присоску. Компенсируем сдвиг
+                 * */
+                let compensation_x;
+                let compensation_y;
+                if (r.angle_degree === -90) {
+                    compensation_x = 100;
+                    compensation_y = -50;
+                } else if (r.angle_degree <= -80) {
+                    compensation_x = 80;
+                    compensation_y = -50;
+                } else if (r.angle_degree <= -70) {
+                    compensation_x = 60;
+                    compensation_y = -58;
+                } else if (r.angle_degree <= -60) {
+                    compensation_x = 40;
+                    compensation_y = -65;
+                } else if (r.angle_degree <= -50) {
+                    compensation_x = 20;
+                    compensation_y = -80;
+                } else if (r.angle_degree <= -40) {
+                    compensation_x = 5;
+                    compensation_y = -95;
+                } else if (r.angle_degree <= -30) {
+                    compensation_x = -5;
+                    compensation_y = -125;
+                } else if (r.angle_degree <= -20) {
+                    compensation_x = -25;
+                    compensation_y = -140;
+                } else if (r.angle_degree <= -10) {
+                    compensation_x = -40;
+                    compensation_y = -165;
+                }
+                arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
+                arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
+                setFly(false);
+                vibrato().then(r => console.log('stick is on'));
+            }
+            /**
+             * Через 9 сек старт игры с исходной позиции
+             * */
+            setTimeout(() => {
+                setFly(false);
+                generate_fon();
+                kim_turns_blocked_ref.current = false;
+                click_is_on_ref.current = true;
+                setAngle(0);
+                setPower(40);
+                setSomething_in_the_hands('nothing');
+                setStickIsOn(0);
+                setKim_control(1);
+                setStanding_squatting(true);
+                arrow_stick_ref.current.style = '';
+                torso_ref.current.style = '';
+                legs_ref.current.style = '';
+                legs_folded_1_ref.current.style = '';
+                forest_ref.current.style = '';
+                arrows_fly_ref.current.style = '';
+                city_ref.current.style = '';
+                joe_ref.current.style = '';
+                setNotShoot(true);
+                getPosition();
+                console.log('start new')
+            }, 9000);
+        });
+    }
+
     return (
         <div className="field">
             <div className="target">
 
             </div>
-            <div className="you" onWheel={getPower} onClick={() => {
-                /**
-                 * Блокируем выстрел если лук не заряжен и блокируем второй выстрел если
-                 * предыдущий еще не завершился
-                 * */
-                if (something_in_the_hands === 'nothing' || click_is_on_ref.current === false) {
-                    return;
-                }
-                /**
-                 * Фиксируем чем произвели выстрел
-                 * */
-                setArrowShootWith(something_in_the_hands);
-                click_is_on_ref.current = false;
-                kim_turns_blocked_ref.current = true;
-                setKim_control(55);
-                setNotShoot(false);
-                setFly(true);
-                moveAll().then(r => {
-                    console.log('Угол: ' + r.angle_degree);
-                    if (r.hit_area === 'ground') {
-                        /**
-                         * Устанавливаем перпендикулярную присоску. Компенсируем сдвиг
-                         * */
-                        let compensation_x;
-                        let compensation_y;
-                        if (r.angle_degree === -90) {
-                            compensation_x = 100;
-                            compensation_y = -50;
-                        } else if (r.angle_degree <= -80) {
-                            compensation_x = 80;
-                            compensation_y = -50;
-                        } else if (r.angle_degree <= -70) {
-                            compensation_x = 60;
-                            compensation_y = -58;
-                        } else if (r.angle_degree <= -60) {
-                            compensation_x = 40;
-                            compensation_y = -65;
-                        } else if (r.angle_degree <= -50) {
-                            compensation_x = 20;
-                            compensation_y = -80;
-                        } else if (r.angle_degree <= -40) {
-                            compensation_x = 5;
-                            compensation_y = -95;
-                        } else if (r.angle_degree <= -30) {
-                            compensation_x = -5;
-                            compensation_y = -125;
-                        } else if (r.angle_degree <= -20) {
-                            compensation_x = -25;
-                            compensation_y = -140;
-                        } else if (r.angle_degree <= -10) {
-                            compensation_x = -40;
-                            compensation_y = -165;
-                        }
-                        arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
-                        arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
-                        setFly(false);
-                        vibrato().then(r => console.log('stick is on'));
-                    }
-                    /**
-                     * Через 9 сек старт игры с исходной позиции
-                     * */
-                    setTimeout(() => {
-                        setFly(false);
-                        generate_fon();
-                        kim_turns_blocked_ref.current = false;
-                        click_is_on_ref.current = true;
-                        setAngle(0);
-                        setPower(40);
-                        setSomething_in_the_hands('nothing');
-                        setStickIsOn(0);
-                        setKim_control(1);
-                        setStanding_squatting(true);
-                        arrow_stick_ref.current.style = '';
-                        torso_ref.current.style = '';
-                        legs_ref.current.style = '';
-                        legs_folded_1_ref.current.style = '';
-                        forest_ref.current.style = '';
-                        arrows_fly_ref.current.style = '';
-                        city_ref.current.style = '';
-                        joe_ref.current.style = '';
-                        setNotShoot(true);
-                        getPosition();
-                        console.log('start new')
-                    }, 9000);
-                });
-            }}>
+            <div className="you" onWheel={getPower} onClick={clickAndStart}>
                 <div className="sky"/>
                 <div className="city" ref={city_ref}>
                     <div className="buildings">{buildings_elements.map(c => {
