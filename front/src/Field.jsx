@@ -331,7 +331,7 @@ function Field() {
             /**
              * Ставим Байдена
              * */
-            joe_ref.current.style.left = (marker_right_bottom_x - 4000) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - 5000) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 550) + 'px';
         }
     }
@@ -741,6 +741,9 @@ function Field() {
                     if (r.angle_degree <= -55) {
                         compensation_x = 160;
                         compensation_y = 20;
+                    } else if (r.angle_degree <= -40) {
+                        compensation_x = 125;
+                        compensation_y = -20;
                     } else if (r.angle_degree <= -20) {
                         compensation_x = 100;
                         compensation_y = -30;
