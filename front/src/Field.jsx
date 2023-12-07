@@ -331,7 +331,7 @@ function Field() {
             /**
              * Ставим Байдена
              * */
-            joe_ref.current.style.left = (marker_right_bottom_x - 3000) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - 2500) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 550) + 'px';
         }
     }
@@ -640,25 +640,31 @@ function Field() {
     const green = <img src={arrow_green} alt={""}/>;
     const white = <img src={arrow_white} alt={""}/>;
 
-    const b_1 = <img src={bush_1} alt={""}/>;
-    const b_2 = <img src={bush_2} alt={""}/>;
-    const b_3 = <img src={bush_3} alt={""}/>;
-    const t_1 = <img src={tree_1} alt={""}/>;
-    const t_2 = <img src={tree_2} alt={""}/>;
-    const s_1 = <img src={stone_1} alt={""}/>;
-    const s_2 = <img src={stone_2} alt={""}/>;
-    const l_1 = <img src={log_1} alt={""}/>;
+    const b_1 = <img key="b_1" src={bush_1} alt={""}/>;
+    const b_2 = <img key="b_2" src={bush_2} alt={""}/>;
+    const b_3 = <img key="b_3" src={bush_3} alt={""}/>;
+    const t_1 = <img key="t_1" src={tree_1} alt={""}/>;
+    const t_2 = <img key="t_2" src={tree_2} alt={""}/>;
+    const s_1 = <img key="s_1" src={stone_1} alt={""}/>;
+    const s_2 = <img key="s_2" src={stone_2} alt={""}/>;
+    const l_1 = <img key="l_1" src={log_1} alt={""}/>;
     /**
      * Массив для перетасовки элементов ближнего фона
      * */
     let background_images = [s_1, s_2, t_1, t_2, b_3, l_1];
 
-    const c_3 = <img src={city_3} alt={""}/>;
-    const c_4 = <img src={city_4} alt={""}/>;
+    const c_1 = <img key="c_1" src={city_4} alt={""}/>;
+    const c_2 = <img key="c_2" src={city_3} alt={""}/>;
+    const c_3 = <img key="c_3" src={city_4} alt={""}/>;
+    const c_4 = <img key="c_4" src={city_3} alt={""}/>;
+    const c_5 = <img key="c_5" src={city_4} alt={""}/>;
+    const c_6 = <img key="c_6" src={city_3} alt={""}/>;
+    const c_7 = <img key="c_7" src={city_4} alt={""}/>;
+    const c_8 = <img key="c_8" src={city_3} alt={""}/>;
     /**
      * Массив зданий
      * */
-    const buildings_elements = [c_4, c_3, c_4, c_3, c_4, c_3, c_4, c_3];
+    const buildings_elements = [c_1, c_2, c_3, c_4, c_5, c_6, c_7, c_8];
 
     const generate_fon = () => {
         /**
@@ -761,7 +767,10 @@ function Field() {
                         compensation_y = -30;
                     } else if (r.angle_degree <= -10) {
                         compensation_x = 90;
-                        compensation_y = -30;
+                        compensation_y = -60;
+                    } else if (r.angle_degree <= 0) {
+                        compensation_x = 90;
+                        compensation_y = -60;
                     }
                     rotation = 90;
                 } else {
