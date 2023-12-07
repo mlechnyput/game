@@ -331,7 +331,7 @@ function Field() {
             /**
              * Ставим Байдена
              * */
-            joe_ref.current.style.left = (marker_right_bottom_x - 4500) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - 3500) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 550) + 'px';
         }
     }
@@ -738,7 +738,10 @@ function Field() {
                 let rotation;
 
                 if (r.hit_area === 'legs' || r.hit_area === 'body') {
-                    if (r.angle_degree <= -50) {
+                    if (r.angle_degree <= -60) {
+                        compensation_x = 165;
+                        compensation_y = 25;
+                    } else if (r.angle_degree <= -50) {
                         compensation_x = 150;
                         compensation_y = 20;
                     } else if (r.angle_degree <= -40) {
@@ -747,8 +750,14 @@ function Field() {
                     } else if (r.angle_degree <= -30) {
                         compensation_x = 105;
                         compensation_y = -25;
-                    } else if (r.angle_degree <= -20) {
+                    } else if (r.angle_degree <= -25) {
                         compensation_x = 100;
+                        compensation_y = -30;
+                    } else if (r.angle_degree <= -20) {
+                        compensation_x = 90;
+                        compensation_y = -30;
+                    } else if (r.angle_degree <= -10) {
+                        compensation_x = 90;
                         compensation_y = -30;
                     }
                     rotation = 90;
