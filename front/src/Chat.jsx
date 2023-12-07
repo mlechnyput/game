@@ -8,7 +8,6 @@ function Chat(props) {
     const [changeProps, setChangeProps] = useState('');
 
     useEffect(() => {
-        console.log('chat render');
         setChangeProps(props.obj);
     });
 
