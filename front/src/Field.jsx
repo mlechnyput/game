@@ -331,7 +331,7 @@ function Field() {
             /**
              * Ставим Байдена
              * */
-            joe_ref.current.style.left = (marker_right_bottom_x - 1500) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - 1000) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 550) + 'px';
         }
     }
@@ -777,9 +777,9 @@ function Field() {
                     } else if (r.angle_degree <= 0) {
                         compensation_x = 90;
                         compensation_y = -85;
-                    } else if (r.angle_degree <= 10) {
+                    } else if (r.angle_degree <= 20) {
                         compensation_x = 90;
-                        compensation_y = -90;
+                        compensation_y = -100;
                     }
                     rotation = 90;
                 } else {
