@@ -22,6 +22,12 @@ export default function Screen() {
 
     const [something_in_the_hands, setSomething_in_the_hands] = useState('nothing');
 
+    const [arms, setArms] = useState({
+        atomic: 0,
+        grenade: 0,
+        arrow: 0
+    });
+
     useEffect(() => {
 
         ws.onopen = function () {
@@ -63,7 +69,8 @@ export default function Screen() {
 
     return (
         <div className="body">
-            <GameContext.Provider value={[something_in_the_hands, setSomething_in_the_hands]}>
+            <GameContext.Provider value={[something_in_the_hands, setSomething_in_the_hands,
+                arms, setArms]}>
                 <Player obj={player}/>
                 <Hat objPlayer={player}
                      visitorsQuantity={quantity}/>

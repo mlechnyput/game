@@ -131,7 +131,7 @@ function Field() {
      * grenade
      * atomic
      * */
-    const [something_in_the_hands, setSomething_in_the_hands] = useContext(GameContext);
+    const [something_in_the_hands, setSomething_in_the_hands, arms, setArms] = useContext(GameContext);
     /**
      * true - выстрел еще не произведен
      * false - выстрыл произведен
@@ -159,27 +159,50 @@ function Field() {
      * */
     useEffect(() => {
         if (notShoot) {
-            item_in_the_hands_ref.current = something_in_the_hands;
             if (something_in_the_hands === 'nothing') {
                 electricity_stopped_ref.current = true;
                 setKim_control(1);
             } else {
                 if (something_in_the_hands === 'arrow') {
-                    electricity_stopped_ref.current = true;
-                    setKim_control(6);
+                    if (arms.arrow > 0) {
+                        setArms({
+                            arrow: arms.arrow - 1,
+                            atomic: item_in_the_hands_ref.current === 'atomic' ? ++arms.atomic : arms.atomic,
+                            grenade: item_in_the_hands_ref.current === 'grenade' ? ++arms.grenade : arms.grenade
+                        });
+                        item_in_the_hands_ref.current = something_in_the_hands;
+                        electricity_stopped_ref.current = true;
+                        setKim_control(6);
+                    }
                 } else {
                     if (something_in_the_hands === 'grenade') {
-                        electricity_stopped_ref.current = true;
-                        setKim_control(11);
+                        if (arms.grenade > 0) {
+                            setArms({
+                                arrow: item_in_the_hands_ref.current === 'arrow' ? ++arms.arrow : arms.arrow,
+                                atomic: item_in_the_hands_ref.current === 'atomic' ? ++arms.atomic : arms.atomic,
+                                grenade: arms.grenade - 1
+                            });
+                            item_in_the_hands_ref.current = something_in_the_hands;
+                            electricity_stopped_ref.current = true;
+                            setKim_control(11);
+                        }
                     } else {
                         if (something_in_the_hands === 'atomic') {
-                            electricity_stopped_ref.current = false;
-                            runElectricity().then(r => {
-                                /**
-                                 * По завершению работы функции снимаем блокировку поворота головы
-                                 * */
-                                kim_turns_blocked_ref.current = false;
-                            });
+                            if (arms.atomic > 0) {
+                                setArms({
+                                    arrow: item_in_the_hands_ref.current === 'arrow' ? ++arms.arrow : arms.arrow,
+                                    atomic: arms.atomic - 1,
+                                    grenade: item_in_the_hands_ref.current === 'grenade' ? ++arms.grenade : arms.grenade
+                                });
+                                item_in_the_hands_ref.current = something_in_the_hands;
+                                electricity_stopped_ref.current = false;
+                                runElectricity().then(r => {
+                                    /**
+                                     * По завершению работы функции снимаем блокировку поворота головы
+                                     * */
+                                    kim_turns_blocked_ref.current = false;
+                                });
+                            }
                         }
                     }
                 }
@@ -188,6 +211,7 @@ function Field() {
     }, [something_in_the_hands]);
 
     useEffect(() => {
+        resetArms();
         getPosition();
         window.addEventListener('resize', getPosition);
         window.addEventListener('mousemove', (e) => getCursor(e));
@@ -244,7 +268,7 @@ function Field() {
     const legs_folded_1_ref = useRef();
     const torso_ref = useRef();
     const velocity_bar_ref = useRef();
-    const item_in_the_hands_ref = useRef();
+    const item_in_the_hands_ref = useRef('');
     /**
      * Для досрочной остановки электричества
      * */
@@ -334,6 +358,14 @@ function Field() {
             joe_ref.current.style.left = (marker_right_bottom_x - 1000) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 550) + 'px';
         }
+    }
+
+    const resetArms = () => {
+        setArms({
+            atomic: 1,
+            grenade: 2,
+            arrow: 3
+        });
     }
 
     const getCursor = (ev) => {
@@ -686,13 +718,13 @@ function Field() {
          * Блокируем выстрел если лук не заряжен и блокируем второй выстрел если
          * предыдущий еще не завершился
          * */
-        if (something_in_the_hands === 'nothing' || click_is_on_ref.current === false) {
+        if (item_in_the_hands_ref.current === 'nothing' || click_is_on_ref.current === false) {
             return;
         }
         /**
          * Фиксируем чем произвели выстрел
          * */
-        setArrowShootWith(something_in_the_hands);
+        setArrowShootWith(item_in_the_hands_ref.current);
         click_is_on_ref.current = false;
         kim_turns_blocked_ref.current = true;
         setKim_control(55);
@@ -801,12 +833,12 @@ function Field() {
              * */
             setTimeout(() => {
                 setFly(false);
-                generate_fon();
                 kim_turns_blocked_ref.current = false;
                 click_is_on_ref.current = true;
                 setAngle(0);
                 setPower(40);
                 setSomething_in_the_hands('nothing');
+                item_in_the_hands_ref.current = 'nothing';
                 setStickIsOn(0);
                 setKim_control(1);
                 setStanding_squatting(true);
@@ -820,6 +852,10 @@ function Field() {
                 joe_ref.current.style = '';
                 setNotShoot(true);
                 getPosition();
+                if (arms.atomic + arms.arrow + arms.grenade === 0) {
+                    resetArms();
+                    generate_fon();
+                }
             }, 9000);
         });
     }
