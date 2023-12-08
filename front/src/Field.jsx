@@ -56,6 +56,11 @@ import electricity32 from "./images/electricity/electricity0032.png";
 import electricity33 from "./images/electricity/electricity0033.png";
 import electricity34 from "./images/electricity/electricity0034.png";
 import kim_release from "./images/kim_release/kim2.png";
+import grenade_glow1 from "./images/grenade_glow/grenade_glow0001.png"
+import grenade_glow2 from "./images/grenade_glow/grenade_glow0002.png"
+import grenade_glow3 from "./images/grenade_glow/grenade_glow0003.png"
+import grenade_glow4 from "./images/grenade_glow/grenade_glow0004.png"
+import grenade_glow5 from "./images/grenade_glow/grenade_glow0005.png"
 import arrow_red from "./images/arrows/arrows0001.png";
 import arrow_green from "./images/arrows/arrows0002.png";
 import arrow_white from "./images/arrows/arrows0003.png";
@@ -184,7 +189,13 @@ function Field() {
                             });
                             item_in_the_hands_ref.current = something_in_the_hands;
                             electricity_stopped_ref.current = true;
-                            setKim_control(11);
+                            runGrenadeGlow().then(r => {
+                                /**
+                                 * По завершению работы функции снимаем блокировку поворота головы
+                                 * */
+                                kim_turns_blocked_ref.current = false;
+                                setKim_control(11);
+                            });
                         }
                     } else {
                         if (something_in_the_hands === 'atomic') {
@@ -423,6 +434,47 @@ function Field() {
                     }
                 }
             }
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(i_kim++);
+                }, time)
+            });
+            let result = await promise;
+        }
+    }
+
+    async function runGrenadeGlow() {
+        /**
+         *На время работы функции ставим блокировку поворота головы
+         * */
+        kim_turns_blocked_ref.current = true;
+        let i_kim = 56;
+        let time;
+        while (i_kim <= 60) {
+            /**
+             * Рисуем свечение
+             * */
+            setKim_control(i_kim);
+            switch (i_kim) {
+                case 56:
+                    time = 10;
+                    break;
+                case 57:
+                    time = 10;
+                    break;
+                case 58:
+                    time = 20;
+                    break;
+                case 59:
+                    time = 10;
+                    break;
+                case 60:
+                    time = 5;
+                    break;
+            }
+            /**
+             * Притормаживаем
+             * */
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(i_kim++);
@@ -945,6 +997,11 @@ function Field() {
                     <img src={electricity33} hidden={kim_control !== 53} alt={""}/>
                     <img src={electricity34} hidden={kim_control !== 54} alt={""}/>
                     <img src={kim_release} hidden={kim_control !== 55} alt={""}/>
+                    <img src={grenade_glow1} hidden={kim_control !== 56} alt={""}/>
+                    <img src={grenade_glow2} hidden={kim_control !== 57} alt={""}/>
+                    <img src={grenade_glow3} hidden={kim_control !== 58} alt={""}/>
+                    <img src={grenade_glow4} hidden={kim_control !== 59} alt={""}/>
+                    <img src={grenade_glow5} hidden={kim_control !== 60} alt={""}/>
                 </div>
                 <div className="joe" ref={joe_ref}>
                     <img src={joe_1} alt={""}/>

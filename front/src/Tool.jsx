@@ -17,8 +17,6 @@ function Tool() {
             <div className="arrow_num">{arms.arrow}</div>
             <div className="arrow"
                  onClick={() => setSomething_in_the_hands('arrow')}/>
-            <div className="non"
-                 onClick={() => setSomething_in_the_hands('nothing')}/>
         </div>
     );
 }
