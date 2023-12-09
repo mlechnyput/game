@@ -61,6 +61,21 @@ import grenade_glow2 from "./images/grenade_glow/grenade_glow0002.png"
 import grenade_glow3 from "./images/grenade_glow/grenade_glow0003.png"
 import grenade_glow4 from "./images/grenade_glow/grenade_glow0004.png"
 import grenade_glow5 from "./images/grenade_glow/grenade_glow0005.png"
+import grenade_glow6 from "./images/grenade_glow/grenade_glow0006.png"
+import grenade_glow7 from "./images/grenade_glow/grenade_glow0007.png"
+import grenade_glow8 from "./images/grenade_glow/grenade_glow0008.png"
+import grenade_glow9 from "./images/grenade_glow/grenade_glow0009.png"
+import grenade_glow10 from "./images/grenade_glow/grenade_glow0010.png"
+import grenade_glow11 from "./images/grenade_glow/grenade_glow0011.png"
+import grenade_glow12 from "./images/grenade_glow/grenade_glow0012.png"
+import grenade_glow13 from "./images/grenade_glow/grenade_glow0013.png"
+import grenade_glow14 from "./images/grenade_glow/grenade_glow0014.png"
+import grenade_glow15 from "./images/grenade_glow/grenade_glow0015.png"
+import grenade_glow16 from "./images/grenade_glow/grenade_glow0016.png"
+import grenade_glow17 from "./images/grenade_glow/grenade_glow0017.png"
+import grenade_glow18 from "./images/grenade_glow/grenade_glow0018.png"
+import grenade_glow19 from "./images/grenade_glow/grenade_glow0019.png"
+import grenade_glow20 from "./images/grenade_glow/grenade_glow0020.png"
 import arrow_red from "./images/arrows/arrows0001.png";
 import arrow_green from "./images/arrows/arrows0002.png";
 import arrow_white from "./images/arrows/arrows0003.png";
@@ -177,6 +192,7 @@ function Field() {
                         });
                         item_in_the_hands_ref.current = something_in_the_hands;
                         electricity_stopped_ref.current = true;
+                        grenade_glowing_stopped_ref.current = true;
                         setKim_control(6);
                     }
                 } else {
@@ -189,12 +205,12 @@ function Field() {
                             });
                             item_in_the_hands_ref.current = something_in_the_hands;
                             electricity_stopped_ref.current = true;
+                            grenade_glowing_stopped_ref.current = false;
                             runGrenadeGlow().then(r => {
                                 /**
                                  * По завершению работы функции снимаем блокировку поворота головы
                                  * */
                                 kim_turns_blocked_ref.current = false;
-                                setKim_control(11);
                             });
                         }
                     } else {
@@ -207,6 +223,7 @@ function Field() {
                                 });
                                 item_in_the_hands_ref.current = something_in_the_hands;
                                 electricity_stopped_ref.current = false;
+                                grenade_glowing_stopped_ref.current = true;
                                 runElectricity().then(r => {
                                     /**
                                      * По завершению работы функции снимаем блокировку поворота головы
@@ -324,6 +341,10 @@ function Field() {
      * Прямоугольник, очерчивающий яблоко на голове Байдена для collision detect
      * */
     const joe_box_3_ref = useRef();
+    /**
+     * Для досрочной остановки свечения гранаты
+     * */
+    const grenade_glowing_stopped_ref = useRef(false);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -449,28 +470,13 @@ function Field() {
          * */
         kim_turns_blocked_ref.current = true;
         let i_kim = 56;
-        let time;
-        while (i_kim <= 60) {
-            /**
-             * Рисуем свечение
-             * */
-            setKim_control(i_kim);
-            switch (i_kim) {
-                case 56:
-                    time = 10;
-                    break;
-                case 57:
-                    time = 10;
-                    break;
-                case 58:
-                    time = 20;
-                    break;
-                case 59:
-                    time = 10;
-                    break;
-                case 60:
-                    time = 5;
-                    break;
+        let time = 30;
+        while (i_kim <= 75) {
+            if (!grenade_glowing_stopped_ref.current) {
+                /**
+                 * Рисуем свечение
+                 * */
+                setKim_control(i_kim);
             }
             /**
              * Притормаживаем
@@ -1002,6 +1008,21 @@ function Field() {
                     <img src={grenade_glow3} hidden={kim_control !== 58} alt={""}/>
                     <img src={grenade_glow4} hidden={kim_control !== 59} alt={""}/>
                     <img src={grenade_glow5} hidden={kim_control !== 60} alt={""}/>
+                    <img src={grenade_glow6} hidden={kim_control !== 61} alt={""}/>
+                    <img src={grenade_glow7} hidden={kim_control !== 62} alt={""}/>
+                    <img src={grenade_glow8} hidden={kim_control !== 63} alt={""}/>
+                    <img src={grenade_glow9} hidden={kim_control !== 64} alt={""}/>
+                    <img src={grenade_glow10} hidden={kim_control !== 65} alt={""}/>
+                    <img src={grenade_glow11} hidden={kim_control !== 66} alt={""}/>
+                    <img src={grenade_glow12} hidden={kim_control !== 67} alt={""}/>
+                    <img src={grenade_glow13} hidden={kim_control !== 68} alt={""}/>
+                    <img src={grenade_glow14} hidden={kim_control !== 69} alt={""}/>
+                    <img src={grenade_glow15} hidden={kim_control !== 70} alt={""}/>
+                    <img src={grenade_glow16} hidden={kim_control !== 71} alt={""}/>
+                    <img src={grenade_glow17} hidden={kim_control !== 72} alt={""}/>
+                    <img src={grenade_glow18} hidden={kim_control !== 73} alt={""}/>
+                    <img src={grenade_glow19} hidden={kim_control !== 74} alt={""}/>
+                    <img src={grenade_glow20} hidden={kim_control !== 75} alt={""}/>
                 </div>
                 <div className="joe" ref={joe_ref}>
                     <img src={joe_1} alt={""}/>
