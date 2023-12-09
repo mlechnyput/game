@@ -345,6 +345,8 @@ function Field() {
      * Для досрочной остановки свечения гранаты
      * */
     const grenade_glowing_stopped_ref = useRef(false);
+    const baiden_position_x = useRef(0);
+    const game_in_the_beginning = useRef(true);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -385,10 +387,11 @@ function Field() {
             arrows_fly_ref.current.style.left = (marker_right_bottom_x * 0.66 - 310) + 'px';
             arrows_fly_ref.current.style.top = (marker_right_bottom_y - 375) + 'px';
             /**
-             * Ставим Байдена
+             * Ставим Байдена за пределы окна. Y меняться уже не будет. Х будет изменен в момент выстрела
              * */
-            joe_ref.current.style.left = (marker_right_bottom_x - 1000) + 'px';
             joe_ref.current.style.top = (marker_right_bottom_y - 550) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - 2000) + 'px';
+
         }
     }
 
@@ -779,6 +782,7 @@ function Field() {
         if (item_in_the_hands_ref.current === 'nothing' || click_is_on_ref.current === false) {
             return;
         }
+        put_baiden_to_x_pos();
         /**
          * Фиксируем чем произвели выстрел
          * */
@@ -913,9 +917,29 @@ function Field() {
                 if (arms.atomic + arms.arrow + arms.grenade === 0) {
                     resetArms();
                     generate_fon();
+                    game_in_the_beginning.current = true;
                 }
             }, 9000);
         });
+    }
+
+    const put_baiden_to_x_pos = () => {
+        const min_x = 1500;
+        const max_x = 4000;
+        /**
+         * Ставим Байдена. Если новая игра - генерим случайный Х и устанавливаем на него.
+         * Если игра не новая - берем Х, сгенерированный ранее.
+         * */
+        if (game_in_the_beginning.current) {
+            let random_x = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
+            baiden_position_x.current = random_x;
+            joe_ref.current.style.left = (position.marker_right_bottom.x - random_x) + 'px';
+            game_in_the_beginning.current = false;
+            console.log('сгенерил новый х:' + random_x);
+        } else {
+            joe_ref.current.style.left = (position.marker_right_bottom.x - baiden_position_x.current) + 'px';
+            console.log('взял старый х:' + baiden_position_x.current);
+        }
     }
 
     return (
