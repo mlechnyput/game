@@ -470,8 +470,8 @@ function Field() {
          * */
         kim_turns_blocked_ref.current = true;
         let i_kim = 56;
-        let time = 30;
-        while (i_kim <= 75) {
+        let time = 40;
+        while (i_kim <= 81) {
             if (!grenade_glowing_stopped_ref.current) {
                 /**
                  * Рисуем свечение
@@ -1022,7 +1022,13 @@ function Field() {
                     <img src={grenade_glow17} hidden={kim_control !== 72} alt={""}/>
                     <img src={grenade_glow18} hidden={kim_control !== 73} alt={""}/>
                     <img src={grenade_glow19} hidden={kim_control !== 74} alt={""}/>
-                    <img src={grenade_glow20} hidden={kim_control !== 75} alt={""}/>
+                    <img src={grenade_glow1} hidden={kim_control !== 75} alt={""}/>
+                    <img src={grenade_glow2} hidden={kim_control !== 76} alt={""}/>
+                    <img src={grenade_glow3} hidden={kim_control !== 77} alt={""}/>
+                    <img src={grenade_glow4} hidden={kim_control !== 78} alt={""}/>
+                    <img src={grenade_glow5} hidden={kim_control !== 79} alt={""}/>
+                    <img src={grenade_glow6} hidden={kim_control !== 80} alt={""}/>
+                    <img src={grenade_glow20} hidden={kim_control !== 81} alt={""}/>
                 </div>
                 <div className="joe" ref={joe_ref}>
                     <img src={joe_1} alt={""}/>
