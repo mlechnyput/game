@@ -401,8 +401,9 @@ function Field() {
             /**
              * Генерим сетку радиолокатора
              * */
-            get_vert_lines(marker_right_bottom_y);
-            get_hor_lines(marker_right_bottom_y);
+            const target_hor_size = marker_right_bottom_x * 3 / 7;
+            get_vert_lines(marker_right_bottom_y, target_hor_size);
+            get_hor_lines(marker_right_bottom_y, target_hor_size);
         }
     }
 
@@ -960,9 +961,10 @@ function Field() {
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
-    const get_vert_lines = (vert_size) => {
+    const get_vert_lines = (vert_size, hor_size) => {
         let arr = [];
-        for (let i = 1; i < 13; i++) {
+        let num = Math.round(hor_size / 30);
+        for (let i = 1; i <= num; i++) {
             const line_x = i * 30;
             const line_k = 'vert' + line_x;
             const line_el = <line x1={line_x} y1={0} x2={line_x} y2={vert_size}
@@ -972,13 +974,13 @@ function Field() {
         setVert_lines(arr);
     }
 
-    const get_hor_lines = (vert_size) => {
+    const get_hor_lines = (vert_size, hor_size) => {
         let arr = [];
         let num = Math.round(vert_size / 30);
         for (let i = 1; i <= num; i++) {
             const line_y = i * 30;
             const line_k = 'hor' + line_y;
-            const line_el = <line x1={0} y1={line_y} x2={400} y2={line_y}
+            const line_el = <line x1={0} y1={line_y} x2={hor_size} y2={line_y}
                                   key={line_k} className="sonar_grid"/>;
             arr.push(line_el);
         }
