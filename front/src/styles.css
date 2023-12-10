@@ -198,15 +198,15 @@
 .joe{
     pointer-events: none;
     position: absolute;
-    width: 100px;
-    height: 435px;
+    width: 200px;
+    height: 460px;
 }
 
 .joe_box_1{
     position: absolute;
     width: 30px;
     height: 80px;
-    left: 35px;
+    left: 85px;
     bottom: 20px;
     /*background-color: burlywood;*/
 }
@@ -214,8 +214,8 @@
 .joe_box_2{
     position: absolute;
     width: 40px;
-    height: 270px;
-    right: 15px;
+    height: 265px;
+    right: 65px;
     bottom: 100px;
     /*background-color: burlywood;*/
 }
@@ -224,8 +224,8 @@
     position: absolute;
     width: 32px;
     height: 45px;
-    right: 25px;
-    bottom: 370px;
+    right: 75px;
+    bottom: 375px;
     /*background-color: burlywood;*/
 }
 

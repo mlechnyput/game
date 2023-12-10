@@ -389,7 +389,7 @@ function Field() {
             /**
              * Ставим Байдена за пределы окна. Y меняться уже не будет. Х будет изменен в момент выстрела
              * */
-            joe_ref.current.style.top = (marker_right_bottom_y - 550) + 'px';
+            joe_ref.current.style.top = (marker_right_bottom_y - 575) + 'px';
             joe_ref.current.style.left = (marker_right_bottom_x - 2000) + 'px';
 
         }
