@@ -86,7 +86,12 @@
 }
 
 .target {
-    background-color: white;
+    background-color: black;
+}
+
+.sonar_grid{
+    stroke: #393939;
+    stroke-width: 1px;
 }
 
 .you {

@@ -173,6 +173,8 @@ function Field() {
      * Масссив с фоновыми элеиентами (для ближнего фона)
      * */
     const [fon_elements, setFon_elements] = useState([]);
+    const [vert_lines, setVert_lines] = useState([]);
+    const [hor_lines, setHor_lines] = useState([]);
     /**
      * Из something_in_the_hands перекладываем значение в Ref и устанавливаем персонажа в
      * начальный кадр для выполнения rerender.
@@ -396,7 +398,11 @@ function Field() {
             joe_ref.current.style.top = (marker_right_bottom_y - 575) + 'px';
             joe_ref.current.style.left = (marker_right_bottom_x - baiden_position_x_ref.current) + 'px';
             console.log('Позиция Байдена х:' + baiden_position_x_ref.current);
-
+            /**
+             * Генерим сетку радиолокатора
+             * */
+            get_vert_lines(marker_right_bottom_y);
+            get_hor_lines(marker_right_bottom_y);
         }
     }
 
@@ -954,11 +960,42 @@ function Field() {
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
+    const get_vert_lines = (vert_size) => {
+        let arr = [];
+        for (let i = 1; i < 13; i++) {
+            const line_x = i * 30;
+            const line_k = 'vert' + line_x;
+            const line_el = <line x1={line_x} y1={0} x2={line_x} y2={vert_size}
+                                  key={line_k} className="sonar_grid"/>;
+            arr.push(line_el);
+        }
+        setVert_lines(arr);
+    }
+
+    const get_hor_lines = (vert_size) => {
+        let arr = [];
+        let num = Math.round(vert_size / 30);
+        for (let i = 1; i <= num; i++) {
+            const line_y = i * 30;
+            const line_k = 'hor' + line_y;
+            const line_el = <line x1={0} y1={line_y} x2={400} y2={line_y}
+                                  key={line_k} className="sonar_grid"/>;
+            arr.push(line_el);
+        }
+        setHor_lines(arr);
+    }
 
     return (
         <div className="field">
             <div className="target">
-
+                <svg width="100%" height="100%">
+                    {vert_lines.map(l => {
+                        return l;
+                    })}
+                    {hor_lines.map(l => {
+                        return l;
+                    })}
+                </svg>
             </div>
             <div className="you" onWheel={getPower} onClick={clickAndStart}>
                 <div className="sky"/>
