@@ -332,15 +332,19 @@ function Field() {
     /**
      * Прямоугольник, очерчивающий ноги Байдена для collision detect
      * */
-    const joe_box_1_ref = useRef();
+    const joe_box_legs_ref = useRef();
     /**
      * Прямоугольник, очерчивающий туловище и голову Байдена для collision detect
      * */
-    const joe_box_2_ref = useRef();
+    const joe_box_body_ref = useRef();
     /**
      * Прямоугольник, очерчивающий яблоко на голове Байдена для collision detect
      * */
-    const joe_box_3_ref = useRef();
+    const joe_box_apple_ref = useRef();
+    /**
+     * Прямоугольник, очерчивающий верхнюю часть головы Байдена для collision detect
+     * */
+    const joe_box_head_ref = useRef();
     /**
      * Для досрочной остановки свечения гранаты
      * */
@@ -397,9 +401,9 @@ function Field() {
 
     const resetArms = () => {
         setArms({
-            atomic: 1,
-            grenade: 2,
-            arrow: 3
+            atomic: 0,
+            grenade: 0,
+            arrow: 7
         });
     }
 
@@ -661,7 +665,7 @@ function Field() {
             /**
              * Проверяем попала ли стрела в ногу Байдена
              * */
-            if (intersectRect(arrows_core_ref.current, joe_box_1_ref.current)) {
+            if (intersectRect(arrows_core_ref.current, joe_box_legs_ref.current)) {
                 return {
                     coord_x: arrows_fly_ref.current.offsetLeft,
                     coord_y: arrows_fly_ref.current.offsetTop,
@@ -672,7 +676,7 @@ function Field() {
             /**
              * Проверяем попала ли стрела в тело Байдена
              * */
-            if (intersectRect(arrows_core_ref.current, joe_box_2_ref.current)) {
+            if (intersectRect(arrows_core_ref.current, joe_box_body_ref.current)) {
                 return {
                     coord_x: arrows_fly_ref.current.offsetLeft,
                     coord_y: arrows_fly_ref.current.offsetTop,
@@ -683,12 +687,23 @@ function Field() {
             /**
              * Проверяем попала ли стрела в яблоко
              * */
-            if (intersectRect(arrows_core_ref.current, joe_box_3_ref.current)) {
+            if (intersectRect(arrows_core_ref.current, joe_box_apple_ref.current)) {
                 return {
                     coord_x: arrows_fly_ref.current.offsetLeft,
                     coord_y: arrows_fly_ref.current.offsetTop,
                     angle_degree: beta,
                     hit_area: 'apple'
+                };
+            }
+            /**
+             * Проверяем попала ли стрела в голову Байдена
+             * */
+            if (intersectRect(arrows_core_ref.current, joe_box_head_ref.current)) {
+                return {
+                    coord_x: arrows_fly_ref.current.offsetLeft,
+                    coord_y: arrows_fly_ref.current.offsetTop,
+                    angle_degree: beta,
+                    hit_area: 'head'
                 };
             }
             let promise = new Promise((resolve, reject) => {
@@ -836,8 +851,18 @@ function Field() {
                 let compensation_x;
                 let compensation_y;
                 let rotation;
+                /**
+                 * additional_y это дополнительное смещение вниз при попадании в голову Байдена, чтобы не было
+                 * визуального конфликта с попаданием в яблоко
+                 * */
+                let additional_y;
+                if (r.hit_area === 'head') {
+                    additional_y = 15;
+                } else {
+                    additional_y = 0;
+                }
 
-                if (r.hit_area === 'legs' || r.hit_area === 'body') {
+                if (r.hit_area === 'legs' || r.hit_area === 'body' || r.hit_area === 'head') {
                     if (r.angle_degree <= -80) {
                         compensation_x = 195;
                         compensation_y = 30;
@@ -879,14 +904,14 @@ function Field() {
                 } else {
                     if (r.hit_area === 'apple') {
                         compensation_x = 100;
-                        compensation_y = -90;
+                        compensation_y = -100;
                         rotation = 90 + r.angle_degree;
                     }
                 }
 
                 arrow_stick_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
                 arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
-                arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
+                arrow_stick_ref.current.style.top = r.coord_y + compensation_y + additional_y + 'px';
                 setFly(false);
                 vibrato().then(res => console.log('hit to ' + r.hit_area));
             }
@@ -1056,9 +1081,10 @@ function Field() {
                 </div>
                 <div className="joe" ref={joe_ref}>
                     <img src={joe_1} alt={""}/>
-                    <div className="joe_box_1" ref={joe_box_1_ref}/>
-                    <div className="joe_box_2" ref={joe_box_2_ref}/>
-                    <div className="joe_box_3" ref={joe_box_3_ref}/>
+                    <div className="joe_box_legs" ref={joe_box_legs_ref}/>
+                    <div className="joe_box_body" ref={joe_box_body_ref}/>
+                    <div className="joe_box_apple" ref={joe_box_apple_ref}/>
+                    <div className="joe_box_head" ref={joe_box_head_ref}/>
                 </div>
                 <div className="arrows_fly" ref={arrows_fly_ref}>
                     {!fly ? null :
