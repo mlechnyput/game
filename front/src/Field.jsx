@@ -239,6 +239,7 @@ function Field() {
     }, [something_in_the_hands]);
 
     useEffect(() => {
+        get_random_x_for_baiden();
         resetArms();
         getPosition();
         window.addEventListener('resize', getPosition);
@@ -350,7 +351,6 @@ function Field() {
      * */
     const grenade_glowing_stopped_ref = useRef(false);
     const baiden_position_x = useRef(0);
-    const game_in_the_beginning = useRef(true);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -797,6 +797,9 @@ function Field() {
         if (item_in_the_hands_ref.current === 'nothing' || click_is_on_ref.current === false) {
             return;
         }
+        /**
+         * Устанавливаем Байдена в начальную позицию
+         * */
         put_baiden_to_x_pos();
         /**
          * Фиксируем чем произвели выстрел
@@ -942,29 +945,21 @@ function Field() {
                 if (arms.atomic + arms.arrow + arms.grenade === 0) {
                     resetArms();
                     generate_fon();
-                    game_in_the_beginning.current = true;
+                    get_random_x_for_baiden();
                 }
             }, 9000);
         });
     }
 
-    const put_baiden_to_x_pos = () => {
+    const get_random_x_for_baiden = () => {
         const min_x = 1500;
         const max_x = 4000;
-        /**
-         * Ставим Байдена. Если новая игра - генерим случайный Х и устанавливаем на него.
-         * Если игра не новая - берем Х, сгенерированный ранее.
-         * */
-        if (game_in_the_beginning.current) {
-            let random_x = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
-            baiden_position_x.current = random_x;
-            joe_ref.current.style.left = (position.marker_right_bottom.x - random_x) + 'px';
-            game_in_the_beginning.current = false;
-            console.log('сгенерил новый х:' + random_x);
-        } else {
-            joe_ref.current.style.left = (position.marker_right_bottom.x - baiden_position_x.current) + 'px';
-            console.log('взял старый х:' + baiden_position_x.current);
-        }
+        baiden_position_x.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
+    }
+
+    const put_baiden_to_x_pos = () => {
+        joe_ref.current.style.left = (position.marker_right_bottom.x - baiden_position_x.current) + 'px';
+        console.log('Позиция Байдена х:' + baiden_position_x.current);
     }
 
     return (
