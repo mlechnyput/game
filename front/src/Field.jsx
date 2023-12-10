@@ -350,7 +350,7 @@ function Field() {
      * Для досрочной остановки свечения гранаты
      * */
     const grenade_glowing_stopped_ref = useRef(false);
-    const baiden_position_x = useRef(0);
+    const baiden_position_x_ref = useRef(0);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -391,10 +391,11 @@ function Field() {
             arrows_fly_ref.current.style.left = (marker_right_bottom_x * 0.66 - 310) + 'px';
             arrows_fly_ref.current.style.top = (marker_right_bottom_y - 375) + 'px';
             /**
-             * Ставим Байдена за пределы окна. Y меняться уже не будет. Х будет изменен в момент выстрела
+             * Ставим Байдена
              * */
             joe_ref.current.style.top = (marker_right_bottom_y - 575) + 'px';
-            joe_ref.current.style.left = (marker_right_bottom_x - 2000) + 'px';
+            joe_ref.current.style.left = (marker_right_bottom_x - baiden_position_x_ref.current) + 'px';
+            console.log('Позиция Байдена х:' + baiden_position_x_ref.current);
 
         }
     }
@@ -403,7 +404,7 @@ function Field() {
         setArms({
             atomic: 0,
             grenade: 0,
-            arrow: 7
+            arrow: 3
         });
     }
 
@@ -798,10 +799,6 @@ function Field() {
             return;
         }
         /**
-         * Устанавливаем Байдена в начальную позицию
-         * */
-        put_baiden_to_x_pos();
-        /**
          * Фиксируем чем произвели выстрел
          * */
         setArrowShootWith(item_in_the_hands_ref.current);
@@ -941,12 +938,12 @@ function Field() {
                 city_ref.current.style = '';
                 joe_ref.current.style = '';
                 setNotShoot(true);
-                getPosition();
                 if (arms.atomic + arms.arrow + arms.grenade === 0) {
                     resetArms();
                     generate_fon();
                     get_random_x_for_baiden();
                 }
+                getPosition();
             }, 9000);
         });
     }
@@ -954,13 +951,9 @@ function Field() {
     const get_random_x_for_baiden = () => {
         const min_x = 1500;
         const max_x = 4000;
-        baiden_position_x.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
+        baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
-    const put_baiden_to_x_pos = () => {
-        joe_ref.current.style.left = (position.marker_right_bottom.x - baiden_position_x.current) + 'px';
-        console.log('Позиция Байдена х:' + baiden_position_x.current);
-    }
 
     return (
         <div className="field">
