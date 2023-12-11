@@ -177,8 +177,23 @@ function Field() {
      * Масссив с фоновыми элеиентами (для ближнего фона)
      * */
     const [fon_elements, setFon_elements] = useState([]);
+    /**
+     * Вертикальные линии шкалы радиолокатора
+     * */
     const [vert_lines, setVert_lines] = useState([]);
+    /**
+     * Горизонтальные линии шкалы радиолокатора
+     * */
     const [hor_lines, setHor_lines] = useState([]);
+    const [trajectory, setTrajectory] = useState([]);
+    const [trajectoryPoint, setTrajectoryPoint] = useState({
+        x: 0,
+        y: 0
+    });
+
+    useEffect(() => {
+        setTrajectory([...trajectory, trajectoryPoint]);
+    }, [trajectoryPoint]);
     /**
      * Из something_in_the_hands перекладываем значение в Ref и устанавливаем персонажа в
      * начальный кадр для выполнения rerender.
@@ -663,6 +678,16 @@ function Field() {
          * цикла заходим вниз не более чем на 140, иначе вылезет белое пятно.
          * */
         const min_y_forest = (-1) * ((forest_vertical - 160) - position.marker_right_bottom.y);
+        let just_started = true;
+        let last_trajectory_point = {
+            x: 0,
+            y: 0
+        };
+        let current_arrow_little_x;
+        let current_arrow_little_y;
+        let katet_x;
+        let katet_y;
+        let gipotenuza;
         while (y_forest_0 + delta_y >= min_y_forest - 140) {
             t += time_step_ms / 140;
             delta_x = V_0_x * t;
@@ -690,10 +715,30 @@ function Field() {
             /**
              * Сдвигаем стрелу на локаторе
              * */
-            arrow_little_ref.current.style.left = (x_arrow_little_0 - delta_x * coefficient_locator) + 'px';
-            arrow_little_ref.current.style.top = (y_arrow_little_0 - delta_y * coefficient_locator) + 'px';
+            current_arrow_little_x = x_arrow_little_0 - delta_x * coefficient_locator;
+            current_arrow_little_y = y_arrow_little_0 - delta_y * coefficient_locator;
+            arrow_little_ref.current.style.left = current_arrow_little_x + 'px';
+            arrow_little_ref.current.style.top = current_arrow_little_y + 'px';
             arrow_little_ref.current.style.transform = 'rotate(' + beta + 'deg)';
-
+            if (just_started) {
+                last_trajectory_point = {
+                    x: x_arrow_little_0,
+                    y: y_arrow_little_0
+                };
+                setTrajectoryPoint(last_trajectory_point);
+                just_started = false;
+            } else {
+                katet_x = last_trajectory_point.x - current_arrow_little_x;
+                katet_y = last_trajectory_point.y - current_arrow_little_y;
+                gipotenuza = Math.sqrt(katet_x * katet_x + katet_y * katet_y);
+                if (gipotenuza >= 20) {
+                    last_trajectory_point = {
+                        x: current_arrow_little_x,
+                        y: current_arrow_little_y
+                    };
+                    setTrajectoryPoint(last_trajectory_point);
+                }
+            }
             /**
              * Проверяем попала ли стрела в ногу Байдена
              * */
@@ -950,6 +995,7 @@ function Field() {
              * Через 9 сек старт игры с исходной позиции
              * */
             setTimeout(() => {
+                setTrajectory([]);
                 setFly(false);
                 kim_turns_blocked_ref.current = false;
                 click_is_on_ref.current = true;
@@ -1024,6 +1070,9 @@ function Field() {
                     {hor_lines.map(l => {
                         return l;
                     })}
+                    {trajectory.map((el, index) => (
+                        <circle cx={el.x} cy={el.y} r={2} key={index} fill="red"/>
+                    ))}
                 </svg>
                 <div className="arrows_little_container" ref={arrow_little_ref}>
                     {!fly ? null :
