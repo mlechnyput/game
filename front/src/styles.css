@@ -257,6 +257,13 @@
     background-color: white;
 }
 
+.silhouette{
+    position: absolute;
+    display: block;
+    height: 120px;
+    width: 50px;
+}
+
 .arrows_fly {
     /*border: solid #2d2d2d;*/
     pointer-events: none;

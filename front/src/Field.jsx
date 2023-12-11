@@ -98,6 +98,7 @@ import log_1 from "./images/fon/log-1.png"
 import city_3 from "./images/fon/city-3.png"
 import city_4 from "./images/fon/city-4.png"
 import joe_1 from "./images/joe/joe.png"
+import silhouette from "./images/locator/silhouette.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -372,7 +373,14 @@ function Field() {
      * */
     const grenade_glowing_stopped_ref = useRef(false);
     const baiden_position_x_ref = useRef(0);
+    /**
+     * Квадрат 4х4 на экране радиолокатора, изображающий стрелу
+     * */
     const arrow_little_ref = useRef();
+    /**
+     * Силует на экране радиолокатора
+     * */
+    const silhouette_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -425,10 +433,15 @@ function Field() {
             get_vert_lines(marker_right_bottom_y, target_hor_size);
             get_hor_lines(marker_right_bottom_y, target_hor_size);
             /**
-             * Ставим маленькую стрелу радиолокатора
+             * Ставим маленькую стрелу радиолокатора (квадратик 4х4)
              * */
             arrow_little_ref.current.style.top = (marker_right_bottom_y - 150) + 'px';
             arrow_little_ref.current.style.left = baiden_position_x_ref.current * coefficient_locator - 150 + 'px';
+            /**
+             * Ставим силует на экране радиолокатора
+             * */
+            silhouette_ref.current.style.top = (marker_right_bottom_y - 200) + 'px';
+            silhouette_ref.current.style.left = 90 + 'px';
         }
     }
 
@@ -653,11 +666,6 @@ function Field() {
          * */
         const coefficient_city = 0.7;
         /**
-         * Начальное положение маленькой стрелы на локаторе
-         * */
-        let x_arrow_little_0 = arrow_little_ref.current.offsetLeft;
-        let y_arrow_little_0 = arrow_little_ref.current.offsetTop;
-        /**
          * У летящей стрелы изменяем центр вращения, чтобы во время полета она накренялась относительно
          * собственного центра тяжести. В результате этого изменения - почему то возникло смещение,
          * которое прямо пропорционально углу наклона. Компенсируем возникшее смещение.
@@ -669,6 +677,13 @@ function Field() {
         arrows_fly_ref.current.style.transformOrigin = 140 + 'px ' + 42 + 'px';
         arrows_fly_ref.current.style.left = x_arrows_fly_0 + compensation_x + 'px';
         arrows_fly_ref.current.style.top = y_arrows_fly_0 - compensation_y + 'px';
+        /**
+         * Начальное положение маленькой стрелы на локаторе
+         * */
+        let compensation_little_x = 440 / 90 * alfa;
+        let compensation_little_y = 120 / 90 * alfa;
+        let x_arrow_little_0 = arrow_little_ref.current.offsetLeft + compensation_little_x * coefficient_locator;
+        let y_arrow_little_0 = arrow_little_ref.current.offsetTop + compensation_little_y * coefficient_locator;
         let beta;
         /**
          * Т.к. в CSS фон уходит на 160 под нижнюю границу, то
@@ -728,7 +743,7 @@ function Field() {
                 katet_x = last_trajectory_point.x - current_arrow_little_x;
                 katet_y = last_trajectory_point.y - current_arrow_little_y;
                 gipotenuza = Math.sqrt(katet_x * katet_x + katet_y * katet_y);
-                if (gipotenuza >= 8) {
+                if (gipotenuza >= 20) {
                     last_trajectory_point = {
                         x: current_arrow_little_x,
                         y: current_arrow_little_y
@@ -1024,7 +1039,7 @@ function Field() {
     }
 
     const get_random_x_for_baiden = () => {
-        const min_x = 1500;
+        const min_x = 1820;
         const max_x = 4000;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
@@ -1066,11 +1081,13 @@ function Field() {
                         return l;
                     })}
                     {trajectory.map((el, index) => (
-                        <circle cx={el.x} cy={el.y} r={2} key={index} fill="red"/>
+                        <circle cx={el.x} cy={el.y} r={2} key={index} fill="white"/>
                     ))}
                 </svg>
                 <div className="arrows_little_container" ref={arrow_little_ref}>
-
+                </div>
+                <div className="silhouette" ref={silhouette_ref}>
+                    <img src={silhouette} alt={""}/>
                 </div>
             </div>
             <div className="you" onWheel={getPower} onClick={clickAndStart}>
