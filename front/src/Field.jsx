@@ -449,7 +449,7 @@ function Field() {
         setArms({
             atomic: 0,
             grenade: 0,
-            arrow: 9
+            arrow: 4
         });
     }
 
@@ -1040,7 +1040,7 @@ function Field() {
 
     const get_random_x_for_baiden = () => {
         const min_x = 1820;
-        const max_x = 4000;
+        const max_x = 4800;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
