@@ -86,10 +86,13 @@
 }
 
 .target {
+    grid-area: target;
+    position: relative;
+    overflow: hidden;
     background-color: black;
 }
 
-.sonar_grid{
+.sonar_grid {
     stroke: #393939;
     stroke-width: 1px;
 }
@@ -115,7 +118,8 @@
     height: 500px;
     width: 5800px;
 }
-.buildings{
+
+.buildings {
     opacity: 100%;
     pointer-events: none;
     position: absolute;
@@ -128,7 +132,8 @@
     justify-content: flex-end;
     align-items: flex-end;
 }
-.grass{
+
+.grass {
     position: absolute;
     background-color: #009966;
     height: 380px;
@@ -136,7 +141,8 @@
     bottom: 0;
     right: 0;
 }
-.bushes{
+
+.bushes {
     pointer-events: none;
     position: absolute;
     height: 400px;
@@ -200,14 +206,14 @@
     transform-origin: 360px 330px;
 }
 
-.joe{
+.joe {
     pointer-events: none;
     position: absolute;
     width: 200px;
     height: 460px;
 }
 
-.joe_box_legs{
+.joe_box_legs {
     position: absolute;
     width: 30px;
     height: 80px;
@@ -216,7 +222,7 @@
     /*background-color: burlywood;*/
 }
 
-.joe_box_body{
+.joe_box_body {
     position: absolute;
     width: 40px;
     height: 235px;
@@ -225,7 +231,7 @@
     /*background-color: #3c3c3c;*/
 }
 
-.joe_box_apple{
+.joe_box_apple {
     position: absolute;
     width: 32px;
     height: 50px;
@@ -234,13 +240,27 @@
     /*background-color: burlywood;*/
 }
 
-.joe_box_head{
+.joe_box_head {
     position: absolute;
     width: 60px;
     height: 38px;
     right: 60px;
     bottom: 335px;
     /*background-color: #838383;*/
+}
+
+.arrows_little_container {
+    position: absolute;
+    display: block;
+    height: 10px;
+    width: 93px;
+    bottom: 100px;
+    right: 0;
+}
+
+.arrows_little {
+    stroke-width: 1px;
+    stroke: white;
 }
 
 .arrows_fly {
@@ -253,7 +273,7 @@
     transform-origin: 360px 140px;
 }
 
-.arrows_core{
+.arrows_core {
     /*background-color: burlywood;*/
     height: 15px;
     width: 15px;

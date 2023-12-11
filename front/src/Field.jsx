@@ -353,6 +353,7 @@ function Field() {
      * */
     const grenade_glowing_stopped_ref = useRef(false);
     const baiden_position_x_ref = useRef(0);
+    const arrow_little_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -628,6 +629,13 @@ function Field() {
          * */
         const coefficient_city = 0.7;
         /**
+         * Начальное положение маленькой стрелы на локаторе
+         * */
+        let x_arrow_little_0 = arrow_little_ref.current.offsetLeft;
+        let y_arrow_little_0 = arrow_little_ref.current.offsetTop;
+        arrow_little_ref.current.style.transformOrigin = 47 + 'px ' + 5 + 'px';
+
+        /**
          * У летящей стрелы изменяем центр вращения, чтобы во время полета она накренялась относительно
          * собственного центра тяжести. В результате этого изменения - почему то возникло смещение,
          * которое прямо пропорционально углу наклона. Компенсируем возникшее смещение.
@@ -670,6 +678,13 @@ function Field() {
             torso_ref.current.style.top = (y_torso_0 + delta_y) + 'px';
             joe_ref.current.style.left = (x_joe_0 + delta_x) + 'px';
             joe_ref.current.style.top = (y_joe_0 + delta_y) + 'px' + '';
+            /**
+             * Сдвигаем стрелу на локаторе
+             * */
+            arrow_little_ref.current.style.left = (x_arrow_little_0 - delta_x / 3) + 'px';
+            arrow_little_ref.current.style.top = (y_arrow_little_0 - delta_y / 3) + 'px';
+            arrow_little_ref.current.style.transform = 'rotate(' + beta + 'deg)';
+
             /**
              * Проверяем попала ли стрела в ногу Байдена
              * */
@@ -944,6 +959,7 @@ function Field() {
                 arrows_fly_ref.current.style = '';
                 city_ref.current.style = '';
                 joe_ref.current.style = '';
+                arrow_little_ref.current.style = '';
                 setNotShoot(true);
                 if (arms.atomic + arms.arrow + arms.grenade === 0) {
                     resetArms();
@@ -987,6 +1003,8 @@ function Field() {
         setHor_lines(arr);
     }
 
+    const arrow_little = <line x1={0} y1={5} x2={93} y2={5} className="arrows_little"/>
+
     return (
         <div className="field">
             <div className="target">
@@ -998,6 +1016,11 @@ function Field() {
                         return l;
                     })}
                 </svg>
+                <div className="arrows_little_container" ref={arrow_little_ref}>
+                    <svg>
+                        {arrow_little}
+                    </svg>
+                </div>
             </div>
             <div className="you" onWheel={getPower} onClick={clickAndStart}>
                 <div className="sky"/>
