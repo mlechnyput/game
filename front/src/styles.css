@@ -252,13 +252,9 @@
 .arrows_little_container {
     position: absolute;
     display: block;
-    height: 10px;
-    width: 93px;
-}
-
-.arrows_little {
-    stroke-width: 1px;
-    stroke: white;
+    height: 4px;
+    width: 4px;
+    background-color: white;
 }
 
 .arrows_fly {

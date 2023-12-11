@@ -436,7 +436,7 @@ function Field() {
         setArms({
             atomic: 0,
             grenade: 0,
-            arrow: 3
+            arrow: 9
         });
     }
 
@@ -657,8 +657,6 @@ function Field() {
          * */
         let x_arrow_little_0 = arrow_little_ref.current.offsetLeft;
         let y_arrow_little_0 = arrow_little_ref.current.offsetTop;
-        arrow_little_ref.current.style.transformOrigin = 47 + 'px ' + 5 + 'px';
-
         /**
          * У летящей стрелы изменяем центр вращения, чтобы во время полета она накренялась относительно
          * собственного центра тяжести. В результате этого изменения - почему то возникло смещение,
@@ -719,7 +717,6 @@ function Field() {
             current_arrow_little_y = y_arrow_little_0 - delta_y * coefficient_locator;
             arrow_little_ref.current.style.left = current_arrow_little_x + 'px';
             arrow_little_ref.current.style.top = current_arrow_little_y + 'px';
-            arrow_little_ref.current.style.transform = 'rotate(' + beta + 'deg)';
             if (just_started) {
                 last_trajectory_point = {
                     x: x_arrow_little_0,
@@ -731,7 +728,7 @@ function Field() {
                 katet_x = last_trajectory_point.x - current_arrow_little_x;
                 katet_y = last_trajectory_point.y - current_arrow_little_y;
                 gipotenuza = Math.sqrt(katet_x * katet_x + katet_y * katet_y);
-                if (gipotenuza >= 20) {
+                if (gipotenuza >= 8) {
                     last_trajectory_point = {
                         x: current_arrow_little_x,
                         y: current_arrow_little_y
@@ -1058,8 +1055,6 @@ function Field() {
         setHor_lines(arr);
     }
 
-    const arrow_little = <line x1={0} y1={5} x2={93} y2={5} className="arrows_little"/>
-
     return (
         <div className="field">
             <div className="target">
@@ -1075,10 +1070,7 @@ function Field() {
                     ))}
                 </svg>
                 <div className="arrows_little_container" ref={arrow_little_ref}>
-                    {!fly ? null :
-                        <svg>
-                            {arrow_little}
-                        </svg>}
+
                 </div>
             </div>
             <div className="you" onWheel={getPower} onClick={clickAndStart}>
