@@ -103,6 +103,10 @@ function Field() {
     const forest_horizon = 5800;
     const forest_vertical = 1000;
     /**
+     * Коэффициент уменьшения на локаторе
+     * */
+    const coefficient_locator = 1 / 3;
+    /**
      *Текущий кадр персонажа:
      * 1-5 безо всего
      * 6-10 со стрелой
@@ -405,6 +409,11 @@ function Field() {
             const target_hor_size = marker_right_bottom_x * 3 / 7;
             get_vert_lines(marker_right_bottom_y, target_hor_size);
             get_hor_lines(marker_right_bottom_y, target_hor_size);
+            /**
+             * Ставим маленькую стрелу радиолокатора
+             * */
+            arrow_little_ref.current.style.top = (marker_right_bottom_y - 150) + 'px';
+            arrow_little_ref.current.style.left = baiden_position_x_ref.current * coefficient_locator - 150 + 'px';
         }
     }
 
@@ -681,8 +690,8 @@ function Field() {
             /**
              * Сдвигаем стрелу на локаторе
              * */
-            arrow_little_ref.current.style.left = (x_arrow_little_0 - delta_x / 3) + 'px';
-            arrow_little_ref.current.style.top = (y_arrow_little_0 - delta_y / 3) + 'px';
+            arrow_little_ref.current.style.left = (x_arrow_little_0 - delta_x * coefficient_locator) + 'px';
+            arrow_little_ref.current.style.top = (y_arrow_little_0 - delta_y * coefficient_locator) + 'px';
             arrow_little_ref.current.style.transform = 'rotate(' + beta + 'deg)';
 
             /**
@@ -1017,9 +1026,10 @@ function Field() {
                     })}
                 </svg>
                 <div className="arrows_little_container" ref={arrow_little_ref}>
-                    <svg>
-                        {arrow_little}
-                    </svg>
+                    {!fly ? null :
+                        <svg>
+                            {arrow_little}
+                        </svg>}
                 </div>
             </div>
             <div className="you" onWheel={getPower} onClick={clickAndStart}>
