@@ -97,7 +97,9 @@ import stone_2 from "./images/fon/stone-2.png"
 import log_1 from "./images/fon/log-1.png"
 import city_3 from "./images/fon/city-3.png"
 import city_4 from "./images/fon/city-4.png"
-import joe_1 from "./images/joe/joe.png"
+import joe_1 from "./images/joe/joe0001.png"
+import joe_2 from "./images/joe/joe0002.png"
+import joe_3 from "./images/joe/joe0003.png"
 import silhouette from "./images/locator/silhouette.png"
 import apple_1 from "./images/apple/apple0001.png"
 import apple_2 from "./images/apple/apple0002.png"
@@ -205,6 +207,12 @@ function Field() {
      * 2-8 яблоко с попавшей в нее стрелой
      * */
     const [apple, setApple] = useState(1);
+    /**
+     * baiden normal - просто стоит
+     * baiden down - присел
+     * baiden up - вытянулся вверх
+     * */
+    const [baiden_control, setBaiden_control] = useState('baiden normal');
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -828,6 +836,35 @@ function Field() {
         };
     }
 
+    async function hitBaiden() {
+        let i = 1;
+        let time;
+        let str;
+        while (i <= 2) {
+            switch (i) {
+                case 1:
+                    time = 120;
+                    str = 'baiden down';
+                    break;
+                case 2:
+                    time = 50;
+                    str = 'baiden up';
+                    break;
+            }
+            setBaiden_control(str);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            if (i === 2) {
+                setBaiden_control('baiden normal');
+            }
+            i++;
+        }
+    }
+
     async function vibrato() {
         let i = 1;
         let time;
@@ -1025,6 +1062,7 @@ function Field() {
                     }
                     rotation = 90;
 
+                    hitBaiden().then(ret => console.log('байден дернулся'));
                     arrow_stick_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
                     arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
                     arrow_stick_ref.current.style.top = r.coord_y + compensation_y + additional_y + 'px';
@@ -1244,7 +1282,9 @@ function Field() {
                     <img src={grenade_glow20} hidden={kim_control !== 81} alt={""}/>
                 </div>
                 <div className="joe" ref={joe_ref}>
-                    <img src={joe_1} alt={""}/>
+                    <img src={joe_1} alt={""} hidden={baiden_control !== 'baiden normal'}/>
+                    <img src={joe_2} alt={""} hidden={baiden_control !== 'baiden down'}/>
+                    <img src={joe_3} alt={""} hidden={baiden_control !== 'baiden up'}/>
                     <div className="joe_box_legs" ref={joe_box_legs_ref}/>
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
                     <div className="apple" ref={apple_ref}>
