@@ -99,6 +99,14 @@ import city_3 from "./images/fon/city-3.png"
 import city_4 from "./images/fon/city-4.png"
 import joe_1 from "./images/joe/joe.png"
 import silhouette from "./images/locator/silhouette.png"
+import apple_1 from "./images/apple/apple0001.png"
+import apple_2 from "./images/apple/apple0002.png"
+import apple_3 from "./images/apple/apple0003.png"
+import apple_4 from "./images/apple/apple0004.png"
+import apple_5 from "./images/apple/apple0005.png"
+import apple_6 from "./images/apple/apple0006.png"
+import apple_7 from "./images/apple/apple0007.png"
+import apple_8 from "./images/apple/apple0008.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -191,6 +199,12 @@ function Field() {
         x: 0,
         y: 0
     });
+    /**
+     * Яблоко.
+     * 1 просто яблоко
+     * 2-8 яблоко с попавшей в нее стрелой
+     * */
+    const [apple, setApple] = useState(1);
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -381,6 +395,7 @@ function Field() {
      * Силует на экране радиолокатора
      * */
     const silhouette_ref = useRef();
+    const apple_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -833,6 +848,26 @@ function Field() {
         }
     }
 
+    async function vibratoWithApple() {
+        let i = 2;
+        let time;
+        while (i <= 8) {
+            if (i === 2) {
+                time = 80;
+            } else {
+                time = 55;
+            }
+            setApple(i);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+    }
+
     const red = <img src={arrow_red} alt={""}/>;
     const green = <img src={arrow_green} alt={""}/>;
     const white = <img src={arrow_white} alt={""}/>;
@@ -989,19 +1024,21 @@ function Field() {
                         compensation_y = -100;
                     }
                     rotation = 90;
+
+                    arrow_stick_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
+                    arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
+                    arrow_stick_ref.current.style.top = r.coord_y + compensation_y + additional_y + 'px';
+                    setFly(false);
+                    vibrato().then(res => console.log('hit to ' + r.hit_area));
+
                 } else {
                     if (r.hit_area === 'apple') {
-                        compensation_x = 100;
-                        compensation_y = -100;
-                        rotation = 90 + r.angle_degree;
+                        rotation = r.angle_degree;
+                        apple_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
+                        setFly(false);
+                        vibratoWithApple().then(res => console.log('hit to ' + r.hit_area));
                     }
                 }
-
-                arrow_stick_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
-                arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
-                arrow_stick_ref.current.style.top = r.coord_y + compensation_y + additional_y + 'px';
-                setFly(false);
-                vibrato().then(res => console.log('hit to ' + r.hit_area));
             }
             /**
              * Через 9 сек старт игры с исходной позиции
@@ -1016,12 +1053,18 @@ function Field() {
                 setSomething_in_the_hands('nothing');
                 item_in_the_hands_ref.current = 'nothing';
                 /**
-                 * Выключаем торчащую стрелу
+                 * Выключаем торчащую стрелу из Байдена и из земли
                  * */
                 setStickIsOn(0);
+                /**
+                 * Выключаем торчащую стрелу из яблока,
+                 * включая режим "просто яблоко"
+                 * */
+                setApple(1);
                 setKim_control(1);
                 setStanding_squatting(true);
                 arrow_stick_ref.current.style = '';
+                apple_ref.current.style = '';
                 torso_ref.current.style = '';
                 legs_ref.current.style = '';
                 legs_folded_1_ref.current.style = '';
@@ -1043,7 +1086,7 @@ function Field() {
 
     const get_random_x_for_baiden = () => {
         const min_x = 1820;
-        const max_x = 4800;
+        const max_x = 1830;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
@@ -1204,6 +1247,16 @@ function Field() {
                     <img src={joe_1} alt={""}/>
                     <div className="joe_box_legs" ref={joe_box_legs_ref}/>
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
+                    <div className="apple" ref={apple_ref}>
+                        <img src={apple_1} alt={""} hidden={apple !== 1}/>
+                        <img src={apple_2} alt={""} hidden={apple !== 2}/>
+                        <img src={apple_3} alt={""} hidden={apple !== 3}/>
+                        <img src={apple_4} alt={""} hidden={apple !== 4}/>
+                        <img src={apple_5} alt={""} hidden={apple !== 5}/>
+                        <img src={apple_6} alt={""} hidden={apple !== 6}/>
+                        <img src={apple_7} alt={""} hidden={apple !== 7}/>
+                        <img src={apple_8} alt={""} hidden={apple !== 8}/>
+                    </div>
                     <div className="joe_box_apple" ref={joe_box_apple_ref}/>
                     <div className="joe_box_head" ref={joe_box_head_ref}/>
                 </div>

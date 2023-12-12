@@ -249,6 +249,15 @@
     /*background-color: #838383;*/
 }
 
+.apple {
+    position: absolute;
+    width: 280px;
+    height: 80px;
+    left: 70px;
+    top: 15px;
+    transform-origin: 30px 40px;
+}
+
 .arrows_little_container {
     position: absolute;
     display: block;
@@ -257,7 +266,7 @@
     background-color: white;
 }
 
-.silhouette{
+.silhouette {
     position: absolute;
     display: block;
     height: 120px;
