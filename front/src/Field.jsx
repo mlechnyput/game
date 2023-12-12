@@ -1015,6 +1015,9 @@ function Field() {
                 setPower(40);
                 setSomething_in_the_hands('nothing');
                 item_in_the_hands_ref.current = 'nothing';
+                /**
+                 * Выключаем торчащую стрелу
+                 * */
                 setStickIsOn(0);
                 setKim_control(1);
                 setStanding_squatting(true);
