@@ -100,6 +100,8 @@ import city_4 from "./images/fon/city-4.png"
 import joe_1 from "./images/joe/joe0001.png"
 import joe_2 from "./images/joe/joe0002.png"
 import joe_3 from "./images/joe/joe0003.png"
+import joe_4 from "./images/joe/joe0004.png"
+import joe_5 from "./images/joe/joe0005.png"
 import silhouette from "./images/locator/silhouette.png"
 import apple_1 from "./images/apple/apple0001.png"
 import apple_2 from "./images/apple/apple0002.png"
@@ -208,11 +210,9 @@ function Field() {
      * */
     const [apple, setApple] = useState(1);
     /**
-     * baiden normal - просто стоит
-     * baiden down - присел
-     * baiden up - вытянулся вверх
+     * от 1 до 5
      * */
-    const [baiden_control, setBaiden_control] = useState('baiden normal');
+    const [baiden_control, setBaiden_control] = useState(1);
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -837,30 +837,28 @@ function Field() {
     }
 
     async function hitBaiden() {
-        let i = 1;
+        let i = 2;
         let time;
-        let str;
-        while (i <= 2) {
+        while (i <= 5) {
             switch (i) {
-                case 1:
-                    time = 120;
-                    str = 'baiden down';
-                    break;
                 case 2:
+                    time = 120;
+                    break;
+                case 3:
+                case 5:
                     time = 50;
-                    str = 'baiden up';
+                    break;
+                case 4:
+                    time = 80;
                     break;
             }
-            setBaiden_control(str);
+            setBaiden_control(i);
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
                 }, time)
             });
             let result = await promise;
-            if (i === 2) {
-                setBaiden_control('baiden normal');
-            }
             i++;
         }
     }
@@ -1100,6 +1098,7 @@ function Field() {
                  * */
                 setApple(1);
                 setKim_control(1);
+                setBaiden_control(1);
                 setStanding_squatting(true);
                 arrow_stick_ref.current.style = '';
                 apple_ref.current.style = '';
@@ -1282,9 +1281,11 @@ function Field() {
                     <img src={grenade_glow20} hidden={kim_control !== 81} alt={""}/>
                 </div>
                 <div className="joe" ref={joe_ref}>
-                    <img src={joe_1} alt={""} hidden={baiden_control !== 'baiden normal'}/>
-                    <img src={joe_2} alt={""} hidden={baiden_control !== 'baiden down'}/>
-                    <img src={joe_3} alt={""} hidden={baiden_control !== 'baiden up'}/>
+                    <img src={joe_1} alt={""} hidden={baiden_control !== 1}/>
+                    <img src={joe_2} alt={""} hidden={baiden_control !== 2}/>
+                    <img src={joe_3} alt={""} hidden={baiden_control !== 3}/>
+                    <img src={joe_4} alt={""} hidden={baiden_control !== 4}/>
+                    <img src={joe_5} alt={""} hidden={baiden_control !== 5}/>
                     <div className="joe_box_legs" ref={joe_box_legs_ref}/>
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
                     <div className="apple" ref={apple_ref}>
