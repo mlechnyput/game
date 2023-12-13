@@ -405,6 +405,7 @@ function Field() {
      * */
     const silhouette_ref = useRef();
     const apple_ref = useRef();
+    const star_score_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -1078,6 +1079,12 @@ function Field() {
                         setStar_score('20');
                     }
                 }
+                /**
+                 * Желтый круг с баллами всплывает и исчезает
+                 * */
+                star_score_ref.current.style.transition='2.5s';
+                star_score_ref.current.style.opacity='0';
+                star_score_ref.current.style.transform='translate(0px, -150px)';
             }
             /**
              * Через 9 сек старт игры с исходной позиции
@@ -1114,6 +1121,7 @@ function Field() {
                 city_ref.current.style = '';
                 joe_ref.current.style = '';
                 arrow_little_ref.current.style = '';
+                star_score_ref.current.style='';
                 setNotShoot(true);
                 if (arms.atomic + arms.arrow + arms.grenade === 0) {
                     resetArms();
@@ -1292,7 +1300,7 @@ function Field() {
                     <img src={joe_5} alt={""} hidden={baiden_control !== 5}/>
                     <div className="joe_box_legs" ref={joe_box_legs_ref}/>
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
-                    <div className="star_score_container">
+                    <div className="star_score_container" ref={star_score_ref}>
                         {star_score.length === 0 ? null :
                             <svg>
                                 <circle cx={50} cy={50} r={50} fill="yellow"/>
