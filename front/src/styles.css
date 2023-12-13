@@ -273,7 +273,8 @@
     top: 0;
     left: 0;
     font-size: 90px;
-    color: #f64a06;
+    font-weight: bold;
+    color: #060af6;
     text-align: center;
 }
 

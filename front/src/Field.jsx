@@ -1097,9 +1097,9 @@ function Field() {
                 /**
                  * Желтый круг с баллами всплывает и исчезает
                  * */
-                star_score_ref.current.style.transition = '2.5s';
+                star_score_ref.current.style.transition = '0.7s linear';
                 star_score_ref.current.style.opacity = '0';
-                star_score_ref.current.style.transform = 'translate(0px, -150px)';
+                star_score_ref.current.style.transform = 'translate(0px, -140px)';
             }
             /**
              * Через 9 сек старт игры с исходной позиции
