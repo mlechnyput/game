@@ -42,6 +42,19 @@ public class MsgProcessor {
                     System.out.println("прилетело чат-сообщение");
                     sendToEveryone(message);
                     break;
+                case CHANGE_SCORE_REQUEST:
+                    System.out.println("прилетел запрос на увеличение баллов");
+                    Visitor vis_1 = objectMapper.readValue(objectMapper.writeValueAsString(message.getBody()), Visitor.class);
+                    /**
+                     * vis_1 содержит кол-во баллов, которые надо добавить визитору
+                     * */
+                    Visitor vis_1_from_DB = visitorService.findVisitor(vis_1.getUsername());
+                    int increased_score = vis_1_from_DB.getScore() + vis_1.getScore();
+                    vis_1_from_DB.setScore(increased_score);
+                    Visitor updated = visitorService.updateVisitor(vis_1_from_DB);
+                    Message<Visitor> changeScoreResp = new Message<>(MessageType.CHANGE_SCORE_RESPONSE, updated);
+                    sessionState.sendAsText(changeScoreResp);
+                    break;
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

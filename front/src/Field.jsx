@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
+import {ws} from "./websocket";
 import "./styles.css";
 import {GameContext} from "./GameContext";
 import kim1 from "./images/kimm/kimm0001.png";
@@ -168,7 +169,7 @@ function Field() {
      * grenade
      * atomic
      * */
-    const [something_in_the_hands, setSomething_in_the_hands, arms, setArms] = useContext(GameContext);
+    const [something_in_the_hands, setSomething_in_the_hands, arms, setArms, player] = useContext(GameContext);
     /**
      * true - выстрел еще не произведен
      * false - выстрыл произведен
@@ -950,6 +951,18 @@ function Field() {
         setFon_elements(arr);
     }
 
+    function sendScoreToBack(num_score) {
+        const msg = {
+            type: 'CHANGE_SCORE_REQUEST',
+            body: {
+                username: player.username,
+                score: num_score
+            }
+        }
+        const str=JSON.stringify(msg);
+        ws.send(str);
+    }
+
     const clickAndStart = () => {
         /**
          * Блокируем выстрел если лук не заряжен и блокируем второй выстрел если
@@ -1069,6 +1082,7 @@ function Field() {
                     setFly(false);
                     vibrato().then(res => console.log('hit to ' + r.hit_area));
                     setStar_score('1');
+                    sendScoreToBack(1);
 
                 } else {
                     if (r.hit_area === 'apple') {
@@ -1077,14 +1091,15 @@ function Field() {
                         setFly(false);
                         vibratoWithApple().then(res => console.log('hit to ' + r.hit_area));
                         setStar_score('20');
+                        sendScoreToBack(20);
                     }
                 }
                 /**
                  * Желтый круг с баллами всплывает и исчезает
                  * */
-                star_score_ref.current.style.transition='2.5s';
-                star_score_ref.current.style.opacity='0';
-                star_score_ref.current.style.transform='translate(0px, -150px)';
+                star_score_ref.current.style.transition = '2.5s';
+                star_score_ref.current.style.opacity = '0';
+                star_score_ref.current.style.transform = 'translate(0px, -150px)';
             }
             /**
              * Через 9 сек старт игры с исходной позиции
@@ -1121,7 +1136,7 @@ function Field() {
                 city_ref.current.style = '';
                 joe_ref.current.style = '';
                 arrow_little_ref.current.style = '';
-                star_score_ref.current.style='';
+                star_score_ref.current.style = '';
                 setNotShoot(true);
                 if (arms.atomic + arms.arrow + arms.grenade === 0) {
                     resetArms();

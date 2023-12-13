@@ -53,4 +53,8 @@ public class VisitorService implements ReactiveUserDetailsService {
     public Visitor findVisitor(String username) {
         return visitorDao.findVisitorByUsername(username);
     }
+
+    public Visitor updateVisitor(Visitor v) {
+        return visitorDao.save(v);
+    }
 }

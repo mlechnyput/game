@@ -44,6 +44,7 @@ export default function Screen() {
             console.log(event.data);
             const gotFromBack = JSON.parse(event.data);
             switch (gotFromBack.type) {
+                case 'CHANGE_SCORE_RESPONSE':
                 case 'HANDSHAKE_RESPONSE':
                     setPlayer(gotFromBack.body);
                     break;
@@ -70,7 +71,7 @@ export default function Screen() {
     return (
         <div className="body">
             <GameContext.Provider value={[something_in_the_hands, setSomething_in_the_hands,
-                arms, setArms]}>
+                arms, setArms, player]}>
                 <Player obj={player}/>
                 <Hat objPlayer={player}
                      visitorsQuantity={quantity}/>
