@@ -213,6 +213,7 @@ function Field() {
      * от 1 до 5
      * */
     const [baiden_control, setBaiden_control] = useState(1);
+    const [star_score, setStar_score] = useState('');
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -1066,6 +1067,7 @@ function Field() {
                     arrow_stick_ref.current.style.top = r.coord_y + compensation_y + additional_y + 'px';
                     setFly(false);
                     vibrato().then(res => console.log('hit to ' + r.hit_area));
+                    setStar_score('1');
 
                 } else {
                     if (r.hit_area === 'apple') {
@@ -1073,6 +1075,7 @@ function Field() {
                         apple_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
                         setFly(false);
                         vibratoWithApple().then(res => console.log('hit to ' + r.hit_area));
+                        setStar_score('20');
                     }
                 }
             }
@@ -1080,6 +1083,7 @@ function Field() {
              * Через 9 сек старт игры с исходной позиции
              * */
             setTimeout(() => {
+                setStar_score('');
                 setTrajectory([]);
                 setFly(false);
                 kim_turns_blocked_ref.current = false;
@@ -1288,6 +1292,13 @@ function Field() {
                     <img src={joe_5} alt={""} hidden={baiden_control !== 5}/>
                     <div className="joe_box_legs" ref={joe_box_legs_ref}/>
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
+                    <div className="star_score_container">
+                        {star_score.length === 0 ? null :
+                            <svg>
+                                <circle cx={50} cy={50} r={50} fill="yellow"/>
+                            </svg>}
+                        <div className="star_score_text">{star_score}</div>
+                    </div>
                     <div className="apple" ref={apple_ref}>
                         <img src={apple_1} alt={""} hidden={apple !== 1}/>
                         <img src={apple_2} alt={""} hidden={apple !== 2}/>

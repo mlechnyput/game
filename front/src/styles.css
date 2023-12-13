@@ -258,6 +258,25 @@
     transform-origin: 30px 40px;
 }
 
+.star_score_container {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: -50px;
+    left: 50px;
+}
+
+.star_score_text {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    font-size: 90px;
+    color: #f64a06;
+    text-align: center;
+}
+
 .arrows_little_container {
     position: absolute;
     display: block;
