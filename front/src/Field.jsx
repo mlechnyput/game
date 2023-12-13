@@ -1149,8 +1149,8 @@ function Field() {
     }
 
     const get_random_x_for_baiden = () => {
-        const min_x = 1820;
-        const max_x = 1830;
+        const min_x = 1800;
+        const max_x = 4800;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
