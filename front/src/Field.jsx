@@ -842,14 +842,14 @@ function Field() {
         while (i <= 5) {
             switch (i) {
                 case 2:
-                    time = 120;
+                    time = 80;
                     break;
                 case 3:
                 case 5:
-                    time = 50;
+                    time = 35;
                     break;
                 case 4:
-                    time = 80;
+                    time = 50;
                     break;
             }
             setBaiden_control(i);
