@@ -112,6 +112,9 @@ import apple_5 from "./images/apple/apple0005.png"
 import apple_6 from "./images/apple/apple0006.png"
 import apple_7 from "./images/apple/apple0007.png"
 import apple_8 from "./images/apple/apple0008.png"
+import apple_9 from "./images/apple/apple0009.png"
+import apple_10 from "./images/apple/apple0010.png"
+import apple_11 from "./images/apple/apple0011.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -840,6 +843,10 @@ function Field() {
     }
 
     async function hitBaiden() {
+        /**
+         * На 2,3 и 4 отключаем яблоко
+         * */
+        setApple(0);
         let i = 2;
         let time;
         while (i <= 5) {
@@ -848,11 +855,17 @@ function Field() {
                     time = 80;
                     break;
                 case 3:
-                case 5:
                     time = 35;
                     break;
                 case 4:
                     time = 50;
+                    break;
+                case 5:
+                    /**
+                     * На 5 включаем яблоко
+                     * */
+                    setApple(1);
+                    time = 0;
                     break;
             }
             setBaiden_control(i);
@@ -959,7 +972,7 @@ function Field() {
                 score: num_score
             }
         }
-        const str=JSON.stringify(msg);
+        const str = JSON.stringify(msg);
         ws.send(str);
     }
 
@@ -1150,7 +1163,7 @@ function Field() {
 
     const get_random_x_for_baiden = () => {
         const min_x = 1800;
-        const max_x = 4800;
+        const max_x = 1820;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
@@ -1331,6 +1344,13 @@ function Field() {
                         <img src={apple_6} alt={""} hidden={apple !== 6}/>
                         <img src={apple_7} alt={""} hidden={apple !== 7}/>
                         <img src={apple_8} alt={""} hidden={apple !== 8}/>
+                        {/**
+                         apple_9, 10 и 11 управляются стейтом baiden_control,
+                         на это время отключаем яблоко (apple=0)
+                         */}
+                        <img src={apple_9} alt={""} hidden={baiden_control !== 2}/>
+                        <img src={apple_10} alt={""} hidden={baiden_control !== 3}/>
+                        <img src={apple_11} alt={""} hidden={baiden_control !== 4}/>
                     </div>
                     <div className="joe_box_apple" ref={joe_box_apple_ref}/>
                     <div className="joe_box_head" ref={joe_box_head_ref}/>
