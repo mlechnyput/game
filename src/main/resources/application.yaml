@@ -8,3 +8,4 @@ spring:
 
 #server:
 #  address: 176.57.213.155
+#  port: 80
