@@ -217,6 +217,9 @@ function Field() {
      * от 1 до 5
      * */
     const [baiden_control, setBaiden_control] = useState(1);
+    /**
+     * Баллы в кружочке
+     * */
     const [star_score, setStar_score] = useState('');
 
     useEffect(() => {
@@ -409,7 +412,18 @@ function Field() {
      * */
     const silhouette_ref = useRef();
     const apple_ref = useRef();
+    /**
+     * Всплывающий кружок с баллами
+     * */
     const star_score_ref = useRef();
+    /**
+     * Во что попал последний выстрел
+     * */
+    const last_shoot_to_ref = useRef('empty');
+    /**
+     * Счетчик побед, следующих подряд друг за другом
+     * */
+    const victory_counter_ref = useRef(0);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -478,7 +492,23 @@ function Field() {
         setArms({
             atomic: 0,
             grenade: 0,
-            arrow: 4
+            arrow: 3
+        });
+    }
+
+    const resetArrows = () => {
+        setArms({
+            atomic: arms.atomic,
+            grenade: arms.grenade,
+            arrow: 3
+        });
+    }
+
+    const increaseGrenadeAndResetArrows = () => {
+        setArms({
+            atomic: arms.atomic,
+            grenade: arms.grenade + 1,
+            arrow: 3
         });
     }
 
@@ -995,6 +1025,7 @@ function Field() {
         setFly(true);
         moveAll().then(r => {
             console.log('Угол: ' + r.angle_degree);
+            last_shoot_to_ref.current = r.hit_area;
             if (r.hit_area === 'ground') {
                 /**
                  * Устанавливаем перпендикулярную присоску. Компенсируем сдвиг
@@ -1103,8 +1134,9 @@ function Field() {
                         apple_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
                         setFly(false);
                         vibratoWithApple().then(res => console.log('hit to ' + r.hit_area));
-                        setStar_score('20');
-                        sendScoreToBack(20);
+                        setStar_score('10');
+                        sendScoreToBack(10);
+                        victory_counter_ref.current = victory_counter_ref.current + 1;
                     }
                 }
                 /**
@@ -1151,11 +1183,31 @@ function Field() {
                 arrow_little_ref.current.style = '';
                 star_score_ref.current.style = '';
                 setNotShoot(true);
-                if (arms.atomic + arms.arrow + arms.grenade === 0) {
-                    resetArms();
+                /**
+                 * Новая игра начинается в двух случаях:
+                 * 1. Попал в яблоко
+                 * 2. Закончилось оружие
+                 * Во всех остальных случаях продолжается старая игра.
+                 * Новая игра подразумевает перезагрузку оружия, фонов и координат Байдена.
+                 * */
+                if (last_shoot_to_ref.current === 'apple') {
+                    if (victory_counter_ref.current < 3) {
+                        resetArrows();
+                    } else {
+                        increaseGrenadeAndResetArrows();
+                        victory_counter_ref.current = 0;
+                    }
                     generate_fon();
                     get_random_x_for_baiden();
+                } else {
+                    if (arms.atomic + arms.arrow + arms.grenade === 0) {
+                        resetArms();
+                        generate_fon();
+                        get_random_x_for_baiden();
+                        victory_counter_ref.current = 0;
+                    }
                 }
+
                 getPosition();
             }, 9000);
         });
@@ -1163,7 +1215,7 @@ function Field() {
 
     const get_random_x_for_baiden = () => {
         const min_x = 1800;
-        const max_x = 4800;
+        const max_x = 1820;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
