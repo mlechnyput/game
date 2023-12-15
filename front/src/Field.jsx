@@ -115,6 +115,36 @@ import apple_8 from "./images/apple/apple0008.png"
 import apple_9 from "./images/apple/apple0009.png"
 import apple_10 from "./images/apple/apple0010.png"
 import apple_11 from "./images/apple/apple0011.png"
+import demo_1 from "./images/demo/demo0001.png"
+import demo_2 from "./images/demo/demo0002.png"
+import demo_3 from "./images/demo/demo0003.png"
+import demo_4 from "./images/demo/demo0004.png"
+import demo_5 from "./images/demo/demo0005.png"
+import demo_6 from "./images/demo/demo0006.png"
+import demo_7 from "./images/demo/demo0007.png"
+import demo_8 from "./images/demo/demo0008.png"
+import demo_9 from "./images/demo/demo0009.png"
+import demo_10 from "./images/demo/demo0010.png"
+import demo_11 from "./images/demo/demo0011.png"
+import demo_12 from "./images/demo/demo0012.png"
+import demo_13 from "./images/demo/demo0013.png"
+import demo_14 from "./images/demo/demo0014.png"
+import demo_15 from "./images/demo/demo0015.png"
+import demo_16 from "./images/demo/demo0016.png"
+import demo_17 from "./images/demo/demo0017.png"
+import demo_18 from "./images/demo/demo0018.png"
+import demo_19 from "./images/demo/demo0019.png"
+import demo_20 from "./images/demo/demo0020.png"
+import demo_21 from "./images/demo/demo0021.png"
+import demo_22 from "./images/demo/demo0022.png"
+import demo_23 from "./images/demo/demo0023.png"
+import demo_24 from "./images/demo/demo0024.png"
+import demo_25 from "./images/demo/demo0025.png"
+import demo_26 from "./images/demo/demo0026.png"
+import demo_27 from "./images/demo/demo0027.png"
+import demo_28 from "./images/demo/demo0028.png"
+import demo_29 from "./images/demo/demo0029.png"
+import demo_30 from "./images/demo/demo0030.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -221,6 +251,10 @@ function Field() {
      * Баллы в кружочке
      * */
     const [star_score, setStar_score] = useState('');
+    /**
+     * Управление демо 30 кадров
+     * */
+    const [demo_control, setDemo_control] = useState(0);
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -949,6 +983,22 @@ function Field() {
         }
     }
 
+    async function runDemo() {
+        let i = 1;
+        let time = 50;
+        while (i <= 30) {
+            setDemo_control(i);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+        setDemo_control(0);
+    }
+
     const red = <img src={arrow_red} alt={""}/>;
     const green = <img src={arrow_green} alt={""}/>;
     const white = <img src={arrow_white} alt={""}/>;
@@ -1147,8 +1197,24 @@ function Field() {
                 star_score_ref.current.style.transform = 'translate(0px, -140px)';
             }
             /**
-             * Через 9 сек старт игры с исходной позиции
+             * Через 7 сек старт новой игры или продолжение старой
              * */
+            const time_out=7000;
+            setTimeout(()=>{
+                /**
+                 * Демо запускается если:
+                 * 1. Попал в яблоко
+                 * 2. Закончилось оружие
+                 * Во всех остальных случаях продолжается старая игра без запуска демо.
+                 * */
+                if (last_shoot_to_ref.current === 'apple') {
+                    runDemo().then();
+                } else {
+                    if (arms.atomic + arms.arrow + arms.grenade === 0) {
+                        runDemo().then();
+                    }
+                }
+            },time_out-1000);
             setTimeout(() => {
                 setStar_score('');
                 setTrajectory([]);
@@ -1209,7 +1275,7 @@ function Field() {
                 }
 
                 getPosition();
-            }, 9000);
+            }, time_out);
         });
     }
 
@@ -1424,6 +1490,38 @@ function Field() {
                     <img src={arrow_vibro_6} alt={""} hidden={stickIsOn !== 6}/>
                     <img src={arrow_vibro_7} alt={""} hidden={stickIsOn !== 7}/>
                     <img src={arrow_vibro_8} alt={""} hidden={stickIsOn !== 8}/>
+                </div>
+                <div className="demo">
+                    <img className="demo_image" src={demo_1} alt={""} hidden={demo_control !== 1}/>
+                    <img className="demo_image" src={demo_2} alt={""} hidden={demo_control !== 2}/>
+                    <img className="demo_image" src={demo_3} alt={""} hidden={demo_control !== 3}/>
+                    <img className="demo_image" src={demo_4} alt={""} hidden={demo_control !== 4}/>
+                    <img className="demo_image" src={demo_5} alt={""} hidden={demo_control !== 5}/>
+                    <img className="demo_image" src={demo_6} alt={""} hidden={demo_control !== 6}/>
+                    <img className="demo_image" src={demo_7} alt={""} hidden={demo_control !== 7}/>
+                    <img className="demo_image" src={demo_8} alt={""} hidden={demo_control !== 8}/>
+                    <img className="demo_image" src={demo_9} alt={""} hidden={demo_control !== 9}/>
+                    <img className="demo_image" src={demo_10} alt={""} hidden={demo_control !== 10}/>
+                    <img className="demo_image" src={demo_11} alt={""} hidden={demo_control !== 11}/>
+                    <img className="demo_image" src={demo_12} alt={""} hidden={demo_control !== 12}/>
+                    <img className="demo_image" src={demo_13} alt={""} hidden={demo_control !== 13}/>
+                    <img className="demo_image" src={demo_14} alt={""} hidden={demo_control !== 14}/>
+                    <img className="demo_image" src={demo_15} alt={""} hidden={demo_control !== 15}/>
+                    <img className="demo_image" src={demo_16} alt={""} hidden={demo_control !== 16}/>
+                    <img className="demo_image" src={demo_17} alt={""} hidden={demo_control !== 17}/>
+                    <img className="demo_image" src={demo_18} alt={""} hidden={demo_control !== 18}/>
+                    <img className="demo_image" src={demo_19} alt={""} hidden={demo_control !== 19}/>
+                    <img className="demo_image" src={demo_20} alt={""} hidden={demo_control !== 20}/>
+                    <img className="demo_image" src={demo_21} alt={""} hidden={demo_control !== 21}/>
+                    <img className="demo_image" src={demo_22} alt={""} hidden={demo_control !== 22}/>
+                    <img className="demo_image" src={demo_23} alt={""} hidden={demo_control !== 23}/>
+                    <img className="demo_image" src={demo_24} alt={""} hidden={demo_control !== 24}/>
+                    <img className="demo_image" src={demo_25} alt={""} hidden={demo_control !== 25}/>
+                    <img className="demo_image" src={demo_26} alt={""} hidden={demo_control !== 26}/>
+                    <img className="demo_image" src={demo_27} alt={""} hidden={demo_control !== 27}/>
+                    <img className="demo_image" src={demo_28} alt={""} hidden={demo_control !== 28}/>
+                    <img className="demo_image" src={demo_29} alt={""} hidden={demo_control !== 29}/>
+                    <img className="demo_image" src={demo_30} alt={""} hidden={demo_control !== 30}/>
                 </div>
             </div>
         </div>
