@@ -458,6 +458,7 @@ function Field() {
      * Счетчик побед, следующих подряд друг за другом
      * */
     const victory_counter_ref = useRef(0);
+    const demo_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -984,6 +985,7 @@ function Field() {
     }
 
     async function runDemo() {
+        demo_ref.current.style = '';
         let i = 1;
         let time = 50;
         while (i <= 30) {
@@ -996,7 +998,8 @@ function Field() {
             let result = await promise;
             i++;
         }
-        setDemo_control(0);
+        demo_ref.current.style.transition = '1.6s';
+        demo_ref.current.style.opacity = '0';
     }
 
     const red = <img src={arrow_red} alt={""}/>;
@@ -1199,8 +1202,8 @@ function Field() {
             /**
              * Через 7 сек старт новой игры или продолжение старой
              * */
-            const time_out=7000;
-            setTimeout(()=>{
+            const time_out = 7000;
+            setTimeout(() => {
                 /**
                  * Демо запускается если:
                  * 1. Попал в яблоко
@@ -1214,7 +1217,7 @@ function Field() {
                         runDemo().then();
                     }
                 }
-            },time_out-1000);
+            }, time_out - 1000);
             setTimeout(() => {
                 setStar_score('');
                 setTrajectory([]);
@@ -1491,7 +1494,7 @@ function Field() {
                     <img src={arrow_vibro_7} alt={""} hidden={stickIsOn !== 7}/>
                     <img src={arrow_vibro_8} alt={""} hidden={stickIsOn !== 8}/>
                 </div>
-                <div className="demo">
+                <div className="demo" ref={demo_ref}>
                     <img className="demo_image" src={demo_1} alt={""} hidden={demo_control !== 1}/>
                     <img className="demo_image" src={demo_2} alt={""} hidden={demo_control !== 2}/>
                     <img className="demo_image" src={demo_3} alt={""} hidden={demo_control !== 3}/>
