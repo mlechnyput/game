@@ -998,7 +998,7 @@ function Field() {
             let result = await promise;
             i++;
         }
-        demo_ref.current.style.transition = '1.6s';
+        demo_ref.current.style.transition = '0.1s';
         demo_ref.current.style.opacity = '0';
     }
 
