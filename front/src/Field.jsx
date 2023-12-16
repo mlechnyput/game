@@ -1031,7 +1031,7 @@ function Field() {
         let i = 1;
         let k = 1;
         let time = 30;
-        while (k <= 5) {
+        while (k <= 3) {
             while (i <= 24) {
                 setFlame_control(i);
                 let promise = new Promise((resolve, reject) => {
@@ -1045,9 +1045,9 @@ function Field() {
             i = 1;
             k++;
             /**
-             * На 4-м круге начинает исчезать
+             * На 3-м круге начинает исчезать
              * */
-            if (k===4){
+            if (k===3){
                 star_score_ref.current.style.transition = '0.2s';
                 star_score_ref.current.style.opacity = '0';
             }
