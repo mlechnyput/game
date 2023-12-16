@@ -145,6 +145,30 @@ import demo_27 from "./images/demo/demo0027.png"
 import demo_28 from "./images/demo/demo0028.png"
 import demo_29 from "./images/demo/demo0029.png"
 import demo_30 from "./images/demo/demo0030.png"
+import flame_1 from "./images/flame/flame0001.png"
+import flame_2 from "./images/flame/flame0002.png"
+import flame_3 from "./images/flame/flame0003.png"
+import flame_4 from "./images/flame/flame0004.png"
+import flame_5 from "./images/flame/flame0005.png"
+import flame_6 from "./images/flame/flame0006.png"
+import flame_7 from "./images/flame/flame0007.png"
+import flame_8 from "./images/flame/flame0008.png"
+import flame_9 from "./images/flame/flame0009.png"
+import flame_10 from "./images/flame/flame0010.png"
+import flame_11 from "./images/flame/flame0011.png"
+import flame_12 from "./images/flame/flame0012.png"
+import flame_13 from "./images/flame/flame0013.png"
+import flame_14 from "./images/flame/flame0014.png"
+import flame_15 from "./images/flame/flame0015.png"
+import flame_16 from "./images/flame/flame0016.png"
+import flame_17 from "./images/flame/flame0017.png"
+import flame_18 from "./images/flame/flame0018.png"
+import flame_19 from "./images/flame/flame0019.png"
+import flame_20 from "./images/flame/flame0020.png"
+import flame_21 from "./images/flame/flame0021.png"
+import flame_22 from "./images/flame/flame0022.png"
+import flame_23 from "./images/flame/flame0023.png"
+import flame_24 from "./images/flame/flame0024.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -255,6 +279,7 @@ function Field() {
      * Управление демо 30 кадров
      * */
     const [demo_control, setDemo_control] = useState(0);
+    const [flame_control, setFlame_control] = useState(0);
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -1002,6 +1027,34 @@ function Field() {
         demo_ref.current.style.opacity = '0';
     }
 
+    async function runFlame() {
+        let i = 1;
+        let k = 1;
+        let time = 30;
+        while (k <= 5) {
+            while (i <= 24) {
+                setFlame_control(i);
+                let promise = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve("готово");
+                    }, time)
+                });
+                let result = await promise;
+                i++;
+            }
+            i = 1;
+            k++;
+            /**
+             * На 4-м круге начинает исчезать
+             * */
+            if (k===4){
+                star_score_ref.current.style.transition = '0.2s';
+                star_score_ref.current.style.opacity = '0';
+            }
+        }
+        setFlame_control(0);
+    }
+
     const red = <img src={arrow_red} alt={""}/>;
     const green = <img src={arrow_green} alt={""}/>;
     const white = <img src={arrow_white} alt={""}/>;
@@ -1193,16 +1246,16 @@ function Field() {
                     }
                 }
                 /**
-                 * Желтый круг с баллами всплывает и исчезает
+                 *  Всплывает огонек с баллами
                  * */
-                star_score_ref.current.style.transition = '0.7s linear';
-                star_score_ref.current.style.opacity = '0';
-                star_score_ref.current.style.transform = 'translate(0px, -140px)';
+                runFlame().then();
+                star_score_ref.current.style.transition = '0.1s';
+                star_score_ref.current.style.transform = 'translate(0px, -100px)';
             }
             /**
-             * Через 7 сек старт новой игры или продолжение старой
+             * Через 5 сек старт новой игры или продолжение старой
              * */
-            const time_out = 7000;
+            const time_out = 5000;
             setTimeout(() => {
                 /**
                  * Демо запускается если:
@@ -1451,9 +1504,36 @@ function Field() {
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
                     <div className="star_score_container" ref={star_score_ref}>
                         {star_score.length === 0 ? null :
-                            <svg>
-                                <circle cx={50} cy={50} r={50} fill="white"/>
-                            </svg>}
+                            // <svg>
+                            //     <circle cx={50} cy={50} r={50} fill="white"/>
+                            // </svg>
+                            <div className="flame">
+                                <img src={flame_1} className="flame_image" hidden={flame_control !== 1}/>
+                                <img src={flame_2} className="flame_image" hidden={flame_control !== 2}/>
+                                <img src={flame_3} className="flame_image" hidden={flame_control !== 3}/>
+                                <img src={flame_4} className="flame_image" hidden={flame_control !== 4}/>
+                                <img src={flame_5} className="flame_image" hidden={flame_control !== 5}/>
+                                <img src={flame_6} className="flame_image" hidden={flame_control !== 6}/>
+                                <img src={flame_7} className="flame_image" hidden={flame_control !== 7}/>
+                                <img src={flame_8} className="flame_image" hidden={flame_control !== 8}/>
+                                <img src={flame_9} className="flame_image" hidden={flame_control !== 9}/>
+                                <img src={flame_10} className="flame_image" hidden={flame_control !== 10}/>
+                                <img src={flame_11} className="flame_image" hidden={flame_control !== 11}/>
+                                <img src={flame_12} className="flame_image" hidden={flame_control !== 12}/>
+                                <img src={flame_13} className="flame_image" hidden={flame_control !== 13}/>
+                                <img src={flame_14} className="flame_image" hidden={flame_control !== 14}/>
+                                <img src={flame_15} className="flame_image" hidden={flame_control !== 15}/>
+                                <img src={flame_16} className="flame_image" hidden={flame_control !== 16}/>
+                                <img src={flame_17} className="flame_image" hidden={flame_control !== 17}/>
+                                <img src={flame_18} className="flame_image" hidden={flame_control !== 18}/>
+                                <img src={flame_19} className="flame_image" hidden={flame_control !== 19}/>
+                                <img src={flame_20} className="flame_image" hidden={flame_control !== 20}/>
+                                <img src={flame_21} className="flame_image" hidden={flame_control !== 21}/>
+                                <img src={flame_22} className="flame_image" hidden={flame_control !== 22}/>
+                                <img src={flame_23} className="flame_image" hidden={flame_control !== 23}/>
+                                <img src={flame_24} className="flame_image" hidden={flame_control !== 24}/>
+                            </div>
+                        }
                         <div className="star_score_text">{star_score}</div>
                     </div>
                     <div className="apple" ref={apple_ref}>
