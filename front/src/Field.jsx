@@ -665,13 +665,13 @@ function Field() {
                     time = 10000;
                     break;
                 case 2:
-                    time = 80;
+                    time = 100;
                     break;
                 case 3:
-                    time = 30;
+                    time = 55;
                     break;
                 case 4:
-                    time = 40;
+                    time = 90;
                     break;
                 case 5:
                     time = 0;
@@ -917,13 +917,13 @@ function Field() {
         while (i <= 5) {
             switch (i) {
                 case 2:
-                    time = 80;
+                    time = 100;
                     break;
                 case 3:
-                    time = 35;
+                    time = 55;
                     break;
                 case 4:
-                    time = 50;
+                    time = 90;
                     break;
                 case 5:
                     /**
@@ -949,7 +949,7 @@ function Field() {
         let time;
         while (i <= 8) {
             if (i === 1) {
-                time = 80;
+                time = 90;
             } else {
                 time = 55;
             }
@@ -969,7 +969,7 @@ function Field() {
         let time;
         while (i <= 8) {
             if (i === 2) {
-                time = 80;
+                time = 90;
             } else {
                 time = 55;
             }
