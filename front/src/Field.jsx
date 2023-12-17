@@ -563,7 +563,8 @@ function Field() {
              * Ставим маленькую стрелу радиолокатора (квадратик 4х4)
              * */
             arrow_little_ref.current.style.top = (marker_right_bottom_y - 150) + 'px';
-            arrow_little_ref.current.style.left = baiden_position_x_ref.current * coefficient_locator - 150 + 'px';
+            const comp_little_x = marker_right_bottom_x / 7;
+            arrow_little_ref.current.style.left = baiden_position_x_ref.current * coefficient_locator - comp_little_x + 'px';
             /**
              * Ставим силует на экране радиолокатора
              * */
