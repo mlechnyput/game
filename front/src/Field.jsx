@@ -169,6 +169,24 @@ import flame_21 from "./images/flame/flame0021.png"
 import flame_22 from "./images/flame/flame0022.png"
 import flame_23 from "./images/flame/flame0023.png"
 import flame_24 from "./images/flame/flame0024.png"
+import explode_1 from "./images/explode/explode0001.png"
+import explode_2 from "./images/explode/explode0002.png"
+import explode_3 from "./images/explode/explode0003.png"
+import explode_4 from "./images/explode/explode0004.png"
+import explode_5 from "./images/explode/explode0005.png"
+import explode_6 from "./images/explode/explode0006.png"
+import explode_7 from "./images/explode/explode0007.png"
+import explode_8 from "./images/explode/explode0008.png"
+import explode_9 from "./images/explode/explode0009.png"
+import explode_10 from "./images/explode/explode0010.png"
+import explode_11 from "./images/explode/explode0011.png"
+import explode_12 from "./images/explode/explode0012.png"
+import explode_13 from "./images/explode/explode0013.png"
+import explode_14 from "./images/explode/explode0014.png"
+import explode_15 from "./images/explode/explode0015.png"
+import explode_16 from "./images/explode/explode0016.png"
+import explode_17 from "./images/explode/explode0017.png"
+import explode_18 from "./images/explode/explode0018.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -280,6 +298,7 @@ function Field() {
      * */
     const [demo_control, setDemo_control] = useState(0);
     const [flame_control, setFlame_control] = useState(0);
+    const [explode_control, setExplode_control] = useState(0);
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -484,6 +503,11 @@ function Field() {
      * */
     const victory_counter_ref = useRef(0);
     const demo_ref = useRef();
+    /**
+     * Чем произведен выстрел
+     * */
+    const arrow_shoot_with_ref = useRef('');
+    const explode_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -1047,12 +1071,28 @@ function Field() {
             /**
              * На 3-м круге начинает исчезать
              * */
-            if (k===3){
+            if (k === 3) {
                 star_score_ref.current.style.transition = '0.2s';
                 star_score_ref.current.style.opacity = '0';
             }
         }
         setFlame_control(0);
+    }
+
+    async function runExplode() {
+        let i = 1;
+        let time = 50;
+        while (i <= 18) {
+            setExplode_control(i);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+        setExplode_control(0);
     }
 
     const red = <img src={arrow_red} alt={""}/>;
@@ -1124,13 +1164,14 @@ function Field() {
          * Фиксируем чем произвели выстрел
          * */
         setArrowShootWith(item_in_the_hands_ref.current);
+        arrow_shoot_with_ref.current = item_in_the_hands_ref.current;
         click_is_on_ref.current = false;
         kim_turns_blocked_ref.current = true;
         setKim_control(55);
         setNotShoot(false);
         setFly(true);
         moveAll().then(r => {
-            console.log('Угол: ' + r.angle_degree);
+            console.log('Угол: ' + r.angle_degree + ', Стрела ' + arrow_shoot_with_ref.current);
             last_shoot_to_ref.current = r.hit_area;
             if (r.hit_area === 'ground') {
                 /**
@@ -1166,10 +1207,20 @@ function Field() {
                     compensation_x = -40;
                     compensation_y = -165;
                 }
-                arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
-                arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
                 setFly(false);
-                vibrato().then(r => console.log('stick is vertical'));
+                if (arrow_shoot_with_ref.current === 'arrow') {
+                    arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
+                    arrow_stick_ref.current.style.top = r.coord_y + compensation_y + 'px';
+                    vibrato().then(r => console.log('stick is vertical'));
+                } else {
+                    if (arrow_shoot_with_ref.current === 'grenade') {
+                        const comp_explode_x = -110;
+                        const comp_explode_y = 20;
+                        explode_ref.current.style.left = r.coord_x + compensation_x + comp_explode_x + 'px';
+                        explode_ref.current.style.top = r.coord_y + compensation_y + comp_explode_y + 'px';
+                        runExplode().then();
+                    }
+                }
             } else {
                 let compensation_x;
                 let compensation_y;
@@ -1293,6 +1344,7 @@ function Field() {
                 setKim_control(1);
                 setBaiden_control(1);
                 setStanding_squatting(true);
+                explode_ref.current.style = "";
                 arrow_stick_ref.current.style = '';
                 apple_ref.current.style = '';
                 torso_ref.current.style = '';
@@ -1555,6 +1607,26 @@ function Field() {
                     </div>
                     <div className="joe_box_apple" ref={joe_box_apple_ref}/>
                     <div className="joe_box_head" ref={joe_box_head_ref}/>
+                </div>
+                <div className="explode" ref={explode_ref}>
+                    <img src={explode_1} alt={""} hidden={explode_control !== 1}/>
+                    <img src={explode_2} alt={""} hidden={explode_control !== 2}/>
+                    <img src={explode_3} alt={""} hidden={explode_control !== 3}/>
+                    <img src={explode_4} alt={""} hidden={explode_control !== 4}/>
+                    <img src={explode_5} alt={""} hidden={explode_control !== 5}/>
+                    <img src={explode_6} alt={""} hidden={explode_control !== 6}/>
+                    <img src={explode_7} alt={""} hidden={explode_control !== 7}/>
+                    <img src={explode_8} alt={""} hidden={explode_control !== 8}/>
+                    <img src={explode_9} alt={""} hidden={explode_control !== 9}/>
+                    <img src={explode_10} alt={""} hidden={explode_control !== 10}/>
+                    <img src={explode_11} alt={""} hidden={explode_control !== 11}/>
+                    <img src={explode_12} alt={""} hidden={explode_control !== 12}/>
+                    <img src={explode_13} alt={""} hidden={explode_control !== 13}/>
+                    <img src={explode_14} alt={""} hidden={explode_control !== 14}/>
+                    <img src={explode_15} alt={""} hidden={explode_control !== 15}/>
+                    <img src={explode_16} alt={""} hidden={explode_control !== 16}/>
+                    <img src={explode_17} alt={""} hidden={explode_control !== 17}/>
+                    <img src={explode_18} alt={""} hidden={explode_control !== 18}/>
                 </div>
                 <div className="arrows_fly" ref={arrows_fly_ref}>
                     {!fly ? null :

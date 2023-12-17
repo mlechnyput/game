@@ -289,6 +289,13 @@
     height: 100%;
 }
 
+.explode{
+    position: absolute;
+    width: 310px;
+    height: 260px;
+    pointer-events: none;
+}
+
 .demo{
     position: absolute;
     width: 100%;
