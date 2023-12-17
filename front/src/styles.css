@@ -277,6 +277,16 @@
     color: #000000;
     text-align: center;
 }
+
+.star_score_circle {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 130px;
+    left: 20px;
+    text-align: center;
+}
+
 .flame{
     position: absolute;
     width: 100%;

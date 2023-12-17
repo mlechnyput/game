@@ -1556,9 +1556,6 @@ function Field() {
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
                     <div className="star_score_container" ref={star_score_ref}>
                         {star_score.length === 0 ? null :
-                            // <svg>
-                            //     <circle cx={50} cy={50} r={50} fill="white"/>
-                            // </svg>
                             <div className="flame">
                                 <img src={flame_1} className="flame_image" hidden={flame_control !== 1}/>
                                 <img src={flame_2} className="flame_image" hidden={flame_control !== 2}/>
@@ -1586,6 +1583,10 @@ function Field() {
                                 <img src={flame_24} className="flame_image" hidden={flame_control !== 24}/>
                             </div>
                         }
+                        {star_score.length === 0 ? null :
+                            <svg className="star_score_circle">
+                                <circle cx={50} cy={25} r={25} stroke="black" fill="white"/>
+                            </svg>}
                         <div className="star_score_text">{star_score}</div>
                     </div>
                     <div className="apple" ref={apple_ref}>
