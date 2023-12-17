@@ -1048,15 +1048,13 @@ function Field() {
             let result = await promise;
             i++;
         }
-        demo_ref.current.style.transition = '0.1s';
-        demo_ref.current.style.opacity = '0';
     }
 
     async function runFlame() {
         let i = 1;
         let k = 1;
         let time = 30;
-        while (k <= 3) {
+        while (k <= 5) {
             while (i <= 24) {
                 setFlame_control(i);
                 let promise = new Promise((resolve, reject) => {
@@ -1070,14 +1068,15 @@ function Field() {
             i = 1;
             k++;
             /**
-             * На 3-м круге начинает исчезать
+             * На 4-м круге начинает исчезать
              * */
-            if (k === 3) {
+            if (k === 4) {
                 star_score_ref.current.style.transition = '0.2s';
                 star_score_ref.current.style.opacity = '0';
             }
         }
         setFlame_control(0);
+        setStar_score('');
     }
 
     async function runExplode() {
@@ -1300,8 +1299,10 @@ function Field() {
                 /**
                  *  Всплывает огонек с баллами
                  * */
-                runFlame().then();
-                star_score_ref.current.style.transition = '0.1s';
+                runFlame().then(() => {
+                    star_score_ref.current.style = '';
+                });
+                star_score_ref.current.style.transition = '0.2s';
                 star_score_ref.current.style.transform = 'translate(0px, -100px)';
             }
             /**
@@ -1316,15 +1317,14 @@ function Field() {
                  * Во всех остальных случаях продолжается старая игра без запуска демо.
                  * */
                 if (last_shoot_to_ref.current === 'apple') {
-                    runDemo().then();
+                    runDemo().then(() => setDemo_control(0));
                 } else {
                     if (arms.atomic + arms.arrow + arms.grenade === 0) {
-                        runDemo().then();
+                        runDemo().then(() => setDemo_control(0));
                     }
                 }
             }, time_out - 1000);
             setTimeout(() => {
-                setStar_score('');
                 setTrajectory([]);
                 setFly(false);
                 kim_turns_blocked_ref.current = false;
@@ -1356,7 +1356,6 @@ function Field() {
                 city_ref.current.style = '';
                 joe_ref.current.style = '';
                 arrow_little_ref.current.style = '';
-                star_score_ref.current.style = '';
                 setNotShoot(true);
                 /**
                  * Новая игра начинается в двух случаях:
