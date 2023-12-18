@@ -1585,7 +1585,7 @@ function Field() {
                         }
                         {star_score.length === 0 ? null :
                             <svg className="star_score_circle">
-                                <circle cx={50} cy={25} r={25} stroke="black" fill="white"/>
+                                <circle cx={50} cy={30} r={25} stroke="black" strokeWidth={4} fill="white"/>
                             </svg>}
                         <div className="star_score_text">{star_score}</div>
                     </div>
