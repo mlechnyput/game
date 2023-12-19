@@ -1089,6 +1089,9 @@ function Field() {
         let i = 1;
         let time = 80;
         while (i <= 67) {
+            if (i === 67) {
+                time = 2000;
+            }
             setBanknotes_control(i);
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -1160,7 +1163,7 @@ function Field() {
         let i = 1;
         let k = 1;
         let time = 30;
-        while (k <= 5) {
+        while (k <= 11) {
             while (i <= 24) {
                 setFlame_control(i);
                 let promise = new Promise((resolve, reject) => {
@@ -1174,9 +1177,9 @@ function Field() {
             i = 1;
             k++;
             /**
-             * На 4-м круге начинает исчезать
+             * На 10-м круге начинает исчезать
              * */
-            if (k === 4) {
+            if (k === 10) {
                 star_score_ref.current.style.transition = '0.2s';
                 star_score_ref.current.style.opacity = '0';
             }
@@ -1187,7 +1190,7 @@ function Field() {
 
     async function runExplode() {
         let i = 1;
-        let time = 50;
+        let time = 30;
         while (i <= 18) {
             setExplode_control(i);
             let promise = new Promise((resolve, reject) => {
@@ -1394,6 +1397,7 @@ function Field() {
                     } else {
                         if (arrow_shoot_with_ref.current === 'grenade') {
                             flyBanknots().then(() => setBanknotes_control(0));
+                            setStar_score('99');
                         }
                     }
                 } else {
@@ -1417,9 +1421,9 @@ function Field() {
                 star_score_ref.current.style.transform = 'translate(0px, -100px)';
             }
             /**
-             * Через 5 сек старт новой игры или продолжение старой
+             * Через 8 сек старт новой игры или продолжение старой
              * */
-            const time_out = 5000;
+            const time_out = 8000;
             setTimeout(() => {
                 /**
                  * Демо запускается если:
