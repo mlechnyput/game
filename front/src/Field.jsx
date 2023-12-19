@@ -1396,8 +1396,13 @@ function Field() {
                         sendScoreToBack(1);
                     } else {
                         if (arrow_shoot_with_ref.current === 'grenade') {
+                            const comp_explode_x = -110;
+                            explode_ref.current.style.left = r.coord_x - compensation_x + comp_explode_x + 'px';
+                            explode_ref.current.style.top = r.coord_y + compensation_y + 'px';
+                            runExplode().then();
                             flyBanknots().then(() => setBanknotes_control(0));
                             setStar_score('99');
+                            sendScoreToBack(99);
                         }
                     }
                 } else {
