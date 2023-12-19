@@ -258,6 +258,15 @@
     transform-origin: 30px 50px;
 }
 
+.banknotes {
+    pointer-events: none;
+    position: absolute;
+    top: 20px;
+    left: -160px;
+    height: 460px;
+    width: 520px;
+}
+
 .star_score_container {
     position: absolute;
     width: 110px;

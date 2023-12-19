@@ -103,6 +103,9 @@ import joe_2 from "./images/joe/joe0002.png"
 import joe_3 from "./images/joe/joe0003.png"
 import joe_4 from "./images/joe/joe0004.png"
 import joe_5 from "./images/joe/joe0005.png"
+import joe_6 from "./images/joe/joe0006.png"
+import joe_7 from "./images/joe/joe0007.png"
+import joe_8 from "./images/joe/joe0008.png"
 import silhouette from "./images/locator/silhouette.png"
 import apple_1 from "./images/apple/apple0001.png"
 import apple_2 from "./images/apple/apple0002.png"
@@ -187,6 +190,73 @@ import explode_15 from "./images/explode/explode0015.png"
 import explode_16 from "./images/explode/explode0016.png"
 import explode_17 from "./images/explode/explode0017.png"
 import explode_18 from "./images/explode/explode0018.png"
+import banknotes_1 from "./images/banknotes/bnknots0001.png"
+import banknotes_2 from "./images/banknotes/bnknots0002.png"
+import banknotes_3 from "./images/banknotes/bnknots0003.png"
+import banknotes_4 from "./images/banknotes/bnknots0004.png"
+import banknotes_5 from "./images/banknotes/bnknots0005.png"
+import banknotes_6 from "./images/banknotes/bnknots0006.png"
+import banknotes_7 from "./images/banknotes/bnknots0007.png"
+import banknotes_8 from "./images/banknotes/bnknots0008.png"
+import banknotes_9 from "./images/banknotes/bnknots0009.png"
+import banknotes_10 from "./images/banknotes/bnknots0010.png"
+import banknotes_11 from "./images/banknotes/bnknots0011.png"
+import banknotes_12 from "./images/banknotes/bnknots0012.png"
+import banknotes_13 from "./images/banknotes/bnknots0013.png"
+import banknotes_14 from "./images/banknotes/bnknots0014.png"
+import banknotes_15 from "./images/banknotes/bnknots0015.png"
+import banknotes_16 from "./images/banknotes/bnknots0016.png"
+import banknotes_17 from "./images/banknotes/bnknots0017.png"
+import banknotes_18 from "./images/banknotes/bnknots0018.png"
+import banknotes_19 from "./images/banknotes/bnknots0019.png"
+import banknotes_20 from "./images/banknotes/bnknots0020.png"
+import banknotes_21 from "./images/banknotes/bnknots0021.png"
+import banknotes_22 from "./images/banknotes/bnknots0022.png"
+import banknotes_23 from "./images/banknotes/bnknots0023.png"
+import banknotes_24 from "./images/banknotes/bnknots0024.png"
+import banknotes_25 from "./images/banknotes/bnknots0025.png"
+import banknotes_26 from "./images/banknotes/bnknots0026.png"
+import banknotes_27 from "./images/banknotes/bnknots0027.png"
+import banknotes_28 from "./images/banknotes/bnknots0028.png"
+import banknotes_29 from "./images/banknotes/bnknots0029.png"
+import banknotes_30 from "./images/banknotes/bnknots0030.png"
+import banknotes_31 from "./images/banknotes/bnknots0031.png"
+import banknotes_32 from "./images/banknotes/bnknots0032.png"
+import banknotes_33 from "./images/banknotes/bnknots0033.png"
+import banknotes_34 from "./images/banknotes/bnknots0034.png"
+import banknotes_35 from "./images/banknotes/bnknots0035.png"
+import banknotes_36 from "./images/banknotes/bnknots0036.png"
+import banknotes_37 from "./images/banknotes/bnknots0037.png"
+import banknotes_38 from "./images/banknotes/bnknots0038.png"
+import banknotes_39 from "./images/banknotes/bnknots0039.png"
+import banknotes_40 from "./images/banknotes/bnknots0040.png"
+import banknotes_41 from "./images/banknotes/bnknots0041.png"
+import banknotes_42 from "./images/banknotes/bnknots0042.png"
+import banknotes_43 from "./images/banknotes/bnknots0043.png"
+import banknotes_44 from "./images/banknotes/bnknots0044.png"
+import banknotes_45 from "./images/banknotes/bnknots0045.png"
+import banknotes_46 from "./images/banknotes/bnknots0046.png"
+import banknotes_47 from "./images/banknotes/bnknots0047.png"
+import banknotes_48 from "./images/banknotes/bnknots0048.png"
+import banknotes_49 from "./images/banknotes/bnknots0049.png"
+import banknotes_50 from "./images/banknotes/bnknots0050.png"
+import banknotes_51 from "./images/banknotes/bnknots0051.png"
+import banknotes_52 from "./images/banknotes/bnknots0052.png"
+import banknotes_53 from "./images/banknotes/bnknots0053.png"
+import banknotes_54 from "./images/banknotes/bnknots0054.png"
+import banknotes_55 from "./images/banknotes/bnknots0055.png"
+import banknotes_56 from "./images/banknotes/bnknots0056.png"
+import banknotes_57 from "./images/banknotes/bnknots0057.png"
+import banknotes_58 from "./images/banknotes/bnknots0058.png"
+import banknotes_59 from "./images/banknotes/bnknots0059.png"
+import banknotes_60 from "./images/banknotes/bnknots0060.png"
+import banknotes_61 from "./images/banknotes/bnknots0061.png"
+import banknotes_62 from "./images/banknotes/bnknots0062.png"
+import banknotes_63 from "./images/banknotes/bnknots0063.png"
+import banknotes_64 from "./images/banknotes/bnknots0064.png"
+import banknotes_65 from "./images/banknotes/bnknots0065.png"
+import banknotes_66 from "./images/banknotes/bnknots0066.png"
+import banknotes_67 from "./images/banknotes/bnknots0067.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -299,6 +369,7 @@ function Field() {
     const [demo_control, setDemo_control] = useState(0);
     const [flame_control, setFlame_control] = useState(0);
     const [explode_control, setExplode_control] = useState(0);
+    const [banknotes_control, setBanknotes_control] = useState(0);
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -576,7 +647,7 @@ function Field() {
     const resetArms = () => {
         setArms({
             atomic: 0,
-            grenade: 0,
+            grenade: 1,
             arrow: 3
         });
     }
@@ -957,14 +1028,25 @@ function Field() {
         };
     }
 
-    async function hitBaiden() {
+    async function hitBaiden(hit_by) {
         /**
-         * На 2,3 и 4 отключаем яблоко
+         * На 2,3 и 4 отключаем яблоко (попадание обычной стрелой)
+         * На 6, 7 и 8 тоже отключаем яблоко (попадание гранатой)
          * */
         setApple(0);
-        let i = 2;
+        let i;
+        let max;
+        if (hit_by === 'arrow') {
+            i = 2;
+            max = 5;
+        } else {
+            if (hit_by === 'grenade') {
+                i = 6;
+                max = 8;
+            }
+        }
         let time;
-        while (i <= 5) {
+        while (i <= max) {
             switch (i) {
                 case 2:
                     time = 100;
@@ -982,8 +1064,32 @@ function Field() {
                     setApple(1);
                     time = 0;
                     break;
+                case 6:
+                    time = 100;
+                    break;
+                case 7:
+                    time = 55;
+                    break;
+                case 8:
+                    time = 0;
+                    break;
             }
             setBaiden_control(i);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+    }
+
+    async function flyBanknots() {
+        let i = 1;
+        let time = 80;
+        while (i <= 67) {
+            setBanknotes_control(i);
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
@@ -1276,15 +1382,20 @@ function Field() {
                     }
                     rotation = 90;
 
-                    hitBaiden().then(ret => console.log('байден дернулся'));
-                    arrow_stick_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
-                    arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
-                    arrow_stick_ref.current.style.top = r.coord_y + compensation_y + additional_y + 'px';
+                    hitBaiden(arrow_shoot_with_ref.current).then(ret => console.log('байден дернулся'));
                     setFly(false);
-                    vibrato().then(res => console.log('hit to ' + r.hit_area));
-                    setStar_score('1');
-                    sendScoreToBack(1);
-
+                    if (arrow_shoot_with_ref.current === 'arrow') {
+                        arrow_stick_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
+                        arrow_stick_ref.current.style.left = r.coord_x + compensation_x + 'px';
+                        arrow_stick_ref.current.style.top = r.coord_y + compensation_y + additional_y + 'px';
+                        vibrato().then(res => console.log('hit to ' + r.hit_area));
+                        setStar_score('1');
+                        sendScoreToBack(1);
+                    } else {
+                        if (arrow_shoot_with_ref.current === 'grenade') {
+                            flyBanknots().then(() => setBanknotes_control(0));
+                        }
+                    }
                 } else {
                     if (r.hit_area === 'apple') {
                         rotation = r.angle_degree;
@@ -1552,6 +1663,9 @@ function Field() {
                     <img src={joe_3} alt={""} hidden={baiden_control !== 3}/>
                     <img src={joe_4} alt={""} hidden={baiden_control !== 4}/>
                     <img src={joe_5} alt={""} hidden={baiden_control !== 5}/>
+                    <img src={joe_6} alt={""} hidden={baiden_control !== 6}/>
+                    <img src={joe_7} alt={""} hidden={baiden_control !== 7}/>
+                    <img src={joe_8} alt={""} hidden={baiden_control !== 8}/>
                     <div className="joe_box_legs" ref={joe_box_legs_ref}/>
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
                     <div className="star_score_container" ref={star_score_ref}>
@@ -1608,6 +1722,75 @@ function Field() {
                     </div>
                     <div className="joe_box_apple" ref={joe_box_apple_ref}/>
                     <div className="joe_box_head" ref={joe_box_head_ref}/>
+                    <div className="banknotes">
+                        <img src={banknotes_1} alt={""} hidden={banknotes_control !== 1}/>
+                        <img src={banknotes_2} alt={""} hidden={banknotes_control !== 2}/>
+                        <img src={banknotes_3} alt={""} hidden={banknotes_control !== 3}/>
+                        <img src={banknotes_4} alt={""} hidden={banknotes_control !== 4}/>
+                        <img src={banknotes_5} alt={""} hidden={banknotes_control !== 5}/>
+                        <img src={banknotes_6} alt={""} hidden={banknotes_control !== 6}/>
+                        <img src={banknotes_7} alt={""} hidden={banknotes_control !== 7}/>
+                        <img src={banknotes_8} alt={""} hidden={banknotes_control !== 8}/>
+                        <img src={banknotes_9} alt={""} hidden={banknotes_control !== 9}/>
+                        <img src={banknotes_10} alt={""} hidden={banknotes_control !== 10}/>
+                        <img src={banknotes_11} alt={""} hidden={banknotes_control !== 11}/>
+                        <img src={banknotes_12} alt={""} hidden={banknotes_control !== 12}/>
+                        <img src={banknotes_13} alt={""} hidden={banknotes_control !== 13}/>
+                        <img src={banknotes_14} alt={""} hidden={banknotes_control !== 14}/>
+                        <img src={banknotes_15} alt={""} hidden={banknotes_control !== 15}/>
+                        <img src={banknotes_16} alt={""} hidden={banknotes_control !== 16}/>
+                        <img src={banknotes_17} alt={""} hidden={banknotes_control !== 17}/>
+                        <img src={banknotes_18} alt={""} hidden={banknotes_control !== 18}/>
+                        <img src={banknotes_19} alt={""} hidden={banknotes_control !== 19}/>
+                        <img src={banknotes_20} alt={""} hidden={banknotes_control !== 20}/>
+                        <img src={banknotes_21} alt={""} hidden={banknotes_control !== 21}/>
+                        <img src={banknotes_22} alt={""} hidden={banknotes_control !== 22}/>
+                        <img src={banknotes_23} alt={""} hidden={banknotes_control !== 23}/>
+                        <img src={banknotes_24} alt={""} hidden={banknotes_control !== 24}/>
+                        <img src={banknotes_25} alt={""} hidden={banknotes_control !== 25}/>
+                        <img src={banknotes_26} alt={""} hidden={banknotes_control !== 26}/>
+                        <img src={banknotes_27} alt={""} hidden={banknotes_control !== 27}/>
+                        <img src={banknotes_28} alt={""} hidden={banknotes_control !== 28}/>
+                        <img src={banknotes_29} alt={""} hidden={banknotes_control !== 29}/>
+                        <img src={banknotes_30} alt={""} hidden={banknotes_control !== 30}/>
+                        <img src={banknotes_31} alt={""} hidden={banknotes_control !== 31}/>
+                        <img src={banknotes_32} alt={""} hidden={banknotes_control !== 32}/>
+                        <img src={banknotes_33} alt={""} hidden={banknotes_control !== 33}/>
+                        <img src={banknotes_34} alt={""} hidden={banknotes_control !== 34}/>
+                        <img src={banknotes_35} alt={""} hidden={banknotes_control !== 35}/>
+                        <img src={banknotes_36} alt={""} hidden={banknotes_control !== 36}/>
+                        <img src={banknotes_37} alt={""} hidden={banknotes_control !== 37}/>
+                        <img src={banknotes_38} alt={""} hidden={banknotes_control !== 38}/>
+                        <img src={banknotes_39} alt={""} hidden={banknotes_control !== 39}/>
+                        <img src={banknotes_40} alt={""} hidden={banknotes_control !== 40}/>
+                        <img src={banknotes_41} alt={""} hidden={banknotes_control !== 41}/>
+                        <img src={banknotes_42} alt={""} hidden={banknotes_control !== 42}/>
+                        <img src={banknotes_43} alt={""} hidden={banknotes_control !== 43}/>
+                        <img src={banknotes_44} alt={""} hidden={banknotes_control !== 44}/>
+                        <img src={banknotes_45} alt={""} hidden={banknotes_control !== 45}/>
+                        <img src={banknotes_46} alt={""} hidden={banknotes_control !== 46}/>
+                        <img src={banknotes_47} alt={""} hidden={banknotes_control !== 47}/>
+                        <img src={banknotes_48} alt={""} hidden={banknotes_control !== 48}/>
+                        <img src={banknotes_49} alt={""} hidden={banknotes_control !== 49}/>
+                        <img src={banknotes_50} alt={""} hidden={banknotes_control !== 50}/>
+                        <img src={banknotes_51} alt={""} hidden={banknotes_control !== 51}/>
+                        <img src={banknotes_52} alt={""} hidden={banknotes_control !== 52}/>
+                        <img src={banknotes_53} alt={""} hidden={banknotes_control !== 53}/>
+                        <img src={banknotes_54} alt={""} hidden={banknotes_control !== 54}/>
+                        <img src={banknotes_55} alt={""} hidden={banknotes_control !== 55}/>
+                        <img src={banknotes_56} alt={""} hidden={banknotes_control !== 56}/>
+                        <img src={banknotes_57} alt={""} hidden={banknotes_control !== 57}/>
+                        <img src={banknotes_58} alt={""} hidden={banknotes_control !== 58}/>
+                        <img src={banknotes_59} alt={""} hidden={banknotes_control !== 59}/>
+                        <img src={banknotes_60} alt={""} hidden={banknotes_control !== 60}/>
+                        <img src={banknotes_61} alt={""} hidden={banknotes_control !== 61}/>
+                        <img src={banknotes_62} alt={""} hidden={banknotes_control !== 62}/>
+                        <img src={banknotes_63} alt={""} hidden={banknotes_control !== 63}/>
+                        <img src={banknotes_64} alt={""} hidden={banknotes_control !== 64}/>
+                        <img src={banknotes_65} alt={""} hidden={banknotes_control !== 65}/>
+                        <img src={banknotes_66} alt={""} hidden={banknotes_control !== 66}/>
+                        <img src={banknotes_67} alt={""} hidden={banknotes_control !== 67}/>
+                    </div>
                 </div>
                 <div className="explode" ref={explode_ref}>
                     <img src={explode_1} alt={""} hidden={explode_control !== 1}/>
