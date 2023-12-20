@@ -314,7 +314,18 @@ function Field() {
      * grenade
      * atomic
      * */
-    const [something_in_the_hands, setSomething_in_the_hands, arms, setArms, player] = useContext(GameContext);
+    const {
+        something_in_the_hands,
+        setSomething_in_the_hands,
+        arms,
+        setArms,
+        player,
+        setPlayer,
+        open_winners,
+        setOpen_winners,
+        ten_winners,
+        setTen_winners
+    } = useContext(GameContext);
     /**
      * true - выстрел еще не произведен
      * false - выстрыл произведен
@@ -370,6 +381,16 @@ function Field() {
     const [flame_control, setFlame_control] = useState(0);
     const [explode_control, setExplode_control] = useState(0);
     const [banknotes_control, setBanknotes_control] = useState(0);
+
+    useEffect(() => {
+        if (open_winners) {
+            const obj = {
+                type: 'GET_WINNERS_REQUEST'
+            };
+            const json_msg = JSON.stringify(obj);
+            ws.send(json_msg);
+        }
+    }, [open_winners]);
 
     useEffect(() => {
         setTrajectory([...trajectory, trajectoryPoint]);
@@ -1871,6 +1892,25 @@ function Field() {
                     <img className="demo_image" src={demo_29} alt={""} hidden={demo_control !== 29}/>
                     <img className="demo_image" src={demo_30} alt={""} hidden={demo_control !== 30}/>
                 </div>
+                {open_winners ?
+                    <div className="winners_window">
+                        <div className="winners_head">
+                            <div>Рейтинг 10 лучших игроков</div>
+                            <div className="winners_red" onClick={() => {
+                                setOpen_winners(false)
+                            }}/>
+                        </div>
+                        <table>
+                            {ten_winners.map(w => {
+                                return (
+                                    <tr>
+                                        <td>{w.username}</td>
+                                        <td>{w.score}</td>
+                                    </tr>
+                                )
+                            })}
+                        </table>
+                    </div> : null}
             </div>
         </div>
     );

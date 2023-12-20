@@ -1,15 +1,18 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import "./styles.css";
+import {GameContext} from "./GameContext";
 
 
 function Hat(props) {
+    const {open_winners, setOpen_winners} = useContext(GameContext);
+
 
     return (
         <div className="hat">
             <div className="score">{props.objPlayer.score}</div>
             <div className="people"/>
             <div className="quantity">{props.visitorsQuantity}</div>
-            <div className="winner"/>
+            <div className="winner" onClick={() => setOpen_winners(!open_winners)}/>
             <div className="logo"/>
         </div>
     );

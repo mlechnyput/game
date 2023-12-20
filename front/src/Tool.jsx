@@ -4,7 +4,7 @@ import {GameContext} from "./GameContext";
 
 
 function Tool() {
-    const [something_in_the_hands, setSomething_in_the_hands, arms] = useContext(GameContext);
+    const {something_in_the_hands, setSomething_in_the_hands, arms} = useContext(GameContext);
 
     return (
         <div className="tool">

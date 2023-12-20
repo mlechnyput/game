@@ -12,6 +12,8 @@ import ru.rogov.model.Visitor;
 import ru.rogov.repo.AuthorityDao;
 import ru.rogov.repo.VisitorDao;
 
+import java.util.List;
+
 @Service
 public class VisitorService implements ReactiveUserDetailsService {
 
@@ -56,5 +58,9 @@ public class VisitorService implements ReactiveUserDetailsService {
 
     public Visitor updateVisitor(Visitor v) {
         return visitorDao.save(v);
+    }
+
+    public List<Visitor> getTenWinners(){
+        return visitorDao.findTop10ByOrderByScoreDesc();
     }
 }

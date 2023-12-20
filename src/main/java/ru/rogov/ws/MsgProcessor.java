@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 import ru.rogov.model.Visitor;
 import ru.rogov.service.VisitorService;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,6 +55,11 @@ public class MsgProcessor {
                     Visitor updated = visitorService.updateVisitor(vis_1_from_DB);
                     Message<Visitor> changeScoreResp = new Message<>(MessageType.CHANGE_SCORE_RESPONSE, updated);
                     sessionState.sendAsText(changeScoreResp);
+                    break;
+                case GET_WINNERS_REQUEST:
+                    List<Visitor> winners = visitorService.getTenWinners();
+                    Message<List<Visitor>> winnersResp = new Message<>(MessageType.GET_WINNERS_RESPONSE, winners);
+                    sessionState.sendAsText(winnersResp);
                     break;
             }
         } catch (JsonProcessingException e) {

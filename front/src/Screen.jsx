@@ -28,6 +28,13 @@ export default function Screen() {
         arrow: 0
     });
 
+    const [open_winners, setOpen_winners] = useState(false);
+
+    const [ten_winners, setTen_winners] = useState([{
+        username: 'Visitor',
+        score: 11
+    }]);
+
     useEffect(() => {
 
         ws.onopen = function () {
@@ -54,6 +61,9 @@ export default function Screen() {
                 case 'QUANTITY_OF_VISITORS':
                     setQuantity(gotFromBack.body);
                     break;
+                case 'GET_WINNERS_RESPONSE':
+                    setTen_winners(gotFromBack.body);
+                    break;
             }
         };
 
@@ -70,8 +80,11 @@ export default function Screen() {
 
     return (
         <div className="body">
-            <GameContext.Provider value={[something_in_the_hands, setSomething_in_the_hands,
-                arms, setArms, player]}>
+            <GameContext.Provider value={{
+                something_in_the_hands, setSomething_in_the_hands,
+                arms, setArms, player, setPlayer, open_winners, setOpen_winners,
+                ten_winners, setTen_winners
+            }}>
                 <Player obj={player}/>
                 <Hat objPlayer={player}
                      visitorsQuantity={quantity}/>
