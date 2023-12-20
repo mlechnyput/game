@@ -24,6 +24,7 @@
     color: white;
     font-size: 30px;
     font-weight: bold;
+    padding: 10px;
 }
 
 .hat {
@@ -39,6 +40,7 @@
     color: white;
     font-size: 30px;
     font-weight: bold;
+    padding: 10px;
 }
 
 .people {
@@ -55,7 +57,7 @@
     font-size: 30px;
     font-weight: bold;
     color: white;
-    margin-left: 5px;
+    padding: 10px;
 }
 
 .winner {
