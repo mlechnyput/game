@@ -4,10 +4,14 @@ import {GameContext} from "./GameContext";
 
 
 function Tool() {
-    const {something_in_the_hands, setSomething_in_the_hands, arms} = useContext(GameContext);
+    const {
+        something_in_the_hands, setSomething_in_the_hands,
+        arms, open_mail, setOpen_mail
+    } = useContext(GameContext);
 
     return (
         <div className="tool">
+            <div className="mail" onClick={() => setOpen_mail(!open_mail)}/>
             <div className="atomic_num">{arms.atomic}</div>
             <div className="atomic"
                  onClick={() => setSomething_in_the_hands('atomic')}/>

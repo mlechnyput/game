@@ -35,6 +35,8 @@ export default function Screen() {
         score: 11
     }]);
 
+    const [open_mail, setOpen_mail] = useState(false);
+
     useEffect(() => {
 
         ws.onopen = function () {
@@ -47,8 +49,8 @@ export default function Screen() {
         };
 
         ws.onmessage = function (event) {
-            console.log('msg');
-            console.log(event.data);
+            // console.log('msg');
+            // console.log(event.data);
             const gotFromBack = JSON.parse(event.data);
             switch (gotFromBack.type) {
                 case 'CHANGE_SCORE_RESPONSE':
@@ -63,6 +65,9 @@ export default function Screen() {
                     break;
                 case 'GET_WINNERS_RESPONSE':
                     setTen_winners(gotFromBack.body);
+                    break;
+                case 'ADD_MAIL_RESPONSE':
+                    console.log('Письмо разработчику: ' + gotFromBack.body);
                     break;
             }
         };
@@ -83,7 +88,7 @@ export default function Screen() {
             <GameContext.Provider value={{
                 something_in_the_hands, setSomething_in_the_hands,
                 arms, setArms, player, setPlayer, open_winners, setOpen_winners,
-                ten_winners, setTen_winners
+                ten_winners, setTen_winners, open_mail, setOpen_mail
             }}>
                 <Player obj={player}/>
                 <Hat objPlayer={player}

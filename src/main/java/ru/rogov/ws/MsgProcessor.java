@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Mono;
+import ru.rogov.model.Mail;
 import ru.rogov.model.Visitor;
+import ru.rogov.service.MailService;
 import ru.rogov.service.VisitorService;
 
 import java.util.List;
@@ -22,10 +24,12 @@ public class MsgProcessor {
     private static final Map<WebSocketSession, SessionState> subscribers = new ConcurrentHashMap<>();
 
     VisitorService visitorService;
+    MailService mailService;
 
     @Autowired
-    public MsgProcessor(VisitorService visitorService) {
+    public MsgProcessor(VisitorService visitorService, MailService mailService) {
         this.visitorService = visitorService;
+        this.mailService = mailService;
     }
 
     public void process(SessionState sessionState, WebSocketMessage webSocketMessage, String name) {
@@ -60,6 +64,12 @@ public class MsgProcessor {
                     List<Visitor> winners = visitorService.getTenWinners();
                     Message<List<Visitor>> winnersResp = new Message<>(MessageType.GET_WINNERS_RESPONSE, winners);
                     sessionState.sendAsText(winnersResp);
+                    break;
+                case ADD_MAIL_REQUEST:
+                    Mail mail = objectMapper.readValue(objectMapper.writeValueAsString(message.getBody()), Mail.class);
+                    String str = mailService.addMail(mail);
+                    Message<String> addMailResp = new Message<>(MessageType.ADD_MAIL_RESPONSE, str);
+                    sessionState.sendAsText(addMailResp);
                     break;
             }
         } catch (JsonProcessingException e) {

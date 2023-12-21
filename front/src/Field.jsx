@@ -324,7 +324,9 @@ function Field() {
         open_winners,
         setOpen_winners,
         ten_winners,
-        setTen_winners
+        setTen_winners,
+        open_mail,
+        setOpen_mail
     } = useContext(GameContext);
     /**
      * true - выстрел еще не произведен
@@ -381,6 +383,11 @@ function Field() {
     const [flame_control, setFlame_control] = useState(0);
     const [explode_control, setExplode_control] = useState(0);
     const [banknotes_control, setBanknotes_control] = useState(0);
+    const [mail, setMail] = useState('');
+
+    useEffect(() => {
+        setMail('');
+    }, [open_mail]);
 
     useEffect(() => {
         if (open_winners) {
@@ -644,7 +651,7 @@ function Field() {
              * */
             joe_ref.current.style.top = (marker_right_bottom_y - 575) + 'px';
             joe_ref.current.style.left = (marker_right_bottom_x - baiden_position_x_ref.current) + 'px';
-            console.log('Позиция Байдена х:' + baiden_position_x_ref.current);
+            // console.log('Позиция Байдена х:' + baiden_position_x_ref.current);
             /**
              * Генерим сетку радиолокатора
              * */
@@ -1282,6 +1289,20 @@ function Field() {
         ws.send(str);
     }
 
+    function sendMailToBack() {
+        if (mail.length > 0) {
+            const msg = {
+                type: 'ADD_MAIL_REQUEST',
+                body: {
+                    sender: player.username,
+                    message: mail
+                }
+            }
+            const str = JSON.stringify(msg);
+            ws.send(str);
+        }
+    }
+
     const clickAndStart = () => {
         /**
          * Блокируем выстрел если лук не заряжен и блокируем второй выстрел если
@@ -1893,10 +1914,10 @@ function Field() {
                     <img className="demo_image" src={demo_30} alt={""} hidden={demo_control !== 30}/>
                 </div>
                 {open_winners ?
-                    <div className="winners_window">
-                        <div className="winners_head">
+                    <div className="winners_and_mail_window">
+                        <div className="winners_and_mail_head">
                             <div>Рейтинг 10 лучших игроков</div>
-                            <div className="winners_red" onClick={() => {
+                            <div className="winners_and_mail_red" onClick={() => {
                                 setOpen_winners(false)
                             }}/>
                         </div>
@@ -1910,6 +1931,31 @@ function Field() {
                                 )
                             })}
                         </table>
+                    </div> : null}
+                {open_mail ?
+                    <div className="winners_and_mail_window">
+                        <div className="winners_and_mail_head">
+                            <div>Сказать автору пару ласковых. Увидит только автор</div>
+                            <div className="winners_and_mail_red" onClick={() => {
+                                setOpen_mail(false)
+                            }}/>
+                        </div>
+                        <textarea
+                            maxLength={500}
+                            className="mail_input"
+                            onChange={ev => setMail(ev.target.value)}
+                        />
+                        <div className="winners_and_mail_foot">
+                            <div>
+                                <span>Осталось символов: </span>
+                                <span>{500 - mail.length}</span>
+                            </div>
+                            <div className="blue_button"
+                                 onClick={() => {
+                                     sendMailToBack();
+                                     setOpen_mail(false);
+                                 }}/>
+                        </div>
                     </div> : null}
             </div>
         </div>

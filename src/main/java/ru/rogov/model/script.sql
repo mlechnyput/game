@@ -19,14 +19,21 @@ create table authority
     constraint authority_pk primary key (id)
 );
 
-insert into authority(role) values ('ROLE_USER');
-insert into authority(role) values ('ROLE_ADMIN');
-insert into visitors(login, password, authority_id,level,score) values ('Alex','123',2,0,0);
-insert into visitors(login, password, authority_id,level,score) values ('Elena','456',1,0,0);
-insert into visitors(login, password, authority_id,level,score) values ('Leo','789',1,0,0);
+insert into authority(role)
+values ('ROLE_USER');
+insert into authority(role)
+values ('ROLE_ADMIN');
+insert into visitors(login, password, authority_id, level, score)
+values ('Alex', '123', 2, 0, 0);
+insert into visitors(login, password, authority_id, level, score)
+values ('Elena', '456', 1, 0, 0);
+insert into visitors(login, password, authority_id, level, score)
+values ('Leo', '789', 1, 0, 0);
 
-alter table visitors add constraint visitors_uc unique (login);
-alter table visitors drop constraint visitors_uc;
+alter table visitors
+    add constraint visitors_uc unique (login);
+alter table visitors
+    drop constraint visitors_uc;
 
 SELECT con.*
 FROM pg_catalog.pg_constraint con
@@ -36,3 +43,11 @@ FROM pg_catalog.pg_constraint con
                     ON nsp.oid = connamespace
 WHERE nsp.nspname = 'public'
   AND rel.relname = 'visitors';
+
+create table mails
+(
+    id      serial,
+    sender  varchar(50)  not null,
+    message varchar(500) not null,
+    constraint mails_pk primary key (id)
+);
