@@ -675,7 +675,7 @@ function Field() {
     const resetArms = () => {
         setArms({
             atomic: 0,
-            grenade: 1,
+            grenade: 0,
             arrow: 3
         });
     }
@@ -1449,13 +1449,27 @@ function Field() {
                     }
                 } else {
                     if (r.hit_area === 'apple') {
-                        rotation = r.angle_degree;
-                        apple_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
-                        setFly(false);
-                        vibratoWithApple().then(res => console.log('hit to ' + r.hit_area));
-                        setStar_score('10');
-                        sendScoreToBack(10);
                         victory_counter_ref.current = victory_counter_ref.current + 1;
+                        if (arrow_shoot_with_ref.current === 'arrow') {
+                            rotation = r.angle_degree;
+                            apple_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
+                            setFly(false);
+                            vibratoWithApple().then(res => console.log('hit to ' + r.hit_area));
+                            setStar_score('10');
+                            sendScoreToBack(10);
+                        } else {
+                            if (arrow_shoot_with_ref.current === 'grenade') {
+                                const comp_x = -110;
+                                hitBaiden('grenade').then();
+                                explode_ref.current.style.left = r.coord_x + comp_x + 'px';
+                                explode_ref.current.style.top = r.coord_y + 'px';
+                                setFly(false);
+                                runExplode().then();
+                                flyBanknots().then(() => setBanknotes_control(0));
+                                setStar_score('99');
+                                sendScoreToBack(99);
+                            }
+                        }
                     }
                 }
                 /**
@@ -1551,7 +1565,7 @@ function Field() {
 
     const get_random_x_for_baiden = () => {
         const min_x = 1800;
-        const max_x = 1820;
+        const max_x = 4820;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
