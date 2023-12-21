@@ -4,7 +4,7 @@ import {GameContext} from "./GameContext";
 
 
 function Hat(props) {
-    const {open_winners, setOpen_winners} = useContext(GameContext);
+    const {open_winners, setOpen_winners, setOpen_mail} = useContext(GameContext);
 
 
     return (
@@ -12,7 +12,10 @@ function Hat(props) {
             <div className="score">{props.objPlayer.score}</div>
             <div className="people"/>
             <div className="quantity">{props.visitorsQuantity}</div>
-            <div className="winner" onClick={() => setOpen_winners(!open_winners)}/>
+            <div className="winner" onClick={() => {
+                setOpen_winners(!open_winners);
+                setOpen_mail(false);
+            }}/>
             <div className="logo"/>
         </div>
     );
