@@ -1490,6 +1490,7 @@ function Field() {
                  * Демо запускается если:
                  * 1. Попал в яблоко
                  * 2. Закончилось оружие
+                 * 3. Взорван Байденко (гранатой попали не в землю)
                  * Во всех остальных случаях продолжается старая игра без запуска демо.
                  * */
                 if (last_shoot_to_ref.current === 'apple') {
@@ -1497,6 +1498,11 @@ function Field() {
                 } else {
                     if (arms.atomic + arms.arrow + arms.grenade === 0) {
                         runDemo().then(() => setDemo_control(0));
+                    } else {
+                        if (arrow_shoot_with_ref.current === 'grenade'
+                            && last_shoot_to_ref.current !== 'ground') {
+                            runDemo().then(() => setDemo_control(0));
+                        }
                     }
                 }
             }, time_out - 1000);
@@ -1534,9 +1540,10 @@ function Field() {
                 arrow_little_ref.current.style = '';
                 setNotShoot(true);
                 /**
-                 * Новая игра начинается в двух случаях:
+                 * Новая игра начинается в трех случаях:
                  * 1. Попал в яблоко
                  * 2. Закончилось оружие
+                 * 3. Взорван Байденко (гранатой попали не в землю)
                  * Во всех остальных случаях продолжается старая игра.
                  * Новая игра подразумевает перезагрузку оружия, фонов и координат Байдена.
                  * */
@@ -1555,6 +1562,14 @@ function Field() {
                         generate_fon();
                         get_random_x_for_baiden();
                         victory_counter_ref.current = 0;
+                    } else {
+                        if (arrow_shoot_with_ref.current === 'grenade'
+                            && last_shoot_to_ref.current !== 'ground') {
+                            resetArrows();
+                            generate_fon();
+                            get_random_x_for_baiden();
+                            victory_counter_ref.current = 0;
+                        }
                     }
                 }
 
@@ -1565,7 +1580,7 @@ function Field() {
 
     const get_random_x_for_baiden = () => {
         const min_x = 1800;
-        const max_x = 4820;
+        const max_x = 1820;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
     }
 
