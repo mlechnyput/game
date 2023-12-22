@@ -384,6 +384,10 @@ function Field() {
     const [explode_control, setExplode_control] = useState(0);
     const [banknotes_control, setBanknotes_control] = useState(0);
     const [mail, setMail] = useState('');
+    /**
+     * Рядок из трех боксов для яблок
+     * */
+    const [apple_box_arr, setApple_box_arr] = useState([]);
 
     useEffect(() => {
         setMail('');
@@ -476,6 +480,7 @@ function Field() {
         item_in_the_hands_ref.current = something_in_the_hands;
         setInterval(kimTurns, 15000);
         generate_fon();
+        generateAppleBoxRow();
     }, []);
 
     useEffect(() => {
@@ -1481,6 +1486,7 @@ function Field() {
                 star_score_ref.current.style.transition = '0.2s';
                 star_score_ref.current.style.transform = 'translate(0px, -100px)';
             }
+            generateAppleBoxRow();
             /**
              * Через 8 сек старт новой игры или продолжение старой
              * */
@@ -1572,7 +1578,7 @@ function Field() {
                         }
                     }
                 }
-
+                generateAppleBoxRow();
                 getPosition();
             }, time_out);
         });
@@ -1608,6 +1614,25 @@ function Field() {
             arr.push(line_el);
         }
         setHor_lines(arr);
+    }
+
+    function generateAppleBoxRow() {
+        const full = <div className="apple_box_full"/>;
+        const empty = <div className="apple_box_empty"/>;
+        switch (victory_counter_ref.current) {
+            case 0:
+                setApple_box_arr([empty, empty, empty]);
+                break;
+            case 1:
+                setApple_box_arr([full, empty, empty]);
+                break;
+            case 2:
+                setApple_box_arr([full, full, empty]);
+                break;
+            case 3:
+                setApple_box_arr([full, full, full]);
+                break;
+        }
     }
 
     return (
@@ -1986,6 +2011,11 @@ function Field() {
                                  }}/>
                         </div>
                     </div> : null}
+                <div className="apples_row">
+                    {apple_box_arr.map(box => {
+                        return box;
+                    })}
+                </div>
             </div>
         </div>
     );

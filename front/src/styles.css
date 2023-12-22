@@ -120,7 +120,7 @@
     transform: translate(-50%, -50%);
 }
 
-.mail_input{
+.mail_input {
     height: 180px;
     width: 370px;
 }
@@ -225,6 +225,32 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+}
+
+.apples_row {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 110px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.apple_box_empty {
+    width: 30px;
+    height: 30px;
+    border: solid 2px #ffffff;
+}
+
+.apple_box_full {
+    width: 30px;
+    height: 30px;
+    border: solid 2px #ffffff;
+    background-image: url("./images/ico/ico_apple.png");
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 /*
