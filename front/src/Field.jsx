@@ -418,6 +418,10 @@ function Field() {
      * Анимация атомного круга
      * */
     const [atomic_circle_control, setAtomic_circle_control] = useState(0);
+    /**
+     * Вкл./выкл. атомного треугольника
+     * */
+    const [open_atomic_triangle, setOpen_atomic_triangle] = useState(false);
 
     useEffect(() => {
         setMail('');
@@ -643,6 +647,11 @@ function Field() {
      * */
     const arrow_shoot_with_ref = useRef('');
     const explode_ref = useRef();
+    /**
+     * Бокс атомного круга для коллизии со стрелой
+     * */
+    const atomic_circle_box_ref = useRef();
+    const atomic_triangle_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -1074,6 +1083,16 @@ function Field() {
                     hit_area: 'head'
                 };
             }
+
+            /**
+             * Проверяем попала ли стрела в атомный круг
+             * */
+            if (intersectRect(arrows_core_ref.current, atomic_circle_box_ref.current)) {
+                setOpen_atomic_triangle(true);
+                atomic_triangle_ref.current.style.transition = '0.2s';
+                atomic_triangle_ref.current.style.transform = 'translate(0px, -100px)';
+            }
+
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
@@ -1584,6 +1603,8 @@ function Field() {
                 setKim_control(1);
                 setBaiden_control(1);
                 setStanding_squatting(true);
+                setOpen_atomic_triangle(false);
+                atomic_triangle_ref.current.style = '';
                 explode_ref.current.style = "";
                 arrow_stick_ref.current.style = '';
                 apple_ref.current.style = '';
@@ -1719,6 +1740,7 @@ function Field() {
                         return c;
                     })}</div>
                     <div className="atomic_circle">
+                        <div className="atomic_circle_box" ref={atomic_circle_box_ref}/>
                         <img src={atomic_circle_1} alt={""} hidden={atomic_circle_control !== 1}/>
                         <img src={atomic_circle_2} alt={""} hidden={atomic_circle_control !== 2}/>
                         <img src={atomic_circle_3} alt={""} hidden={atomic_circle_control !== 3}/>
@@ -1745,6 +1767,9 @@ function Field() {
                         <img src={atomic_circle_24} alt={""} hidden={atomic_circle_control !== 24}/>
                         <img src={atomic_circle_25} alt={""} hidden={atomic_circle_control !== 25}/>
                         <img src={atomic_circle_26} alt={""} hidden={atomic_circle_control !== 26}/>
+                        <div className="atomic_triangle_container" ref={atomic_triangle_ref}>
+                            <div className="atomic_triangle_ico" hidden={!open_atomic_triangle}/>
+                        </div>
                     </div>
                 </div>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
