@@ -513,7 +513,7 @@ function Field() {
         window.addEventListener('mousemove', (e) => getCursor(e));
         item_in_the_hands_ref.current = something_in_the_hands;
         setInterval(kimTurns, 15000);
-        setInterval(runAtomicCircle, 1700);
+        setInterval(runAtomicCircle, 1400);
         generate_fon();
         generateAppleBoxRow();
     }, []);
@@ -652,6 +652,10 @@ function Field() {
      * */
     const atomic_circle_box_ref = useRef();
     const atomic_triangle_ref = useRef();
+    /**
+     * Стрела прошла сквозь атомное кольцо
+     * */
+    const passed_through_atomic_circle_ref = useRef(false);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -738,6 +742,14 @@ function Field() {
             atomic: arms.atomic,
             grenade: arms.grenade + 1,
             arrow: 3
+        });
+    }
+
+    const increaseAtomic = () => {
+        setArms({
+            atomic: arms.atomic + 1,
+            grenade: arms.grenade,
+            arrow: arms.arrow
         });
     }
 
@@ -1091,6 +1103,8 @@ function Field() {
                 setOpen_atomic_triangle(true);
                 atomic_triangle_ref.current.style.transition = '0.2s';
                 atomic_triangle_ref.current.style.transform = 'translate(0px, -100px)';
+                increaseAtomic();
+                passed_through_atomic_circle_ref.current = true;
             }
 
             let promise = new Promise((resolve, reject) => {
@@ -1191,9 +1205,9 @@ function Field() {
         let time;
         while (i <= 27) {
             if (i === 22 || i === 23 || i === 24 || i === 25 || i === 26 || i === 27) {
-                time = 70;
+                time = 50;
             } else {
-                time = 35;
+                time = 25;
             }
             setAtomic_circle_control(i);
             let promise = new Promise((resolve, reject) => {
@@ -1627,9 +1641,37 @@ function Field() {
                  * */
                 if (last_shoot_to_ref.current === 'apple') {
                     if (victory_counter_ref.current < 3) {
-                        resetArrows();
+                        /**
+                         * Здесь в resetArrows стейт arms будет иметь значение, которое в нем было
+                         * к моменту выстрела. А у стейта arms поле atomic меняется в процессе полета
+                         * стрелы, соответственно вызов resetArrows не увидит этого изменения и сбросит
+                         * поле atomic до значения к моменту выстрела. Поэтому в кейсе когда стрела проходит
+                         * сквозь атомное кольцо и попадает в яблоко мы увеличиваем atomic на 1 (несмотря
+                         * на то, что мы это уже сделали в момент коллизии), grenade берем ту, которая была
+                         * к моменту выстрела, а arrow сбрасываем до 3.
+                         * */
+                        if (!passed_through_atomic_circle_ref.current) {
+                            resetArrows();
+                        } else {
+                            setArms({
+                                atomic: arms.atomic + 1,
+                                grenade: arms.grenade,
+                                arrow: 3
+                            });
+                        }
                     } else {
-                        increaseGrenadeAndResetArrows();
+                        /**
+                         * То же самое, что и выше с той разницей, что гранату увеличиваем на 1
+                         * */
+                        if (!passed_through_atomic_circle_ref.current) {
+                            increaseGrenadeAndResetArrows();
+                        } else {
+                            setArms({
+                                atomic: arms.atomic + 1,
+                                grenade: arms.grenade + 1,
+                                arrow: 3
+                            });
+                        }
                         victory_counter_ref.current = 0;
                     }
                     generate_fon();
@@ -1652,6 +1694,7 @@ function Field() {
                 }
                 generateAppleBoxRow();
                 getPosition();
+                passed_through_atomic_circle_ref.current = false;
             }, time_out);
         });
     }
