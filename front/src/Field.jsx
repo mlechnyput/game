@@ -257,6 +257,32 @@ import banknotes_64 from "./images/banknotes/bnknots0064.png"
 import banknotes_65 from "./images/banknotes/bnknots0065.png"
 import banknotes_66 from "./images/banknotes/bnknots0066.png"
 import banknotes_67 from "./images/banknotes/bnknots0067.png"
+import atomic_circle_1 from "./images/atomic_circle/atomic_circle0001.png"
+import atomic_circle_2 from "./images/atomic_circle/atomic_circle0002.png"
+import atomic_circle_3 from "./images/atomic_circle/atomic_circle0003.png"
+import atomic_circle_4 from "./images/atomic_circle/atomic_circle0004.png"
+import atomic_circle_5 from "./images/atomic_circle/atomic_circle0005.png"
+import atomic_circle_6 from "./images/atomic_circle/atomic_circle0006.png"
+import atomic_circle_7 from "./images/atomic_circle/atomic_circle0007.png"
+import atomic_circle_8 from "./images/atomic_circle/atomic_circle0008.png"
+import atomic_circle_9 from "./images/atomic_circle/atomic_circle0009.png"
+import atomic_circle_10 from "./images/atomic_circle/atomic_circle0010.png"
+import atomic_circle_11 from "./images/atomic_circle/atomic_circle0011.png"
+import atomic_circle_12 from "./images/atomic_circle/atomic_circle0012.png"
+import atomic_circle_13 from "./images/atomic_circle/atomic_circle0013.png"
+import atomic_circle_14 from "./images/atomic_circle/atomic_circle0014.png"
+import atomic_circle_15 from "./images/atomic_circle/atomic_circle0015.png"
+import atomic_circle_16 from "./images/atomic_circle/atomic_circle0016.png"
+import atomic_circle_17 from "./images/atomic_circle/atomic_circle0017.png"
+import atomic_circle_18 from "./images/atomic_circle/atomic_circle0018.png"
+import atomic_circle_19 from "./images/atomic_circle/atomic_circle0019.png"
+import atomic_circle_20 from "./images/atomic_circle/atomic_circle0020.png"
+import atomic_circle_21 from "./images/atomic_circle/atomic_circle0021.png"
+import atomic_circle_22 from "./images/atomic_circle/atomic_circle0022.png"
+import atomic_circle_23 from "./images/atomic_circle/atomic_circle0023.png"
+import atomic_circle_24 from "./images/atomic_circle/atomic_circle0024.png"
+import atomic_circle_25 from "./images/atomic_circle/atomic_circle0025.png"
+import atomic_circle_26 from "./images/atomic_circle/atomic_circle0026.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -388,6 +414,10 @@ function Field() {
      * Рядок из трех боксов для яблок
      * */
     const [apple_box_arr, setApple_box_arr] = useState([]);
+    /**
+     * Анимация атомного круга
+     * */
+    const [atomic_circle_control, setAtomic_circle_control] = useState(0);
 
     useEffect(() => {
         setMail('');
@@ -479,6 +509,7 @@ function Field() {
         window.addEventListener('mousemove', (e) => getCursor(e));
         item_in_the_hands_ref.current = something_in_the_hands;
         setInterval(kimTurns, 15000);
+        setInterval(runAtomicCircle, 1700);
         generate_fon();
         generateAppleBoxRow();
     }, []);
@@ -1136,6 +1167,26 @@ function Field() {
         }
     }
 
+    async function runAtomicCircle() {
+        let i = 1;
+        let time;
+        while (i <= 27) {
+            if (i === 22 || i === 23 || i === 24 || i === 25 || i === 26 || i === 27) {
+                time = 70;
+            } else {
+                time = 35;
+            }
+            setAtomic_circle_control(i);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+    }
+
     async function vibrato() {
         let i = 1;
         let time;
@@ -1667,6 +1718,34 @@ function Field() {
                     <div className="bushes">{fon_elements.map(c => {
                         return c;
                     })}</div>
+                    <div className="atomic_circle">
+                        <img src={atomic_circle_1} alt={""} hidden={atomic_circle_control !== 1}/>
+                        <img src={atomic_circle_2} alt={""} hidden={atomic_circle_control !== 2}/>
+                        <img src={atomic_circle_3} alt={""} hidden={atomic_circle_control !== 3}/>
+                        <img src={atomic_circle_4} alt={""} hidden={atomic_circle_control !== 4}/>
+                        <img src={atomic_circle_5} alt={""} hidden={atomic_circle_control !== 5}/>
+                        <img src={atomic_circle_6} alt={""} hidden={atomic_circle_control !== 6}/>
+                        <img src={atomic_circle_7} alt={""} hidden={atomic_circle_control !== 7}/>
+                        <img src={atomic_circle_8} alt={""} hidden={atomic_circle_control !== 8}/>
+                        <img src={atomic_circle_9} alt={""} hidden={atomic_circle_control !== 9}/>
+                        <img src={atomic_circle_10} alt={""} hidden={atomic_circle_control !== 10}/>
+                        <img src={atomic_circle_11} alt={""} hidden={atomic_circle_control !== 11}/>
+                        <img src={atomic_circle_12} alt={""} hidden={atomic_circle_control !== 12}/>
+                        <img src={atomic_circle_13} alt={""} hidden={atomic_circle_control !== 13}/>
+                        <img src={atomic_circle_14} alt={""} hidden={atomic_circle_control !== 14}/>
+                        <img src={atomic_circle_15} alt={""} hidden={atomic_circle_control !== 15}/>
+                        <img src={atomic_circle_16} alt={""} hidden={atomic_circle_control !== 16}/>
+                        <img src={atomic_circle_17} alt={""} hidden={atomic_circle_control !== 17}/>
+                        <img src={atomic_circle_18} alt={""} hidden={atomic_circle_control !== 18}/>
+                        <img src={atomic_circle_19} alt={""} hidden={atomic_circle_control !== 19}/>
+                        <img src={atomic_circle_20} alt={""} hidden={atomic_circle_control !== 20}/>
+                        <img src={atomic_circle_21} alt={""} hidden={atomic_circle_control !== 21}/>
+                        <img src={atomic_circle_22} alt={""} hidden={atomic_circle_control !== 22}/>
+                        <img src={atomic_circle_23} alt={""} hidden={atomic_circle_control !== 23}/>
+                        <img src={atomic_circle_24} alt={""} hidden={atomic_circle_control !== 24}/>
+                        <img src={atomic_circle_25} alt={""} hidden={atomic_circle_control !== 25}/>
+                        <img src={atomic_circle_26} alt={""} hidden={atomic_circle_control !== 26}/>
+                    </div>
                 </div>
                 <div className="marker_right_bottom" ref={marker_right_bottom_ref}>
                     X:{position.marker_right_bottom.x}, Y:{position.marker_right_bottom.y}

@@ -253,6 +253,15 @@
     background-size: contain;
 }
 
+.atomic_circle {
+    position: absolute;
+    width: 190px;
+    height: 150px;
+    right: 700px;
+    bottom: 700px;
+    opacity: 60%;
+}
+
 /*
 элементы pointer-events none не попадут в поле действия слушателя mouse events
 */
