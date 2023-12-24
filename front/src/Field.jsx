@@ -656,6 +656,7 @@ function Field() {
      * Стрела прошла сквозь атомное кольцо
      * */
     const passed_through_atomic_circle_ref = useRef(false);
+    const block_atomic_circle_ref = useRef(false);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -1099,12 +1100,14 @@ function Field() {
             /**
              * Проверяем попала ли стрела в атомный круг
              * */
-            if (intersectRect(arrows_core_ref.current, atomic_circle_box_ref.current)) {
+            if (intersectRect(arrows_core_ref.current, atomic_circle_box_ref.current) &&
+                !block_atomic_circle_ref.current) {
                 setOpen_atomic_triangle(true);
                 atomic_triangle_ref.current.style.transition = '0.2s';
                 atomic_triangle_ref.current.style.transform = 'translate(0px, -100px)';
                 increaseAtomic();
                 passed_through_atomic_circle_ref.current = true;
+                block_atomic_circle_ref.current = true;
             }
 
             let promise = new Promise((resolve, reject) => {
@@ -1209,7 +1212,11 @@ function Field() {
             } else {
                 time = 25;
             }
-            setAtomic_circle_control(i);
+            if (block_atomic_circle_ref.current) {
+                setAtomic_circle_control(0);
+            } else {
+                setAtomic_circle_control(i);
+            }
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
@@ -1582,16 +1589,20 @@ function Field() {
                  * 2. Закончилось оружие
                  * 3. Взорван Байденко (гранатой попали не в землю)
                  * Во всех остальных случаях продолжается старая игра без запуска демо.
+                 * С началом каждой новой игры снимаем блокировку атомного круга.
                  * */
                 if (last_shoot_to_ref.current === 'apple') {
                     runDemo().then(() => setDemo_control(0));
+                    block_atomic_circle_ref.current = false;
                 } else {
                     if (arms.atomic + arms.arrow + arms.grenade === 0) {
                         runDemo().then(() => setDemo_control(0));
+                        block_atomic_circle_ref.current = false;
                     } else {
                         if (arrow_shoot_with_ref.current === 'grenade'
                             && last_shoot_to_ref.current !== 'ground') {
                             runDemo().then(() => setDemo_control(0));
+                            block_atomic_circle_ref.current = false;
                         }
                     }
                 }
