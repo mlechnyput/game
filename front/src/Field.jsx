@@ -283,6 +283,30 @@ import atomic_circle_23 from "./images/atomic_circle/atomic_circle0023.png"
 import atomic_circle_24 from "./images/atomic_circle/atomic_circle0024.png"
 import atomic_circle_25 from "./images/atomic_circle/atomic_circle0025.png"
 import atomic_circle_26 from "./images/atomic_circle/atomic_circle0026.png"
+import atomic_explode_1 from "./images/atomic_explode/atomic_explode0001.png"
+import atomic_explode_2 from "./images/atomic_explode/atomic_explode0002.png"
+import atomic_explode_3 from "./images/atomic_explode/atomic_explode0003.png"
+import atomic_explode_4 from "./images/atomic_explode/atomic_explode0004.png"
+import atomic_explode_5 from "./images/atomic_explode/atomic_explode0005.png"
+import atomic_explode_6 from "./images/atomic_explode/atomic_explode0006.png"
+import atomic_explode_7 from "./images/atomic_explode/atomic_explode0007.png"
+import atomic_explode_8 from "./images/atomic_explode/atomic_explode0008.png"
+import atomic_explode_9 from "./images/atomic_explode/atomic_explode0009.png"
+import atomic_explode_10 from "./images/atomic_explode/atomic_explode0010.png"
+import atomic_explode_11 from "./images/atomic_explode/atomic_explode0011.png"
+import atomic_explode_12 from "./images/atomic_explode/atomic_explode0012.png"
+import atomic_explode_13 from "./images/atomic_explode/atomic_explode0013.png"
+import atomic_explode_14 from "./images/atomic_explode/atomic_explode0014.png"
+import atomic_explode_15 from "./images/atomic_explode/atomic_explode0015.png"
+import atomic_explode_16 from "./images/atomic_explode/atomic_explode0016.png"
+import atomic_explode_17 from "./images/atomic_explode/atomic_explode0017.png"
+import atomic_explode_18 from "./images/atomic_explode/atomic_explode0018.png"
+import atomic_explode_19 from "./images/atomic_explode/atomic_explode0019.png"
+import atomic_explode_20 from "./images/atomic_explode/atomic_explode0020.png"
+import atomic_explode_21 from "./images/atomic_explode/atomic_explode0021.png"
+import atomic_explode_22 from "./images/atomic_explode/atomic_explode0022.png"
+import atomic_explode_23 from "./images/atomic_explode/atomic_explode0023.png"
+import atomic_explode_24 from "./images/atomic_explode/atomic_explode0024.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -422,6 +446,7 @@ function Field() {
      * Вкл./выкл. атомного треугольника
      * */
     const [open_atomic_triangle, setOpen_atomic_triangle] = useState(false);
+    const [atomic_explode_control, setAtomic_explode_control] = useState(0);
 
     useEffect(() => {
         setMail('');
@@ -657,6 +682,7 @@ function Field() {
      * */
     const passed_through_atomic_circle_ref = useRef(false);
     const block_atomic_circle_ref = useRef(false);
+    const atomic_explode_ref = useRef();
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -1227,6 +1253,25 @@ function Field() {
         }
     }
 
+    async function runAtomicExplode() {
+        let i = 1;
+        let time = 60;
+        while (i <= 25) {
+            if (i === 25) {
+                setAtomic_explode_control(0);
+            } else {
+                setAtomic_explode_control(i);
+            }
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+    }
+
     async function vibrato() {
         let i = 1;
         let time;
@@ -1466,6 +1511,14 @@ function Field() {
                         explode_ref.current.style.left = r.coord_x + compensation_x + comp_explode_x + 'px';
                         explode_ref.current.style.top = r.coord_y + compensation_y + comp_explode_y + 'px';
                         runExplode().then();
+                    } else {
+                        if (arrow_shoot_with_ref.current === 'atomic') {
+                            const comp_a_explode_x = -345;
+                            const comp_a_explode_y = -320;
+                            atomic_explode_ref.current.style.left = r.coord_x + compensation_x + comp_a_explode_x + 'px';
+                            atomic_explode_ref.current.style.top = r.coord_y + compensation_y + comp_a_explode_y + 'px';
+                            runAtomicExplode().then();
+                        }
                     }
                 }
             } else {
@@ -1629,6 +1682,7 @@ function Field() {
                 setBaiden_control(1);
                 setStanding_squatting(true);
                 setOpen_atomic_triangle(false);
+                atomic_explode_ref.current.style = '';
                 atomic_triangle_ref.current.style = '';
                 explode_ref.current.style = "";
                 arrow_stick_ref.current.style = '';
@@ -2092,6 +2146,32 @@ function Field() {
                     <img src={arrow_vibro_6} alt={""} hidden={stickIsOn !== 6}/>
                     <img src={arrow_vibro_7} alt={""} hidden={stickIsOn !== 7}/>
                     <img src={arrow_vibro_8} alt={""} hidden={stickIsOn !== 8}/>
+                </div>
+                <div className="atomic_explode" ref={atomic_explode_ref}>
+                    <img src={atomic_explode_1} alt={""} hidden={atomic_explode_control !== 1}/>
+                    <img src={atomic_explode_2} alt={""} hidden={atomic_explode_control !== 2}/>
+                    <img src={atomic_explode_3} alt={""} hidden={atomic_explode_control !== 3}/>
+                    <img src={atomic_explode_4} alt={""} hidden={atomic_explode_control !== 4}/>
+                    <img src={atomic_explode_5} alt={""} hidden={atomic_explode_control !== 5}/>
+                    <img src={atomic_explode_6} alt={""} hidden={atomic_explode_control !== 6}/>
+                    <img src={atomic_explode_7} alt={""} hidden={atomic_explode_control !== 7}/>
+                    <img src={atomic_explode_8} alt={""} hidden={atomic_explode_control !== 8}/>
+                    <img src={atomic_explode_9} alt={""} hidden={atomic_explode_control !== 9}/>
+                    <img src={atomic_explode_10} alt={""} hidden={atomic_explode_control !== 10}/>
+                    <img src={atomic_explode_11} alt={""} hidden={atomic_explode_control !== 11}/>
+                    <img src={atomic_explode_12} alt={""} hidden={atomic_explode_control !== 12}/>
+                    <img src={atomic_explode_13} alt={""} hidden={atomic_explode_control !== 13}/>
+                    <img src={atomic_explode_14} alt={""} hidden={atomic_explode_control !== 14}/>
+                    <img src={atomic_explode_15} alt={""} hidden={atomic_explode_control !== 15}/>
+                    <img src={atomic_explode_16} alt={""} hidden={atomic_explode_control !== 16}/>
+                    <img src={atomic_explode_17} alt={""} hidden={atomic_explode_control !== 17}/>
+                    <img src={atomic_explode_18} alt={""} hidden={atomic_explode_control !== 18}/>
+                    <img src={atomic_explode_19} alt={""} hidden={atomic_explode_control !== 19}/>
+                    <img src={atomic_explode_20} alt={""} hidden={atomic_explode_control !== 20}/>
+                    <img src={atomic_explode_21} alt={""} hidden={atomic_explode_control !== 21}/>
+                    <img src={atomic_explode_22} alt={""} hidden={atomic_explode_control !== 22}/>
+                    <img src={atomic_explode_23} alt={""} hidden={atomic_explode_control !== 23}/>
+                    <img src={atomic_explode_24} alt={""} hidden={atomic_explode_control !== 24}/>
                 </div>
                 <div className="demo" ref={demo_ref}>
                     <img className="demo_image" src={demo_1} alt={""} hidden={demo_control !== 1}/>

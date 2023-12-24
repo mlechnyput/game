@@ -285,6 +285,17 @@
     background-image: url("./images/ico/ico_atomic_popup.png");
     background-repeat: no-repeat;
 }
+
+.atomic_explode{
+    pointer-events: none;
+    position: absolute;
+    width: 675px;
+    height: 600px;
+}
+.atomic_explode img{
+    height: 100%;
+    width: 100%;
+}
 /*
 элементы pointer-events none не попадут в поле действия слушателя mouse events
 */
