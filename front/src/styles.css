@@ -370,6 +370,14 @@
     /*background-color: #838383;*/
 }
 
+.joe_fire{
+    position: absolute;
+    width: 200px;
+    height: 400px;
+    left: 0;
+    bottom: 10px;
+}
+
 .apple {
     position: absolute;
     width: 280px;

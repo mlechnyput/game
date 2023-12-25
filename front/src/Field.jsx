@@ -106,6 +106,8 @@ import joe_5 from "./images/joe/joe0005.png"
 import joe_6 from "./images/joe/joe0006.png"
 import joe_7 from "./images/joe/joe0007.png"
 import joe_8 from "./images/joe/joe0008.png"
+import joe_9 from "./images/joe/joe0009.png"
+import joe_10 from "./images/joe/joe0010.png"
 import silhouette from "./images/locator/silhouette.png"
 import apple_1 from "./images/apple/apple0001.png"
 import apple_2 from "./images/apple/apple0002.png"
@@ -307,6 +309,48 @@ import atomic_explode_21 from "./images/atomic_explode/atomic_explode0021.png"
 import atomic_explode_22 from "./images/atomic_explode/atomic_explode0022.png"
 import atomic_explode_23 from "./images/atomic_explode/atomic_explode0023.png"
 import atomic_explode_24 from "./images/atomic_explode/atomic_explode0024.png"
+import fire_1 from "./images/fire/fire0001.png"
+import fire_2 from "./images/fire/fire0002.png"
+import fire_3 from "./images/fire/fire0003.png"
+import fire_4 from "./images/fire/fire0004.png"
+import fire_5 from "./images/fire/fire0005.png"
+import fire_6 from "./images/fire/fire0006.png"
+import fire_7 from "./images/fire/fire0007.png"
+import fire_8 from "./images/fire/fire0008.png"
+import fire_9 from "./images/fire/fire0009.png"
+import fire_10 from "./images/fire/fire0010.png"
+import fire_11 from "./images/fire/fire0011.png"
+import fire_12 from "./images/fire/fire0012.png"
+import fire_13 from "./images/fire/fire0013.png"
+import fire_14 from "./images/fire/fire0014.png"
+import fire_15 from "./images/fire/fire0015.png"
+import fire_16 from "./images/fire/fire0016.png"
+import fire_17 from "./images/fire/fire0017.png"
+import fire_18 from "./images/fire/fire0018.png"
+import fire_19 from "./images/fire/fire0019.png"
+import fire_20 from "./images/fire/fire0020.png"
+import fire_21 from "./images/fire/fire0021.png"
+import fire_22 from "./images/fire/fire0022.png"
+import fire_23 from "./images/fire/fire0023.png"
+import fire_24 from "./images/fire/fire0024.png"
+import fire_25 from "./images/fire/fire0025.png"
+import fire_26 from "./images/fire/fire0026.png"
+import fire_27 from "./images/fire/fire0027.png"
+import fire_28 from "./images/fire/fire0028.png"
+import fire_29 from "./images/fire/fire0029.png"
+import fire_30 from "./images/fire/fire0030.png"
+import fire_31 from "./images/fire/fire0031.png"
+import fire_32 from "./images/fire/fire0032.png"
+import fire_33 from "./images/fire/fire0033.png"
+import fire_34 from "./images/fire/fire0034.png"
+import fire_35 from "./images/fire/fire0035.png"
+import fire_36 from "./images/fire/fire0036.png"
+import fire_37 from "./images/fire/fire0037.png"
+import fire_38 from "./images/fire/fire0038.png"
+import fire_39 from "./images/fire/fire0039.png"
+import fire_40 from "./images/fire/fire0040.png"
+import fire_41 from "./images/fire/fire0041.png"
+import fire_42 from "./images/fire/fire0042.png"
 
 function Field() {
     const forest_horizon = 5800;
@@ -446,7 +490,14 @@ function Field() {
      * Вкл./выкл. атомного треугольника
      * */
     const [open_atomic_triangle, setOpen_atomic_triangle] = useState(false);
+    /**
+     * Атомный взрыв
+     * */
     const [atomic_explode_control, setAtomic_explode_control] = useState(0);
+    /**
+     * Огонь, сжигающий Байдена
+     * */
+    const [fire_control, setFire_control] = useState(0);
 
     useEffect(() => {
         setMail('');
@@ -1253,14 +1304,69 @@ function Field() {
         }
     }
 
+    async function runFire() {
+        let i = 1;
+        let time = 40;
+        while (i <= 42) {
+            if (i === 15) {
+                /**
+                 * Выключаем яблоко. Байденко снижается.
+                 * */
+                setBaiden_control(9);
+                setApple(0);
+            }
+            if (i === 16) {
+                /**
+                 * Байденко снижается.
+                 * */
+                setBaiden_control(10);
+            }
+            if (i === 17) {
+                /**
+                 * Выключаем Байденко (типо сгорел)
+                 * */
+                setBaiden_control(0);
+            }
+            setFire_control(i);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+    }
+
     async function runAtomicExplode() {
         let i = 1;
-        let time = 60;
+        let time = 25;
         while (i <= 25) {
             if (i === 25) {
                 setAtomic_explode_control(0);
             } else {
                 setAtomic_explode_control(i);
+            }
+            if (i === 6) {
+                /**
+                 * На 6-м кадре поджигаем Байдена, если он находится в видимой части
+                 * экрана you
+                 * */
+                const joe_x = joe_ref.current.offsetLeft;
+                if (joe_x > -80 && (joe_x + 120) < position.marker_right_bottom.x) {
+                    runFire().then(ret => {
+                        setStar_score('99');
+                        sendScoreToBack(99);
+                        /**
+                         *  Всплывает огонек с баллами
+                         * */
+                        runFlame().then(() => {
+                            star_score_ref.current.style = '';
+                        });
+                        star_score_ref.current.style.transition = '0.2s';
+                        star_score_ref.current.style.transform = 'translate(0px, -100px)';
+                    });
+                }
             }
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -1592,8 +1698,8 @@ function Field() {
                             explode_ref.current.style.top = r.coord_y + compensation_y + 'px';
                             runExplode().then();
                             flyBanknots().then(() => setBanknotes_control(0));
-                            setStar_score('99');
-                            sendScoreToBack(99);
+                            setStar_score('20');
+                            sendScoreToBack(20);
                         }
                     }
                 } else {
@@ -1604,8 +1710,8 @@ function Field() {
                             apple_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
                             setFly(false);
                             vibratoWithApple().then(res => console.log('hit to ' + r.hit_area));
-                            setStar_score('10');
-                            sendScoreToBack(10);
+                            setStar_score('5');
+                            sendScoreToBack(5);
                         } else {
                             if (arrow_shoot_with_ref.current === 'grenade') {
                                 const comp_x = -110;
@@ -1615,8 +1721,8 @@ function Field() {
                                 setFly(false);
                                 runExplode().then();
                                 flyBanknots().then(() => setBanknotes_control(0));
-                                setStar_score('99');
-                                sendScoreToBack(99);
+                                setStar_score('20');
+                                sendScoreToBack(20);
                             }
                         }
                     }
@@ -1680,6 +1786,7 @@ function Field() {
                 setApple(1);
                 setKim_control(1);
                 setBaiden_control(1);
+                setFire_control(0);
                 setStanding_squatting(true);
                 setOpen_atomic_triangle(false);
                 atomic_explode_ref.current.style = '';
@@ -1983,6 +2090,8 @@ function Field() {
                     <img src={joe_6} alt={""} hidden={baiden_control !== 6}/>
                     <img src={joe_7} alt={""} hidden={baiden_control !== 7}/>
                     <img src={joe_8} alt={""} hidden={baiden_control !== 8}/>
+                    <img src={joe_9} alt={""} hidden={baiden_control !== 9}/>
+                    <img src={joe_10} alt={""} hidden={baiden_control !== 10}/>
                     <div className="joe_box_legs" ref={joe_box_legs_ref}/>
                     <div className="joe_box_body" ref={joe_box_body_ref}/>
                     <div className="star_score_container" ref={star_score_ref}>
@@ -2107,6 +2216,50 @@ function Field() {
                         <img src={banknotes_65} alt={""} hidden={banknotes_control !== 65}/>
                         <img src={banknotes_66} alt={""} hidden={banknotes_control !== 66}/>
                         <img src={banknotes_67} alt={""} hidden={banknotes_control !== 67}/>
+                    </div>
+                    <div className="joe_fire">
+                        <img src={fire_1} alt={""} hidden={fire_control !== 1}/>
+                        <img src={fire_2} alt={""} hidden={fire_control !== 2}/>
+                        <img src={fire_3} alt={""} hidden={fire_control !== 3}/>
+                        <img src={fire_4} alt={""} hidden={fire_control !== 4}/>
+                        <img src={fire_5} alt={""} hidden={fire_control !== 5}/>
+                        <img src={fire_6} alt={""} hidden={fire_control !== 6}/>
+                        <img src={fire_7} alt={""} hidden={fire_control !== 7}/>
+                        <img src={fire_8} alt={""} hidden={fire_control !== 8}/>
+                        <img src={fire_9} alt={""} hidden={fire_control !== 9}/>
+                        <img src={fire_10} alt={""} hidden={fire_control !== 10}/>
+                        <img src={fire_11} alt={""} hidden={fire_control !== 11}/>
+                        <img src={fire_12} alt={""} hidden={fire_control !== 12}/>
+                        <img src={fire_13} alt={""} hidden={fire_control !== 13}/>
+                        <img src={fire_14} alt={""} hidden={fire_control !== 14}/>
+                        <img src={fire_15} alt={""} hidden={fire_control !== 15}/>
+                        <img src={fire_16} alt={""} hidden={fire_control !== 16}/>
+                        <img src={fire_17} alt={""} hidden={fire_control !== 17}/>
+                        <img src={fire_18} alt={""} hidden={fire_control !== 18}/>
+                        <img src={fire_19} alt={""} hidden={fire_control !== 19}/>
+                        <img src={fire_20} alt={""} hidden={fire_control !== 20}/>
+                        <img src={fire_21} alt={""} hidden={fire_control !== 21}/>
+                        <img src={fire_22} alt={""} hidden={fire_control !== 22}/>
+                        <img src={fire_23} alt={""} hidden={fire_control !== 23}/>
+                        <img src={fire_24} alt={""} hidden={fire_control !== 24}/>
+                        <img src={fire_25} alt={""} hidden={fire_control !== 25}/>
+                        <img src={fire_26} alt={""} hidden={fire_control !== 26}/>
+                        <img src={fire_27} alt={""} hidden={fire_control !== 27}/>
+                        <img src={fire_28} alt={""} hidden={fire_control !== 28}/>
+                        <img src={fire_29} alt={""} hidden={fire_control !== 29}/>
+                        <img src={fire_30} alt={""} hidden={fire_control !== 30}/>
+                        <img src={fire_31} alt={""} hidden={fire_control !== 31}/>
+                        <img src={fire_32} alt={""} hidden={fire_control !== 32}/>
+                        <img src={fire_33} alt={""} hidden={fire_control !== 33}/>
+                        <img src={fire_34} alt={""} hidden={fire_control !== 34}/>
+                        <img src={fire_35} alt={""} hidden={fire_control !== 35}/>
+                        <img src={fire_36} alt={""} hidden={fire_control !== 36}/>
+                        <img src={fire_37} alt={""} hidden={fire_control !== 37}/>
+                        <img src={fire_38} alt={""} hidden={fire_control !== 38}/>
+                        <img src={fire_39} alt={""} hidden={fire_control !== 39}/>
+                        <img src={fire_40} alt={""} hidden={fire_control !== 40}/>
+                        <img src={fire_41} alt={""} hidden={fire_control !== 41}/>
+                        <img src={fire_42} alt={""} hidden={fire_control !== 42}/>
                     </div>
                 </div>
                 <div className="explode" ref={explode_ref}>
