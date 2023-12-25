@@ -1745,7 +1745,9 @@ function Field() {
                 /**
                  * Демо запускается если:
                  * 1. Попал в яблоко
-                 * 2. Закончилось оружие
+                 * 2. Закончилось оружие (проверяем прошла ли стрела сквозь атомный круг,
+                 * потому что стейт arms здесь содержит значение на момент выстрела, и проход
+                 * сквозь круг означает, что стейт изменился и арсенал пополнился одной атомной стрелой)
                  * 3. Взорван Байденко (гранатой попали не в землю)
                  * Во всех остальных случаях продолжается старая игра без запуска демо.
                  * С началом каждой новой игры снимаем блокировку атомного круга.
@@ -1754,7 +1756,8 @@ function Field() {
                     runDemo().then(() => setDemo_control(0));
                     block_atomic_circle_ref.current = false;
                 } else {
-                    if (arms.atomic + arms.arrow + arms.grenade === 0) {
+                    if (arms.atomic + arms.arrow + arms.grenade === 0 &&
+                        !passed_through_atomic_circle_ref.current) {
                         runDemo().then(() => setDemo_control(0));
                         block_atomic_circle_ref.current = false;
                     } else {
@@ -1850,14 +1853,30 @@ function Field() {
                     get_random_x_for_baiden();
                 } else {
                     if (arms.atomic + arms.arrow + arms.grenade === 0) {
-                        resetArms();
+                        /**
+                         * Перезагружаем оружие только в случае если стрела не прошла
+                         * сквозь атомный круг. В противном случае стрелок будет обладать
+                         * одной атомной стрелой, это значит, что всё оружие еще не
+                         * израсходованно.
+                         * */
+                        if (!passed_through_atomic_circle_ref.current) {
+                            resetArms();
+                        }
                         generate_fon();
                         get_random_x_for_baiden();
                         victory_counter_ref.current = 0;
                     } else {
                         if (arrow_shoot_with_ref.current === 'grenade'
                             && last_shoot_to_ref.current !== 'ground') {
-                            resetArrows();
+                            if (!passed_through_atomic_circle_ref.current) {
+                                resetArrows();
+                            } else {
+                                setArms({
+                                    atomic: arms.atomic + 1,
+                                    grenade: arms.grenade,
+                                    arrow: 3
+                                });
+                            }
                             generate_fon();
                             get_random_x_for_baiden();
                             victory_counter_ref.current = 0;
