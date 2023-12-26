@@ -739,6 +739,8 @@ function Field() {
      * дубликата огонька в clickAndStart должен блокироваться
      * */
     const block_flame_ref = useRef(false);
+    /** Байден сгорел в атомном огне */
+    const baiden_burned_in_fire_ref = useRef(false);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -1331,6 +1333,7 @@ function Field() {
                  * Выключаем Байденко (типо сгорел)
                  * */
                 setBaiden_control(0);
+                baiden_burned_in_fire_ref.current = true;
                 setStar_score('99');
                 sendScoreToBack(99);
                 /**
@@ -1721,11 +1724,11 @@ function Field() {
                     }
                 } else {
                     if (r.hit_area === 'apple') {
+                        setFly(false);
                         victory_counter_ref.current = victory_counter_ref.current + 1;
                         if (arrow_shoot_with_ref.current === 'arrow') {
                             rotation = r.angle_degree;
                             apple_ref.current.style.transform = 'rotate(' + rotation + 'deg)';
-                            setFly(false);
                             vibratoWithApple().then(res => console.log('hit to ' + r.hit_area));
                             setStar_score('5');
                             sendScoreToBack(5);
@@ -1735,11 +1738,23 @@ function Field() {
                                 hitBaiden('grenade').then();
                                 explode_ref.current.style.left = r.coord_x + comp_x + 'px';
                                 explode_ref.current.style.top = r.coord_y + 'px';
-                                setFly(false);
                                 runExplode().then();
                                 flyBanknots().then(() => setBanknotes_control(0));
                                 setStar_score('20');
                                 sendScoreToBack(20);
+                            } else {
+                                if (arrow_shoot_with_ref.current === 'atomic') {
+                                    /**
+                                     * Ставим ядерный гриб по центру Байдена
+                                     * */
+                                    atomic_explode_ref.current.style.left = joe_ref.current.offsetLeft - 238 + 'px';
+                                    atomic_explode_ref.current.style.top = joe_ref.current.offsetTop - 150 + 'px';
+                                    runAtomicExplode().then();
+                                    /**
+                                     * Ставим блокировку, чтобы не запускался дубликат огонька
+                                     * */
+                                    block_flame_ref.current = true;
+                                }
                             }
                         }
                     }
@@ -1773,6 +1788,7 @@ function Field() {
                  * потому что стейт arms здесь содержит значение на момент выстрела, и проход
                  * сквозь круг означает, что стейт изменился и арсенал пополнился одной атомной стрелой)
                  * 3. Взорван Байденко (гранатой попали не в землю)
+                 * 4. Байден сгорел в атомном огне
                  * Во всех остальных случаях продолжается старая игра без запуска демо.
                  * С началом каждой новой игры снимаем блокировку атомного круга.
                  * */
@@ -1789,6 +1805,11 @@ function Field() {
                             && last_shoot_to_ref.current !== 'ground') {
                             runDemo().then(() => setDemo_control(0));
                             block_atomic_circle_ref.current = false;
+                        } else {
+                            if (baiden_burned_in_fire_ref.current) {
+                                runDemo().then(() => setDemo_control(0));
+                                block_atomic_circle_ref.current = false;
+                            }
                         }
                     }
                 }
@@ -1835,6 +1856,7 @@ function Field() {
                  * 1. Попал в яблоко
                  * 2. Закончилось оружие
                  * 3. Взорван Байденко (гранатой попали не в землю)
+                 * 4. Байден сгорел в атомном огне
                  * Во всех остальных случаях продолжается старая игра.
                  * Новая игра подразумевает перезагрузку оружия, фонов и координат Байдена.
                  * */
@@ -1904,12 +1926,28 @@ function Field() {
                             generate_fon();
                             get_random_x_for_baiden();
                             victory_counter_ref.current = 0;
+                        } else {
+                            if (baiden_burned_in_fire_ref.current) {
+                                if (!passed_through_atomic_circle_ref.current) {
+                                    resetArrows();
+                                } else {
+                                    setArms({
+                                        atomic: arms.atomic + 1,
+                                        grenade: arms.grenade,
+                                        arrow: 3
+                                    });
+                                }
+                                generate_fon();
+                                get_random_x_for_baiden();
+                                victory_counter_ref.current = 0;
+                            }
                         }
                     }
                 }
                 generateAppleBoxRow();
                 getPosition();
                 passed_through_atomic_circle_ref.current = false;
+                baiden_burned_in_fire_ref.current = false;
             }, time_out);
         });
     }
