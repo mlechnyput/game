@@ -1326,6 +1326,16 @@ function Field() {
                  * Выключаем Байденко (типо сгорел)
                  * */
                 setBaiden_control(0);
+                setStar_score('99');
+                sendScoreToBack(99);
+                /**
+                 *  Всплывает огонек с баллами
+                 * */
+                runFlame().then(() => {
+                    star_score_ref.current.style = '';
+                });
+                star_score_ref.current.style.transition = '0.2s';
+                star_score_ref.current.style.transform = 'translate(0px, -100px)';
             }
             setFire_control(i);
             let promise = new Promise((resolve, reject) => {
@@ -1354,18 +1364,7 @@ function Field() {
                  * */
                 const joe_x = joe_ref.current.offsetLeft;
                 if (joe_x > -80 && (joe_x + 120) < position.marker_right_bottom.x) {
-                    runFire().then(ret => {
-                        setStar_score('99');
-                        sendScoreToBack(99);
-                        /**
-                         *  Всплывает огонек с баллами
-                         * */
-                        runFlame().then(() => {
-                            star_score_ref.current.style = '';
-                        });
-                        star_score_ref.current.style.transition = '0.2s';
-                        star_score_ref.current.style.transform = 'translate(0px, -100px)';
-                    });
+                    runFire().then(ret => console.log('Байден сгорел'));
                 }
             }
             let promise = new Promise((resolve, reject) => {
