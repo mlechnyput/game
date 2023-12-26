@@ -582,6 +582,8 @@ function Field() {
     }, [something_in_the_hands]);
 
     useEffect(() => {
+        unblockAtomicCircleWithProbability();
+        get_random_x_for_atomic_circle();
         get_random_x_for_baiden();
         resetArms();
         getPosition();
@@ -732,7 +734,7 @@ function Field() {
      * Стрела прошла сквозь атомное кольцо
      * */
     const passed_through_atomic_circle_ref = useRef(false);
-    const block_atomic_circle_ref = useRef(false);
+    const block_atomic_circle_ref = useRef(true);
     const atomic_explode_ref = useRef();
     /**
      * Блокировка flame. В случае ядерного взрыва огонек запускается из runFire и запуск
@@ -741,6 +743,8 @@ function Field() {
     const block_flame_ref = useRef(false);
     /** Байден сгорел в атомном огне */
     const baiden_burned_in_fire_ref = useRef(false);
+    const atomic_circle_ref = useRef();
+    const atomic_circle_position_x_ref = useRef(0);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -803,6 +807,11 @@ function Field() {
              * */
             silhouette_ref.current.style.top = (marker_right_bottom_y - 200) + 'px';
             silhouette_ref.current.style.left = 90 + 'px';
+            /**
+             * Ставим атомный круг
+             * */
+            atomic_circle_ref.current.style.right = marker_right_bottom_x * 0.33 +
+                atomic_circle_position_x_ref.current + 'px';
         }
     }
 
@@ -1794,21 +1803,21 @@ function Field() {
                  * */
                 if (last_shoot_to_ref.current === 'apple') {
                     runDemo().then(() => setDemo_control(0));
-                    block_atomic_circle_ref.current = false;
+                    unblockAtomicCircleWithProbability();
                 } else {
                     if (arms.atomic + arms.arrow + arms.grenade === 0 &&
                         !passed_through_atomic_circle_ref.current) {
                         runDemo().then(() => setDemo_control(0));
-                        block_atomic_circle_ref.current = false;
+                        unblockAtomicCircleWithProbability();
                     } else {
                         if (arrow_shoot_with_ref.current === 'grenade'
                             && last_shoot_to_ref.current !== 'ground') {
                             runDemo().then(() => setDemo_control(0));
-                            block_atomic_circle_ref.current = false;
+                            unblockAtomicCircleWithProbability();
                         } else {
                             if (baiden_burned_in_fire_ref.current) {
                                 runDemo().then(() => setDemo_control(0));
-                                block_atomic_circle_ref.current = false;
+                                unblockAtomicCircleWithProbability();
                             }
                         }
                     }
@@ -1897,6 +1906,7 @@ function Field() {
                     }
                     generate_fon();
                     get_random_x_for_baiden();
+                    get_random_x_for_atomic_circle();
                 } else {
                     if (arms.atomic + arms.arrow + arms.grenade === 0) {
                         /**
@@ -1910,6 +1920,7 @@ function Field() {
                         }
                         generate_fon();
                         get_random_x_for_baiden();
+                        get_random_x_for_atomic_circle();
                         victory_counter_ref.current = 0;
                     } else {
                         if (arrow_shoot_with_ref.current === 'grenade'
@@ -1925,6 +1936,7 @@ function Field() {
                             }
                             generate_fon();
                             get_random_x_for_baiden();
+                            get_random_x_for_atomic_circle();
                             victory_counter_ref.current = 0;
                         } else {
                             if (baiden_burned_in_fire_ref.current) {
@@ -1939,6 +1951,7 @@ function Field() {
                                 }
                                 generate_fon();
                                 get_random_x_for_baiden();
+                                get_random_x_for_atomic_circle();
                                 victory_counter_ref.current = 0;
                             }
                         }
@@ -1954,8 +1967,28 @@ function Field() {
 
     const get_random_x_for_baiden = () => {
         const min_x = 1800;
-        const max_x = 1820;
+        const max_x = 4820;
         baiden_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
+    }
+
+    const get_random_x_for_atomic_circle = () => {
+        const min_x = 0;
+        const max_x = 1500;
+        atomic_circle_position_x_ref.current = Math.floor(Math.random() * (max_x - min_x + 1)) + min_x;
+    }
+
+    const unblockAtomicCircleWithProbability = () => {
+        const min = 1;
+        const max = 3;
+        const res = Math.floor(Math.random() * (max - min + 1)) + min;
+        /**
+         * Число 2 выпадет с вероятностью 33%, соответственно каждая третья новая игра будет иметь
+         * атомное кольцо
+         * */
+        block_atomic_circle_ref.current = res !== 2;
+        if (!block_atomic_circle_ref.current) {
+            console.log('atomic circle');
+        }
     }
 
     const get_vert_lines = (vert_size, hor_size) => {
@@ -2035,7 +2068,7 @@ function Field() {
                     <div className="bushes">{fon_elements.map(c => {
                         return c;
                     })}</div>
-                    <div className="atomic_circle">
+                    <div className="atomic_circle" ref={atomic_circle_ref}>
                         <div className="atomic_circle_box" ref={atomic_circle_box_ref}/>
                         <img src={atomic_circle_1} alt={""} hidden={atomic_circle_control !== 1}/>
                         <img src={atomic_circle_2} alt={""} hidden={atomic_circle_control !== 2}/>
