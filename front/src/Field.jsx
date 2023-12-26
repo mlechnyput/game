@@ -601,7 +601,7 @@ function Field() {
         window.addEventListener('mousemove', (e) => getCursor(e));
         item_in_the_hands_ref.current = something_in_the_hands;
         setInterval(kimTurns, 15000);
-        setInterval(runAtomicCircle, 1400);
+        setInterval(runAtomicCircle, 1000);
         generate_fon();
         generateAppleBoxRow();
     }, []);
