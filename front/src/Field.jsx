@@ -596,7 +596,7 @@ function Field() {
                 if (e.ctrlKey) {
                     e.preventDefault();
                 }
-            }, { passive: false } );
+            }, {passive: false});
         window.addEventListener('resize', getPosition);
         window.addEventListener('mousemove', (e) => getCursor(e));
         item_in_the_hands_ref.current = something_in_the_hands;
@@ -2028,20 +2028,24 @@ function Field() {
     }
 
     function generateAppleBoxRow() {
-        const full = <div className="apple_box_full"/>;
-        const empty = <div className="apple_box_empty"/>;
+        const full1 = <div className="apple_box_full" key={'full1'}/>;
+        const full2 = <div className="apple_box_full" key={'full2'}/>;
+        const full3 = <div className="apple_box_full" key={'full3'}/>;
+        const empty1 = <div className="apple_box_empty" key={'empty1'}/>;
+        const empty2 = <div className="apple_box_empty" key={'empty2'}/>;
+        const empty3 = <div className="apple_box_empty" key={'empty3'}/>;
         switch (victory_counter_ref.current) {
             case 0:
-                setApple_box_arr([empty, empty, empty]);
+                setApple_box_arr([empty1, empty2, empty3]);
                 break;
             case 1:
-                setApple_box_arr([full, empty, empty]);
+                setApple_box_arr([full1, empty2, empty3]);
                 break;
             case 2:
-                setApple_box_arr([full, full, empty]);
+                setApple_box_arr([full1, full2, empty3]);
                 break;
             case 3:
-                setApple_box_arr([full, full, full]);
+                setApple_box_arr([full1, full2, full3]);
                 break;
         }
     }
