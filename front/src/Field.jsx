@@ -587,6 +587,16 @@ function Field() {
         get_random_x_for_baiden();
         resetArms();
         getPosition();
+        /**
+         * Запрещаем zoom (ctrl + колесико)
+         * */
+        document.addEventListener(
+            "wheel",
+            function touchHandler(e) {
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                }
+            }, { passive: false } );
         window.addEventListener('resize', getPosition);
         window.addEventListener('mousemove', (e) => getCursor(e));
         item_in_the_hands_ref.current = something_in_the_hands;
