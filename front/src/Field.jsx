@@ -734,6 +734,11 @@ function Field() {
     const passed_through_atomic_circle_ref = useRef(false);
     const block_atomic_circle_ref = useRef(false);
     const atomic_explode_ref = useRef();
+    /**
+     * Блокировка flame. В случае ядерного взрыва огонек запускается из runFire и запуск
+     * дубликата огонька в clickAndStart должен блокироваться
+     * */
+    const block_flame_ref = useRef(false);
 
     const getPosition = () => {
         const forest_x = forest_ref.current.offsetLeft;
@@ -1699,6 +1704,19 @@ function Field() {
                             flyBanknots().then(() => setBanknotes_control(0));
                             setStar_score('20');
                             sendScoreToBack(20);
+                        } else {
+                            if (arrow_shoot_with_ref.current === 'atomic') {
+                                /**
+                                 * Ставим ядерный гриб по центру Байдена
+                                 * */
+                                atomic_explode_ref.current.style.left = joe_ref.current.offsetLeft - 238 + 'px';
+                                atomic_explode_ref.current.style.top = joe_ref.current.offsetTop - 150 + 'px';
+                                runAtomicExplode().then();
+                                /**
+                                 * Ставим блокировку, чтобы не запускался дубликат огонька
+                                 * */
+                                block_flame_ref.current = true;
+                            }
                         }
                     }
                 } else {
@@ -1727,13 +1745,20 @@ function Field() {
                     }
                 }
                 /**
-                 *  Всплывает огонек с баллами
+                 * При атомном взрыве огонек с баллами блокируется, потому что он запускается
+                 * из runFire
                  * */
-                runFlame().then(() => {
-                    star_score_ref.current.style = '';
-                });
-                star_score_ref.current.style.transition = '0.2s';
-                star_score_ref.current.style.transform = 'translate(0px, -100px)';
+                if (!block_flame_ref.current) {
+                    /**
+                     *  Всплывает огонек с баллами
+                     * */
+                    runFlame().then(() => {
+                        star_score_ref.current.style = '';
+                    });
+                    star_score_ref.current.style.transition = '0.2s';
+                    star_score_ref.current.style.transform = 'translate(0px, -100px)';
+                }
+                block_flame_ref.current = false;
             }
             generateAppleBoxRow();
             /**
