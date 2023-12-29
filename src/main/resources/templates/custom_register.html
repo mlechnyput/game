@@ -10,23 +10,24 @@
 </head>
 <body>
 <div class="box">
-    <h2>Регистрация</h2>
+    <h2 id="hat">Регистрация</h2>
+    <div id="language" class="language" onclick="changeLanguage()">EN</div>
     <form id="reg_form">
-        <div>
+        <div class="reg_str">
             <p id="reg_str"></p>
         </div>
         <div class="inputbox">
             <input type="text" autocomplete="off" id="reg_username" required=""/>
-            <label>Погонялово</label>
+            <label id="nick">Погонялово</label>
         </div>
         <div class="inputbox">
             <input type="password" autocomplete="off" id="reg_password" required=""/>
-            <label>Пароль</label>
+            <label id="password">Пароль</label>
         </div>
         <div class="txt">
-            <a href="http://localhost:8080/come">Вернуться ко входу</a>
+            <a id="back" href="http://localhost:8080/come">Вернуться ко входу</a>
         </div>
-        <input type="submit" value="Отправить"
+        <input type="submit" value="Отправить" id="send"
                onclick="reg(document.getElementById('reg_username').value,
                document.getElementById('reg_password').value)"/>
     </form>
