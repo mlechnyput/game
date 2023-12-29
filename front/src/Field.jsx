@@ -1358,11 +1358,11 @@ function Field() {
                 /**
                  *  Всплывает огонек с баллами
                  * */
-                runFlame().then(() => {
-                    star_score_ref.current.style = '';
+                popUpStarScore().then(prom => {
+                    runFlame().then(() => {
+                        star_score_ref.current.style = '';
+                    });
                 });
-                star_score_ref.current.style.transition = '0.2s';
-                star_score_ref.current.style.transform = 'translate(0px, -100px)';
             }
             setFire_control(i);
             let promise = new Promise((resolve, reject) => {
@@ -1450,6 +1450,24 @@ function Field() {
         let time = 50;
         while (i <= 30) {
             setDemo_control(i);
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("готово");
+                }, time)
+            });
+            let result = await promise;
+            i++;
+        }
+    }
+
+    async function popUpStarScore() {
+        let y_coordinate = 30;
+        let i = 1;
+        let step = 3.4;
+        let time = 30;
+        while (i <= 7) {
+            y_coordinate = y_coordinate - step * i;
+            star_score_ref.current.style.top = y_coordinate + 'px';
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve("готово");
@@ -1786,11 +1804,11 @@ function Field() {
                     /**
                      *  Всплывает огонек с баллами
                      * */
-                    runFlame().then(() => {
-                        star_score_ref.current.style = '';
+                    popUpStarScore().then(prom => {
+                        runFlame().then(() => {
+                            star_score_ref.current.style = '';
+                        });
                     });
-                    star_score_ref.current.style.transition = '0.2s';
-                    star_score_ref.current.style.transform = 'translate(0px, -100px)';
                 }
                 block_flame_ref.current = false;
             }
