@@ -5,24 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Input Form</title>
+    <script defer="defer" src="/js/come.js"></script>
     <link href="/css/come.css" rel="stylesheet">
 </head>
 <body>
 <div class="box">
-    <h2>Вход</h2>
+    <h2 id="hat">Вход</h2>
+    <div id="language" class="language" onclick="changeLanguage()">EN</div>
     <form action="http://localhost:8080/come" method="post">
         <div class="inputbox">
             <input type="text" name="username" autocomplete="off" required=""/>
-            <label>Погонялово</label>
+            <label id="nick">Погонялово</label>
         </div>
         <div class="inputbox">
             <input type="password" name="password" autocomplete="off" required=""/>
-            <label>Пароль</label>
+            <label id="password">Пароль</label>
         </div>
         <div class="txt">
-            <a href="http://localhost:8080/register">Зарегистрировать новое погонялово</a>
+            <a id="new" href="http://localhost:8080/register">Зарегистрировать новое погонялово</a>
         </div>
-        <input type="submit" value="Войти"/>
+        <input type="submit" value="Войти" id="send"/>
     </form>
 </div>
 </body>

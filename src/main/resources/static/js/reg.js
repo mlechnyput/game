@@ -26,9 +26,9 @@ function changeLanguage() {
     if (language === 'RUS') {
         hat_str.innerText = 'Sign Up';
         language_str.innerText = 'RUS';
-        nick_str.innerText = 'Nick Name';
+        nick_str.innerText = 'Nickname';
         password_str.innerText = "Password";
-        back_str.innerText = 'Back to Login';
+        back_str.innerText = 'Back to Log In';
         send_str.value = 'Send';
         language = 'EN';
     } else {
@@ -52,7 +52,7 @@ async function reg(var_u, var_p) {
                 str.innerText = 'Имя не должно превышать 16 символов';
                 break;
             case "EN":
-                str.innerText = 'Nick Name must be less 16 symbols';
+                str.innerText = 'Nickname must be less 16 symbols';
                 break;
         }
     } else {
@@ -62,7 +62,7 @@ async function reg(var_u, var_p) {
                     str.innerText = 'Слишком короткое имя или пароль'
                     break;
                 case "EN":
-                    str.innerText = 'Too short Nick Name or Password';
+                    str.innerText = 'Too short Nickname or Password';
                     break;
             }
         } else {
@@ -95,7 +95,14 @@ async function reg(var_u, var_p) {
                     const txt_reg = await response_reg.text();
                     console.log('Успех: ', txt_reg);
                     if (txt_reg === 'busy') {
-                        str.innerText = 'Имя занято, попробуй другое';
+                        switch (language) {
+                            case "RUS":
+                                str.innerText = 'Имя занято, попробуй другое';
+                                break;
+                            case "EN":
+                                str.innerText = 'Nickname is already taken, try another one';
+                                break;
+                        }
                     } else {
                         if (txt_reg === 'saved') {
                             const response_come = await fetch(`${base}come`, {

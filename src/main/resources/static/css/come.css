@@ -19,6 +19,14 @@ body {
     border-radius: 10px;
 }
 
+.language {
+    position: absolute;
+    top: 45px;
+    right: 20px;
+    cursor: pointer;
+    color: white;
+}
+
 .box h2 {
     margin: 0 0 30px;
     padding: 0;
