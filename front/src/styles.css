@@ -100,6 +100,28 @@
     stroke-width: 1px;
 }
 
+.rules {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #838383;
+}
+
+.go_button {
+    top: 680px;
+    left: 160px;
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    background-color: #03a9f4;
+    text-align: center;
+    font-size: 30px;
+    font-family: "Arial";
+    color: white;
+    cursor: pointer;
+    padding-top: 15px;
+}
+
 .you {
     grid-area: you;
     position: relative;
@@ -253,7 +275,7 @@
     background-size: contain;
 }
 
-.atomic_circle_box{
+.atomic_circle_box {
     position: absolute;
     width: 100px;
     height: 100px;
@@ -269,7 +291,7 @@
     bottom: 1100px;
 }
 
-.atomic_triangle_container{
+.atomic_triangle_container {
     position: absolute;
     top: 80px;
     left: 70px;
@@ -277,7 +299,7 @@
     height: 50px;
 }
 
-.atomic_triangle_ico{
+.atomic_triangle_ico {
     position: absolute;
     width: 55px;
     height: 50px;
@@ -285,16 +307,18 @@
     background-repeat: no-repeat;
 }
 
-.atomic_explode{
+.atomic_explode {
     pointer-events: none;
     position: absolute;
     width: 675px;
     height: 600px;
 }
-.atomic_explode img{
+
+.atomic_explode img {
     height: 100%;
     width: 100%;
 }
+
 /*
 элементы pointer-events none не попадут в поле действия слушателя mouse events
 */
@@ -369,7 +393,7 @@
     /*background-color: #838383;*/
 }
 
-.joe_fire{
+.joe_fire {
     position: absolute;
     width: 200px;
     height: 400px;

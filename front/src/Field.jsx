@@ -351,10 +351,13 @@ import fire_39 from "./images/fire/fire0039.png"
 import fire_40 from "./images/fire/fire0040.png"
 import fire_41 from "./images/fire/fire0041.png"
 import fire_42 from "./images/fire/fire0042.png"
+import rules_1 from "./images/rulles_1.png"
 
 function Field() {
     const forest_horizon = 5800;
     const forest_vertical = 1000;
+
+    const [is_rules, setIs_rules] = useState(true);
     /**
      * Коэффициент уменьшения на локаторе
      * */
@@ -2553,6 +2556,13 @@ function Field() {
                         return box;
                     })}
                 </div>
+                {is_rules ? <>
+                    <div className={'rules'}>
+                        <img src={rules_1}/>
+                    </div>
+                    <div className={'go_button'} onClick={() => setIs_rules(false)}>Погнали</div>
+                </> : null}
+
             </div>
         </div>
     );
