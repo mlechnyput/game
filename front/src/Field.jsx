@@ -357,6 +357,7 @@ function Field() {
     const forest_horizon = 5800;
     const forest_vertical = 1000;
 
+    const [is_rules_loaded, setIs_rules_loaded] = useState(false);
     const [is_rules, setIs_rules] = useState(true);
     /**
      * Коэффициент уменьшения на локаторе
@@ -2556,12 +2557,16 @@ function Field() {
                         return box;
                     })}
                 </div>
-                {is_rules ? <>
-                    <div className={'rules'}>
-                        <img src={rules_1}/>
-                    </div>
-                    <div className={'go_button'} onClick={() => setIs_rules(false)}>Погнали</div>
-                </> : null}
+                {is_rules ?
+                    <div>
+                        <div className={'rules'}>
+                            {is_rules_loaded ? null : <div className={'loader'}/>}
+                            <img src={rules_1}
+                                 style={{visibility: is_rules_loaded ? "visible" : "hidden"}}
+                                 onLoad={() => setIs_rules_loaded(true)}/>
+                        </div>
+                        <div className={'go_button'} onClick={() => setIs_rules(false)}>Погнали</div>
+                    </div> : null}
 
             </div>
         </div>
